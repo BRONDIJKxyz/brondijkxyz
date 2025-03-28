@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Image Template</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            width: 1200px;
+            height: 630px;
+            background-color: #121212;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content {
+            padding: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00b3b3;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #cccccc;
+        }
+        
+        .rules {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .rule {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            padding: 15px 20px;
+            border-radius: 4px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            width: calc(50% - 10px);
+        }
+        
+        .emoji {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        
+        .website {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            font-size: 24px;
+            color: #00b3b3;
+        }
+        
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                linear-gradient(45deg, #00b3b3 25%, transparent 25%), 
+                linear-gradient(-45deg, #00b3b3 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #00b3b3 75%), 
+                linear-gradient(-45deg, transparent 75%, #00b3b3 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pattern"></div>
+        <div class="content">
+            <div class="title">Windsurf / Cursor Global Rules</div>
+            <div class="subtitle">Best practices for AI-assisted development environments</div>
+            
+            <div class="rules">
+                <div class="rule">
+                    <span class="emoji">🔐</span>
+                    <span>Secrets Management</span>
+                </div>
+                <div class="rule">
+                    <span class="emoji">📝</span>
+                    <span>Documentation</span>
+                </div>
+                <div class="rule">
+                    <span class="emoji">🧭</span>
+                    <span>Project Planning</span>
+                </div>
+                <div class="rule">
+                    <span class="emoji">🧪</span>
+                    <span>Local Testing</span>
+                </div>
+                <div class="rule">
+                    <span class="emoji">🪓</span>
+                    <span>File Size & Modularity</span>
+                </div>
+            </div>
+            
+            <div class="website">brondijk.xyz</div>
+        </div>
+    </div>
+</body>
+</html>

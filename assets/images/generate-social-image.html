@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Social Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #121212;
+            font-family: monospace;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        canvas {
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #00b3b3;
+            color: #121212;
+            border: none;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #00e6e6;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Image Generator</h1>
+    <canvas id="socialCanvas" width="1200" height="630"></canvas>
+    <button id="downloadBtn">Download Image</button>
+    
+    <div class="instructions">
+        <p>Instructions:</p>
+        <ol>
+            <li>Click the "Download Image" button to save the social sharing image</li>
+            <li>The image will be saved as "social-image.png"</li>
+            <li>Place this image in your assets/images folder</li>
+        </ol>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('socialCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Pattern overlay
+            ctx.save();
+            ctx.globalAlpha = 0.05;
+            
+            // Create pattern
+            for (let x = 0; x < canvas.width; x += 20) {
+                for (let y = 0; y < canvas.height; y += 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + 10, y + 10);
+                    ctx.strokeStyle = '#00b3b3';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+            ctx.restore();
+            
+            // Title
+            ctx.font = 'bold 48px monospace';
+            ctx.fillStyle = '#00b3b3';
+            ctx.fillText('Windsurf / Cursor Global Rules', 60, 120);
+            
+            // Subtitle
+            ctx.font = '24px monospace';
+            ctx.fillStyle = '#cccccc';
+            ctx.fillText('Best practices for AI-assisted development environments', 60, 170);
+            
+            // Rule boxes
+            const rules = [
+                { emoji: '🔐', text: 'Secrets Management' },
+                { emoji: '📝', text: 'Documentation' },
+                { emoji: '🧭', text: 'Project Planning' },
+                { emoji: '🧪', text: 'Local Testing' },
+                { emoji: '🪓', text: 'File Size & Modularity' }
+            ];
+            
+            const boxWidth = 520;
+            const boxHeight = 70;
+            const startX = 60;
+            let startY = 220;
+            const gap = 20;
+            
+            rules.forEach((rule, index) => {
+                const x = index % 2 === 0 ? startX : startX + boxWidth + gap;
+                const y = startY + Math.floor(index / 2) * (boxHeight + gap);
+                
+                // Box
+                ctx.fillStyle = '#1e1e1e';
+                ctx.fillRect(x, y, boxWidth, boxHeight);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(x, y, boxWidth, boxHeight);
+                
+                // Emoji
+                ctx.font = '28px Arial';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(rule.emoji, x + 20, y + 45);
+                
+                // Text
+                ctx.font = '18px monospace';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(rule.text, x + 70, y + 45);
+            });
+            
+            // Website URL
+            ctx.font = '24px monospace';
+            ctx.fillStyle = '#00b3b3';
+            ctx.fillText('brondijk.xyz', 60, 580);
+            
+            // Download button
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.download = 'social-image.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -2,6 +2,13 @@
 
 All notable changes to the project list will be documented in this file.
 
+## [1.4.0] - 2025-03-28
+
+### Added
+- Social sharing image for Global Rules page
+- Open Graph and Twitter Card meta tags for better social media previews
+- Image generator tool for creating custom social sharing images
+
 ## [1.3.1] - 2025-03-28
 
 ### Fixed

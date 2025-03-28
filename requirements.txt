@@ -1,0 +1,3 @@
+# Python dependencies for local development
+# For running a simple HTTP server, no additional packages are required
+# If additional functionality is needed, add dependencies below

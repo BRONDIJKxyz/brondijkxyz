@@ -2,6 +2,12 @@
 
 All notable changes to the project list will be documented in this file.
 
+## [1.3.1] - 2025-03-28
+
+### Fixed
+- Improved project card click behavior to properly redirect to respective websites
+- Added cursor pointer to project cards for better usability
+
 ## [1.3.0] - 2025-03-28
 
 ### Improved

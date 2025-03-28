@@ -19,6 +19,7 @@
     <style>
         .project-card {
             position: relative;
+            cursor: pointer;
         }
         
         .project-card-link {
@@ -58,41 +59,37 @@
 
         <section id="projects" class="container">
             <div class="projects-grid">
-                <div class="project-card">
-                    <a href="https://flightvisualizer.com" target="_blank" rel="noopener noreferrer" class="project-card-link" aria-label="Flightvisualizer.com"></a>
+                <div class="project-card" onclick="window.open('https://flightvisualizer.com', '_blank', 'noopener,noreferrer')">
                     <div class="project-header">
                         <h3>Flightvisualizer.com</h3>
                     </div>
                     <p>Real-time flight tracking visualization tool with global coverage</p>
-                    <a href="https://flightvisualizer.com" target="_blank" rel="noopener noreferrer" class="project-link">View Project →</a>
+                    <a href="https://flightvisualizer.com" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">View Project →</a>
                 </div>
 
-                <div class="project-card">
-                    <a href="https://taskflow-done.com" target="_blank" rel="noopener noreferrer" class="project-card-link" aria-label="Taskflow-done.com"></a>
+                <div class="project-card" onclick="window.open('https://taskflow-done.com', '_blank', 'noopener,noreferrer')">
                     <div class="project-header">
                         <h3>Taskflow-done.com</h3>
                     </div>
                     <p>Minimalist task management system with automation capabilities</p>
-                    <a href="https://taskflow-done.com" target="_blank" rel="noopener noreferrer" class="project-link">View Project →</a>
+                    <a href="https://taskflow-done.com" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">View Project →</a>
                 </div>
 
-                <div class="project-card">
-                    <a href="https://github.com/maartenbrondijk/codeanalyzer" target="_blank" rel="noopener noreferrer" class="project-card-link" aria-label="CodeAnalyzer"></a>
+                <div class="project-card" onclick="window.open('https://github.com/maartenbrondijk/codeanalyzer', '_blank', 'noopener,noreferrer')">
                     <div class="project-header">
                         <h3>CodeAnalyzer</h3>
                         <span class="status-tag">in progress</span>
                     </div>
                     <p>Static code analysis tool for identifying performance bottlenecks</p>
-                    <a href="https://github.com/maartenbrondijk/codeanalyzer" target="_blank" rel="noopener noreferrer" class="project-link">View Repository →</a>
+                    <a href="https://github.com/maartenbrondijk/codeanalyzer" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">View Repository →</a>
                 </div>
 
-                <div class="project-card">
-                    <a href="globalrules.html" class="project-card-link" aria-label="Windsurf / Cursor Global Rules"></a>
+                <div class="project-card" onclick="window.location.href='globalrules.html'">
                     <div class="project-header">
                         <h3>Windsurf / Cursor Global Rules</h3>
                     </div>
                     <p>Global rules for AI-assisted development environments</p>
-                    <a href="globalrules.html" class="project-link">View Global Rules →</a>
+                    <a href="globalrules.html" class="project-link" onclick="event.stopPropagation()">View Global Rules →</a>
                 </div>
             </div>
         </section>

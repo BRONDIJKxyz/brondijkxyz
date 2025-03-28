@@ -2,6 +2,12 @@
 
 All notable changes to the project list will be documented in this file.
 
+## [1.2.0] - 2025-03-28
+
+### Added
+- Implemented favicon across all pages
+- Updated site.webmanifest with correct website information and theme colors
+
 ## [1.1.0] - 2025-03-28
 
 ### Changed

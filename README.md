@@ -34,6 +34,18 @@ python3 -m http.server
 
 The site is designed to be deployed as static files to any web hosting service.
 
+### HTTPS Setup for Production
+
+For production deployment, it's important to serve the site over HTTPS to avoid the "Not Secure" warning in browsers:
+
+1. If using a hosting service like Netlify, Vercel, or GitHub Pages, HTTPS is typically provided automatically
+2. For custom hosting:
+   - Obtain an SSL certificate (Let's Encrypt offers free certificates)
+   - Configure your web server (Apache, Nginx, etc.) to use the certificate
+   - Set up automatic redirects from HTTP to HTTPS
+
+Note: The "Not Secure" warning is normal when testing locally with `http://localhost` and doesn't require fixing in the development environment.
+
 ## Directory Structure
 
 - `index.html` - Main page with project listings

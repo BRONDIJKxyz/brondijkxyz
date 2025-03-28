@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Rules - brondijk.xyz</title>
+    <meta name="description" content="Windsurf / Cursor Global Rules">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <style>
+        .rules-container {
+            padding: 40px 0;
+        }
+        
+        .rule-section {
+            margin-bottom: 40px;
+        }
+        
+        .rule-section h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rule-section h2 .emoji {
+            margin-right: 10px;
+        }
+        
+        .rule-section ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .rule-section ul li {
+            position: relative;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .rule-section ul li::before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: -20px;
+        }
+        
+        .rule-section ul ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>brondijk.xyz</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link project-link">← Back to Projects</a>
+            <h2>Windsurf / Cursor Global Rules</h2>
+            
+            <div class="rules-container">
+                <div class="rule-section">
+                    <h2><span class="emoji">🔐</span> Secrets Management</h2>
+                    <ul>
+                        <li>Store secrets (API keys, DB credentials) in <code>.env</code> files</li>
+                        <li>NEVER expose secrets to client-side code</li>
+                        <li>Add <code>.env</code> and other sensitive files to <code>.gitignore</code></li>
+                    </ul>
+                </div>
+
+                <div class="rule-section">
+                    <h2><span class="emoji">📝</span> Documentation</h2>
+                    <ul>
+                        <li>Always use Markdown for documentation and <code>README.md</code> files</li>
+                        <li>Each project must include a <code>README.md</code> with:
+                            <ul>
+                                <li>Title</li>
+                                <li>Description</li>
+                                <li>Setup instructions</li>
+                                <li>Usage examples</li>
+                                <li>License information</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-section">
+                    <h2><span class="emoji">🧭</span> Project Planning</h2>
+                    <ul>
+                        <li>Every project must begin with an <code>instructions.md</code> file</li>
+                        <li>This file should describe:
+                            <ul>
+                                <li>The end goal and success criteria</li>
+                                <li>Scope and key features</li>
+                                <li>Tech stack decisions</li>
+                            </ul>
+                        </li>
+                        <li>It must be written before any code is committed</li>
+                    </ul>
+                </div>
+
+                <div class="rule-section">
+                    <h2><span class="emoji">🧪</span> Local Testing</h2>
+                    <ul>
+                        <li>Kill any running local servers before starting a new one</li>
+                        <li>Always run Python-related tests using Python 3 (<code>python3</code>)</li>
+                    </ul>
+                </div>
+
+                <div class="rule-section">
+                    <h2><span class="emoji">🪓</span> File Size & Modularity</h2>
+                    <ul>
+                        <li>Avoid single files exceeding 500 lines unless justified (e.g., auto-generated code)</li>
+                        <li>For styles: split large <code>styles.css</code> files into domain-based or component-based partials
+                            <ul>
+                                <li>Use <code>@import</code> or PostCSS includes to compose them</li>
+                                <li>Example: <code>layout.css</code>, <code>buttons.css</code>, <code>modals.css</code></li>
+                            </ul>
+                        </li>
+                        <li>For JS/TS: split functions and classes into separate modules or services when possible</li>
+                        <li>For Markdown: split long documentation into logical subpages (e.g., <code>usage.md</code>, <code>api.md</code>)</li>
+                        <li>Use folder-based organization with an index file for clean exports (e.g., <code>index.ts</code>)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

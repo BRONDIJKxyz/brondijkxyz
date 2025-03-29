@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskflow-done - brondijk.xyz</title>
+    <meta name="description" content="Minimalist task management system with automation capabilities">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/taskflow.html">
+    <meta property="og:title" content="Taskflow-done">
+    <meta property="og:description" content="Minimalist task management system with automation capabilities">
+    <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/taskflow.html">
+    <meta name="twitter:title" content="Taskflow-done">
+    <meta name="twitter:description" content="Minimalist task management system with automation capabilities">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    
+    <style>
+        .project-container {
+            padding: 40px 0;
+        }
+        
+        .project-section {
+            margin-bottom: 40px;
+        }
+        
+        .project-section h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-section h2 .emoji {
+            margin-right: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-item {
+            background-color: rgba(0, 179, 179, 0.1);
+            border: 1px solid rgba(0, 179, 179, 0.3);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .feature-list li {
+            position: relative;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .feature-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: -20px;
+        }
+        
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .visit-site {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #121212;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .visit-site:hover {
+            background-color: var(--hover-color);
+            color: #121212;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link project-link">← Back to Projects</a>
+            <h2>Taskflow-done.com</h2>
+            
+            <div class="project-container">
+                <div class="project-section">
+                    <h2><span class="emoji">🔍</span> Overview</h2>
+                    <p>Taskflow-done is a minimalist task management system designed for developers and technical teams. It focuses on simplicity, automation, and integration with development workflows, allowing users to manage tasks efficiently without the bloat of traditional project management tools.</p>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-item">React</div>
+                        <div class="tech-item">TypeScript</div>
+                        <div class="tech-item">Node.js</div>
+                        <div class="tech-item">PostgreSQL</div>
+                        <div class="tech-item">GraphQL</div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><span class="emoji">✨</span> Key Features</h2>
+                    <ul class="feature-list">
+                        <li>Keyboard-driven interface optimized for developer workflows</li>
+                        <li>Markdown support for task descriptions and notes</li>
+                        <li>Automated task creation and updates via API integrations</li>
+                        <li>Git-inspired task branching and dependency tracking</li>
+                        <li>Custom automation rules using a simple scripting language</li>
+                        <li>Dark mode and customizable interface</li>
+                    </ul>
+                </div>
+
+                <div class="project-section">
+                    <h2><span class="emoji">🛠️</span> Technical Implementation</h2>
+                    <p>Taskflow-done is built with a React frontend and a Node.js backend, using TypeScript throughout for type safety. The application uses GraphQL for efficient data fetching and PostgreSQL for data storage.</p>
+                    
+                    <p>The system architecture includes:</p>
+                    <ul class="feature-list">
+                        <li>RESTful and GraphQL APIs for integration with other tools</li>
+                        <li>Event-driven architecture for real-time updates</li>
+                        <li>Custom automation engine for task workflows</li>
+                        <li>Offline support with local-first data approach</li>
+                        <li>Efficient state management using React Context and hooks</li>
+                    </ul>
+                </div>
+                
+                <div class="project-section">
+                    <h2><span class="emoji">💡</span> Design Philosophy</h2>
+                    <p>Taskflow-done was built with the following principles in mind:</p>
+                    <ul class="feature-list">
+                        <li><strong>Minimalism:</strong> Focus on essential features without unnecessary complexity</li>
+                        <li><strong>Keyboard-first:</strong> Optimized for users who prefer keyboard navigation</li>
+                        <li><strong>Developer-centric:</strong> Designed specifically for technical workflows</li>
+                        <li><strong>Automation:</strong> Reduce manual work through intelligent automation</li>
+                        <li><strong>Integration:</strong> Work seamlessly with existing development tools</li>
+                    </ul>
+                </div>
+                
+                <a href="https://taskflow-done.com" target="_blank" rel="noopener noreferrer" class="visit-site">Visit Taskflow-done.com →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

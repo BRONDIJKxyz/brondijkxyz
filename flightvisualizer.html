@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flightvisualizer - brondijk.xyz</title>
+    <meta name="description" content="Real-time flight tracking visualization tool with global coverage">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/flightvisualizer.html">
+    <meta property="og:title" content="Flightvisualizer">
+    <meta property="og:description" content="Real-time flight tracking visualization tool with global coverage">
+    <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/flightvisualizer.html">
+    <meta name="twitter:title" content="Flightvisualizer">
+    <meta name="twitter:description" content="Real-time flight tracking visualization tool with global coverage">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    
+    <style>
+        .project-container {
+            padding: 40px 0;
+        }
+        
+        .project-section {
+            margin-bottom: 40px;
+        }
+        
+        .project-section h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-section h2 .emoji {
+            margin-right: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-item {
+            background-color: rgba(0, 179, 179, 0.1);
+            border: 1px solid rgba(0, 179, 179, 0.3);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .feature-list li {
+            position: relative;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .feature-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: -20px;
+        }
+        
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .visit-site {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #121212;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .visit-site:hover {
+            background-color: var(--hover-color);
+            color: #121212;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link project-link">← Back to Projects</a>
+            <h2>Flightvisualizer.com</h2>
+            
+            <div class="project-container">
+                <div class="project-section">
+                    <h2><span class="emoji">🔍</span> Overview</h2>
+                    <p>Flightvisualizer started as a personal project with a clear objective: I wanted to visualize my frequent flights on a global map, calculate the total distance traveled in kilometers, and estimate the CO2 emissions to easily offset them.</p>
+                    
+                    <p>The development process began with Python-based visualization before expanding to a more comprehensive solution:</p>
+                    <ul class="feature-list">
+                        <li>Collected a comprehensive dataset of all airports worldwide with their coordinates</li>
+                        <li>Created initial flight path visualizations using Python's data visualization libraries</li>
+                        <li>Developed algorithms to calculate distances and estimate carbon emissions</li>
+                    </ul>
+                    
+                    <div class="image-container" style="margin: 30px 0; text-align: center;">
+                        <img src="assets/images/Flightvisualizer/final_flight_map.png" alt="Flight visualization map showing connected flight paths" style="max-width: 100%; border-radius: 4px; border: 1px solid #333;">
+                        <p style="margin-top: 10px; font-size: 0.9em; color: #999;">One of the first visualization outcomes showing flight paths on a global map</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-item">Python</div>
+                        <div class="tech-item">Matplotlib</div>
+                        <div class="tech-item">Pandas</div>
+                        <div class="tech-item">GeoPy</div>
+                        <div class="tech-item">JavaScript</div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><span class="emoji">✨</span> Key Features</h2>
+                    <ul class="feature-list">
+                        <li>Visualization of personal flight history on an interactive global map</li>
+                        <li>Calculation of total distance traveled in kilometers</li>
+                        <li>Estimation of CO2 emissions for carbon offsetting</li>
+                        <li>Support for importing flight data from various sources</li>
+                        <li>Historical view of all past flights with statistics</li>
+                    </ul>
+                </div>
+
+                <div class="project-section">
+                    <h2><span class="emoji">🛠️</span> Technical Implementation</h2>
+                    <p>The project began as a Python-based data visualization tool using libraries like Matplotlib, Pandas, and GeoPy. The initial implementation focused on:</p>
+                    
+                    <ul class="feature-list">
+                        <li>Processing and cleaning airport coordinate data</li>
+                        <li>Plotting flight paths on a world map using great circle arcs</li>
+                        <li>Calculating distances between airports using the haversine formula</li>
+                        <li>Estimating carbon emissions based on flight distance and aircraft type</li>
+                    </ul>
+                    
+                    <p>The front-end implementation is still in development, with plans to create an interactive web interface that allows users to:</p>
+                    
+                    <ul class="feature-list">
+                        <li>Upload their flight history from various sources</li>
+                        <li>Visualize flights with interactive controls</li>
+                        <li>Generate reports on travel statistics and environmental impact</li>
+                        <li>Connect with carbon offsetting services</li>
+                    </ul>
+                </div>
+                
+                <div class="project-section">
+                    <h2><span class="emoji">🚧</span> Current Status</h2>
+                    <p>The project is currently in the prototype phase with a working Python backend for data processing and visualization. The web interface is under development, with plans to release a beta version in the coming months.</p>
+                    
+                    <p>Future development will focus on:</p>
+                    <ul class="feature-list">
+                        <li>Creating a user-friendly web interface</li>
+                        <li>Adding support for automatic flight data import from email confirmations</li>
+                        <li>Implementing more accurate carbon emission calculations</li>
+                        <li>Adding integration with popular carbon offsetting services</li>
+                    </ul>
+                </div>
+                
+                <a href="https://github.com/maartenbrondijk/flightvisualizer" target="_blank" rel="noopener noreferrer" class="visit-site">View Project Repository →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

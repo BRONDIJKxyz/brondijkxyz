@@ -32,3 +32,17 @@
 - For JS/TS: split functions and classes into separate modules or services when possible
 - For Markdown: split long documentation into logical subpages (e.g., `usage.md`, `api.md`)
 - Use folder-based organization with an index file for clean exports (e.g., `index.ts`)
+
+
+## 🌐 Multi-Page HTML Projects
+
+### ✅ Base Template (`base.html`)
+- If your project includes **more than one HTML page**, always create a `base.html` to serve as the layout scaffold
+  - Include shared elements: `<head>`, GTAG script, header, footer
+  - Inherit or import `base.html` to reduce duplication and ensure consistency
+
+### ✅ Clean URLs with `.htaccess`
+- Always include an `.htaccess` file to:
+  - **Remove `.html` extensions** from URLs
+  - **Redirect `/index` to `/`**
+  - (Optional) Enforce HTTPS and `www.` prefix in production

@@ -194,6 +194,30 @@
                         <li>Use folder-based organization with an index file for clean exports (e.g., <code>index.ts</code>)</li>
                     </ul>
                 </div>
+
+                <div class="rule-section">
+                    <h2><span class="emoji">🌐</span> Multi-Page HTML Projects</h2>
+                    <ul>
+                        <li><strong>Base Template (<code>base.html</code>)</strong>
+                            <ul>
+                                <li>If your project includes <strong>more than one HTML page</strong>, always create a <code>base.html</code> to serve as the layout scaffold</li>
+                                <li>Include shared elements: <code>&lt;head&gt;</code>, GTAG script, header, footer</li>
+                                <li>Inherit or import <code>base.html</code> to reduce duplication and ensure consistency</li>
+                            </ul>
+                        </li>
+                        <li><strong>Clean URLs with <code>.htaccess</code></strong>
+                            <ul>
+                                <li>Always include an <code>.htaccess</code> file to:
+                                    <ul>
+                                        <li><strong>Remove <code>.html</code> extensions</strong> from URLs</li>
+                                        <li><strong>Redirect <code>/index</code> to <code>/</code></strong></li>
+                                        <li>(Optional) Enforce HTTPS and <code>www.</code> prefix in production</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>

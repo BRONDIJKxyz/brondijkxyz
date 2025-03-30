@@ -1,39 +1,51 @@
 # Instructions for Windsurf
 
-## Project Setup
-1. **Initialize project environment:**  
-   
-   - Set up any required dependencies listed in the `requirements.txt` or `package.json` file.
+## Project Objective
+Brondijk.xyz is a minimalist, code-centric site showcasing Maarten Brondijk’s technical projects. The focus is on a stripped-back, dark-themed layout that highlights the projects themselves, without personal content or unnecessary design elements.
 
-2. **Directory structure requirements:**  
-   - All documentation must be in Markdown format (`.md`).  
-   - Each project directory should contain a `README.md` file that outlines:  
-     - Project purpose  
-     - How to run or view the project  
-     - License information (if applicable)  
-   - Use a consistent naming convention for all project directories and files.
+## Design and Structure
+1. **One-Page Layout:**  
+   - The site should be a single, lightweight page listing all projects.  
+   - Each project entry includes:  
+     - A title.  
+     - A brief one-line description.  
+     - A single link (either to the live site or the repository).
 
-## Development Guidelines
-1. **Minimal resource usage:**  
-   - Ensure that processes run efficiently to minimize Windsurf action credits.  
-   - Avoid redundant builds by caching dependencies and using build tools that support incremental updates.  
-   - Terminate local development servers after use.
+2. **Minimal Navigation:**  
+   - Include a small, fixed menu at the top or side with these options:  
+     - “Home”  
+     - “Projects”  
+     - “GitHub”  
+   - The navigation should stay out of the way and serve purely functional purposes.
 
-2. **Testing and compatibility:**  
-   - Always run tests with Python 3 (or the latest stable version of your chosen language/framework).  
-   - Check that the site functions correctly in modern web browsers, including mobile browsers.  
-   - Document any known issues or workarounds in the `README.md` for each project.
+3. **Techy Aesthetic:**  
+   - Use a dark background and light text for a code-editor feel.  
+   - Stick to a monospaced or clean sans-serif font for readability.  
+   - Keep hover effects subtle (e.g., link color changes slightly on hover).  
+   - Add no images, only text and links.
 
-## Deployment Workflow
-1. **Build and deploy:**  
-   - Generate the final static files or bundled code.  
-   - Deploy the site to the hosting environment defined in the project settings.
+## Content Guidelines
+1. **Project Listings Only:**  
+   - Include finished projects like Flightvisualizer.com and taskflow-done.com.  
+   - For ongoing work, list the project with a simple “in progress” note.  
+   - Avoid personal details, photos, or any commentary beyond the technical information.
 
-2. **Post-deployment steps:**  
-   - Verify that all links are working and that the site is accessible from both desktop and mobile devices.  
-   - Ensure that visitors redirected from Twitter land on the homepage or a specific introduction page.  
-   - If possible, set up simple analytics (without overloading the site) to track which projects visitors are viewing most often.
+2. **Consistent Styling:**  
+   - All projects should be formatted in the same style.  
+   - Use a single accent color (e.g., green or cyan) for links or headings.  
+   - Make sure all links are direct and functional.
+
+## Deployment and Maintenance
+1. **Efficient Processes:**  
+   - Keep the build process simple and fast.  
+   - Cache dependencies to reduce resource usage.  
+   - Use plain HTML, CSS, and JS (or a minimal framework) to maintain a lightweight footprint.
+
+2. **Maintenance Guidelines:**  
+   - Clearly document changes to the project list in a `CHANGELOG.md` file.  
+   - Ensure all links remain up to date and functional.  
+   - Regularly review for dead links or outdated project descriptions.
 
 ---
 
-By following these instructions, Windsurf should be able to perform its tasks effectively, maintain a clean and efficient setup, and use fewer credits in the process.
+This version of instructions.md sets a clear blueprint for Windsurf, emphasizing the minimal, techy vibe you want while keeping the site efficient and easy to maintain.

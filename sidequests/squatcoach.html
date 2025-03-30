@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squat Coach - Fun Side Quests - brondijk.xyz</title>
+    <meta name="description" content="Squat Coach - A fun side quest project">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/sidequests/squatcoach.html">
+    <meta property="og:title" content="Squat Coach - Fun Side Quests">
+    <meta property="og:description" content="Squat Coach - A fun side quest project">
+    <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/sidequests/squatcoach.html">
+    <meta name="twitter:title" content="Squat Coach - Fun Side Quests">
+    <meta name="twitter:description" content="Squat Coach - A fun side quest project">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+    
+    <style>
+        .project-container {
+            padding: 40px 0;
+        }
+        
+        .project-section {
+            margin-bottom: 40px;
+        }
+        
+        .project-section h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-section h2 .emoji {
+            margin-right: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background-color: rgba(0, 179, 179, 0.1);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background-color: #4caf50;
+            color: #121212;
+            font-size: 0.6em;
+            padding: 3px 8px;
+            border-radius: 12px;
+            vertical-align: middle;
+            margin-left: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .demo-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="../index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="../index.html#home">Home</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#resources">Resources</a></li>
+                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../sidequests.html" class="back-link project-link">← Back to Fun Side Quests</a>
+            <h2>Squat Coach <span class="status-badge">completed</span></h2>
+            
+            <div class="project-container">
+                <div class="project-section">
+                    <h2><span class="emoji">🏋️</span> Overview</h2>
+                    <p>Squat Coach is a computer vision application that helps users perfect their squat form. Using a webcam, it tracks body movements in real-time, provides feedback on form, and counts reps with proper technique.</p>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-item">Python</div>
+                        <div class="tech-item">OpenCV</div>
+                        <div class="tech-item">MediaPipe</div>
+                        <div class="tech-item">TensorFlow</div>
+                    </div>
+                </div>
+                
+                <div class="project-section">
+                    <h2><span class="emoji">✨</span> Features</h2>
+                    <ul class="feature-list">
+                        <li>Real-time body pose tracking using webcam</li>
+                        <li>Automatic squat rep counting</li>
+                        <li>Form analysis with feedback (depth, knee alignment, back angle)</li>
+                        <li>Progress tracking over time</li>
+                        <li>Customizable workout plans</li>
+                        <li>Audio cues for form correction</li>
+                    </ul>
+                </div>
+                
+                <div class="project-section">
+                    <h2><span class="emoji">🛠️</span> Implementation</h2>
+                    <p>Squat Coach uses MediaPipe's pose estimation model to identify 33 key body landmarks in real-time. Custom algorithms analyze the relationships between these points to determine:</p>
+                    
+                    <ul>
+                        <li>Hip angle (for squat depth)</li>
+                        <li>Knee alignment (to prevent valgus)</li>
+                        <li>Back angle (to maintain proper posture)</li>
+                        <li>Rep detection (using state machine logic)</li>
+                    </ul>
+                    
+                    <p>The application provides visual feedback by overlaying guidelines and indicators on the video feed, along with audio cues for form corrections.</p>
+                    
+                    <div class="code-block">
+<pre>def analyze_squat_form(landmarks):
+    # Calculate hip angle
+    hip_angle = calculate_angle(
+        landmarks[LANDMARK_MAP['left_shoulder']],
+        landmarks[LANDMARK_MAP['left_hip']],
+        landmarks[LANDMARK_MAP['left_knee']]
+    )
+    
+    # Calculate knee alignment
+    knee_alignment = check_knee_alignment(
+        landmarks[LANDMARK_MAP['left_hip']],
+        landmarks[LANDMARK_MAP['left_knee']],
+        landmarks[LANDMARK_MAP['left_ankle']]
+    )
+    
+    # Determine squat depth
+    if hip_angle < 90:
+        depth = "DEEP"
+    elif hip_angle < 110:
+        depth = "PARALLEL"
+    else:
+        depth = "SHALLOW"
+        
+    return {
+        "depth": depth,
+        "knee_alignment": knee_alignment,
+        "hip_angle": hip_angle
+    }</pre>
+                    </div>
+                </div>
+                
+                <div class="project-section">
+                    <h2><span class="emoji">🔮</span> Future Improvements</h2>
+                    <ul>
+                        <li>Support for additional exercise types (deadlifts, lunges, etc.)</li>
+                        <li>Mobile app version for iOS and Android</li>
+                        <li>Cloud-based progress tracking and analytics</li>
+                        <li>Integration with fitness wearables for heart rate monitoring</li>
+                        <li>Personalized coaching based on user progress</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

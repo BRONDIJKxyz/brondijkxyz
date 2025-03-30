@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Side Quests - brondijk.xyz</title>
+    <meta name="description" content="Collection of fun coding side quests and mini-projects">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/sidequests.html">
+    <meta property="og:title" content="Fun Side Quests">
+    <meta property="og:description" content="Collection of fun coding side quests and mini-projects">
+    <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/sidequests.html">
+    <meta name="twitter:title" content="Fun Side Quests">
+    <meta name="twitter:description" content="Collection of fun coding side quests and mini-projects">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
+    
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    
+    <style>
+        .quests-container {
+            padding: 40px 0;
+        }
+        
+        .quests-intro {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .quests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .quest-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+        
+        .quest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 179, 179, 0.3);
+        }
+        
+        .quest-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s;
+        }
+        
+        .quest-card:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .quest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .quest-header h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        
+        .status-tag {
+            font-size: 0.7em;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: #4caf50;
+            color: #121212;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        .status-tag.in-progress {
+            background-color: #ff9800;
+        }
+        
+        .quest-card p {
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .quest-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        
+        .quest-link:hover {
+            color: #00e6e6;
+        }
+        
+        .quest-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .tech-tag {
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background-color: rgba(0, 179, 179, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#resources">Resources</a></li>
+                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html#projects" class="back-link project-link">← Back to Projects</a>
+            <h1>Fun Side Quests</h1>
+            
+            <div class="quests-intro">
+                <p>A collection of smaller, experimental projects and coding adventures. These side quests represent quick explorations into interesting technologies, creative coding challenges, and fun mini-applications.</p>
+                <p>Unlike my main projects, these are typically built in a weekend or a few evenings as a way to learn something new or solve a specific problem.</p>
+            </div>
+            
+            <div class="quests-container">
+                <div class="quests-grid">
+                    <div class="quest-card" onclick="window.location.href='sidequests/squatcoach.html'">
+                        <div class="quest-header">
+                            <h3>Squat Coach</h3>
+                            <span class="status-tag">completed</span>
+                        </div>
+                        <p>Computer vision application that helps users perfect their squat form using real-time pose tracking and feedback.</p>
+                        <div class="quest-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">MediaPipe</span>
+                            <span class="tech-tag">TensorFlow</span>
+                        </div>
+                        <a href="sidequests/squatcoach.html" class="quest-link" onclick="event.stopPropagation()">View Project →</a>
+                    </div>
+                    
+                    <!-- Template for future side quests
+                    <div class="quest-card" onclick="window.location.href='sidequests/questname.html'">
+                        <div class="quest-header">
+                            <h3>Quest Name</h3>
+                            <span class="status-tag in-progress">in progress</span>
+                        </div>
+                        <p>Brief description of the side quest project.</p>
+                        <div class="quest-tech">
+                            <span class="tech-tag">Tech 1</span>
+                            <span class="tech-tag">Tech 2</span>
+                        </div>
+                        <a href="sidequests/questname.html" class="quest-link" onclick="event.stopPropagation()">View Project →</a>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

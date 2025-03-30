@@ -35,6 +35,21 @@
             position: relative;
             z-index: 2;
         }
+        
+        .section-divider {
+            margin: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .section-divider h2 {
+            position: relative;
+            top: -15px;
+            background-color: #121212;
+            display: inline-block;
+            padding-right: 20px;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +60,7 @@
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#resources">Resources</a></li>
                     <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
                 </ul>
             </nav>
@@ -83,7 +99,15 @@
                     <p>Static code analysis tool for identifying performance bottlenecks</p>
                     <a href="codeanalyzer.html" class="project-link" onclick="event.stopPropagation()">View Project →</a>
                 </div>
-
+            </div>
+        </section>
+        
+        <div class="section-divider container">
+            <h2 id="resources">Resources</h2>
+        </div>
+        
+        <section class="container">
+            <div class="projects-grid">
                 <div class="project-card" onclick="window.location.href='workflow.html'">
                     <div class="project-header">
                         <h3>Vibe-Coding Workflow</h3>

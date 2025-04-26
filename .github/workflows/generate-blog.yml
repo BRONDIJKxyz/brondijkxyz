@@ -1,0 +1,35 @@
+name: Generate Blog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'blog/posts/**'  # Only trigger when blog posts change
+      - '.github/workflows/generate-blog.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install markdown pyyaml
+          
+      - name: Generate blog
+        run: python scripts/generate_blog.py
+        
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add blog.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-generate blog content" && git push)

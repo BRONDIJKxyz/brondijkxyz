@@ -2,8 +2,8 @@ import os
 import markdown
 import yaml
 from datetime import datetime
-import shutil
 from pathlib import Path
+import shutil
 
 def read_md_with_frontmatter(md_path):
     with open(md_path, 'r', encoding='utf-8') as f:
@@ -14,12 +14,72 @@ def read_md_with_frontmatter(md_path):
             return frontmatter, md_content
         return {}, content[0]
 
+def get_post_template():
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - brondijk.xyz</title>
+    <meta name="description" content="{description}">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+    
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="../index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="../blog.html">Blog</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1>{title}</h1>
+            <div class="post-meta">{date}</div>
+            <div class="post-content">
+                {content}
+            </div>
+            <div class="post-nav">
+                <a href="../blog.html">← Back to Blog</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2025 Maarten Brondijk</p>
+    </footer>
+</body>
+</html>'''
+
 def generate_blog_html():
     posts_dir = Path('blog/posts')
-    blog_template_path = 'blog.html'
+    blog_dir = Path('blog')
+    blog_dir.mkdir(exist_ok=True)
     posts = []
 
-    # Read all markdown files
+    # Read all markdown files and generate individual posts
     for md_file in posts_dir.glob('*.md'):
         frontmatter, content = read_md_with_frontmatter(md_file)
         html_content = markdown.markdown(content)
@@ -28,36 +88,90 @@ def generate_blog_html():
             'title': frontmatter.get('title', md_file.stem),
             'date': frontmatter.get('date', datetime.fromtimestamp(md_file.stat().st_mtime).strftime('%Y-%m-%d')),
             'content': html_content,
-            'slug': md_file.stem
+            'slug': md_file.stem,
+            'description': content.split('\n')[0][:160]  # First line as description
         }
         posts.append(post_data)
+        
+        # Generate individual post HTML
+        post_html = get_post_template().format(**post_data)
+        post_path = blog_dir / f"{post_data['slug']}.html"
+        with open(post_path, 'w', encoding='utf-8') as f:
+            f.write(post_html)
 
     # Sort posts by date
     posts.sort(key=lambda x: x['date'], reverse=True)
 
-    # Generate blog listing
-    posts_html = ''
+    # Generate blog index
+    index_html = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - brondijk.xyz</title>
+    <meta name="description" content="Blog posts by Maarten Brondijk">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+    
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="blog-posts">'''
+
     for post in posts:
-        posts_html += f'''
-        <article class="blog-post">
-            <h2>{post['title']}</h2>
-            <div class="post-meta">{post['date']}</div>
-            <div class="post-content">{post['content']}</div>
-        </article>
-        <hr class="section-divider">
-        '''
+        index_html += f'''
+            <article class="blog-post-preview">
+                <h2><a href="blog/{post['slug']}.html">{post['title']}</a></h2>
+                <div class="post-meta">{post['date']}</div>
+                <div class="post-excerpt">{post['description']}</div>
+                <a href="blog/{post['slug']}.html" class="read-more">Read more →</a>
+            </article>
+            <hr class="section-divider">'''
 
-    # Update blog.html
-    with open(blog_template_path, 'r', encoding='utf-8') as f:
-        template = f.read()
+    index_html += '''
+        </section>
+    </main>
 
-    updated_content = template.replace(
-        '<!-- Blog posts will be dynamically inserted here -->',
-        posts_html
-    )
+    <footer class="container">
+        <p>&copy; 2025 Maarten Brondijk</p>
+    </footer>
+</body>
+</html>'''
 
-    with open(blog_template_path, 'w', encoding='utf-8') as f:
-        f.write(updated_content)
+    with open('blog.html', 'w', encoding='utf-8') as f:
+        f.write(index_html)
 
 if __name__ == '__main__':
     generate_blog_html()

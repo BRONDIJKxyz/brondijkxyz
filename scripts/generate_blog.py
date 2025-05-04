@@ -14,6 +14,13 @@ def read_md_with_frontmatter(md_path):
             return frontmatter, md_content
         return {}, content[0]
 
+def get_first_paragraph(content):
+    paragraphs = content.split('\n\n')
+    for p in paragraphs:
+        if p.strip() and not p.startswith('#'):
+            return p.strip()
+    return ""
+
 def get_post_template():
     return '''<!DOCTYPE html>
 <html lang="en">
@@ -48,15 +55,20 @@ def get_post_template():
         <div class="container">
             <h1><a href="../index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
             <nav>
-                <a href="../index.html">Home</a>
-                <a href="../blog.html">Blog</a>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../blog.html">Blog</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#resources">Resources</a></li>
+                    <li><a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <article class="blog-post">
-            <h1>{title}</h1>
+            <h1 class="post-title">{title}</h1>
             <div class="post-meta">{date}</div>
             <div class="post-content">
                 {content}
@@ -83,13 +95,14 @@ def generate_blog_html():
     for md_file in posts_dir.glob('*.md'):
         frontmatter, content = read_md_with_frontmatter(md_file)
         html_content = markdown.markdown(content)
+        first_para = get_first_paragraph(content)
         
         post_data = {
             'title': frontmatter.get('title', md_file.stem),
             'date': frontmatter.get('date', datetime.fromtimestamp(md_file.stat().st_mtime).strftime('%Y-%m-%d')),
             'content': html_content,
             'slug': md_file.stem,
-            'description': content.split('\n')[0][:160]  # First line as description
+            'description': first_para[:160] if first_para else ""
         }
         posts.append(post_data)
         
@@ -139,8 +152,8 @@ def generate_blog_html():
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="blog.html" class="active">Blog</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#resources">Resources</a></li>
                     <li><a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">GitHub</a></li>
                 </ul>
             </nav>
@@ -148,6 +161,7 @@ def generate_blog_html():
     </header>
 
     <main class="container">
+        <h1 class="page-title">Blog</h1>
         <section id="blog-posts">'''
 
     for post in posts:

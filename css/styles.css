@@ -125,7 +125,8 @@ nav ul li a:hover {
 
 /* Blog Styles */
 .page-title {
-    margin: 2rem 0;
+    margin: 0 0 2rem 0;
+    padding-top: 1rem;
     font-size: 2.5rem;
 }
 
@@ -172,13 +173,14 @@ nav ul li a:hover {
 
 .blog-post {
     max-width: 800px;
-    margin: 2rem auto;
-    padding-top: 1.5rem;
+    margin: 0 auto 2rem auto;
+    padding-top: 2rem;
 }
 
 .post-title {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    margin-top: 0;
     color: var(--text-color);
 }
 

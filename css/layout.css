@@ -18,7 +18,8 @@ body {
   width: 100%;
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 var(--container-padding);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
 }
 
 /* Header layout */
@@ -44,7 +45,7 @@ nav ul {
 
 /* Main content layout */
 main {
-  padding-top: 140px;
+  padding-top: 90px;
   min-height: calc(100vh - 100px);
 }
 
@@ -89,7 +90,7 @@ footer {
   }
   
   main {
-    padding-top: 140px;
+    padding-top: 125px;
   }
 }
 

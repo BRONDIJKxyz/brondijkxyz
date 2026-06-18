@@ -3,225 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>brondijk.xyz</title>
-    <meta name="description" content="Technical projects by Maarten Brondijk">
-    
+    <title>brondijk.xyz — small, useful tools, built fast with AI</title>
+    <meta name="description" content="Maarten Brondijk — a personal collection of tools and experiments built fast with AI, plus a blog. Some run daily inside companies, some are just for fun.">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-56LC4J0MT0');
     </script>
-    
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
-    
-    <!-- Favicon -->
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#16130D;color:#F4ECDC;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
     <link rel="manifest" href="assets/favicon/site.webmanifest">
     <link rel="shortcut icon" href="assets/favicon/favicon.ico">
-    
-    <style>
-        .project-card {
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .project-card-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        
-        .project-card .project-link {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Featured project card */
-        .project-card.featured {
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 0 0 1px rgba(0, 179, 179, 0.12), 0 4px 14px rgba(0, 0, 0, 0.35);
-        }
-
-        .featured-tag {
-            margin-left: 0;
-            margin-bottom: 14px;
-            background-color: rgba(0, 179, 179, 0.12);
-            border: 1px solid var(--primary-color);
-            letter-spacing: 0.04em;
-        }
-
-        .project-meta,
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 14px 0;
-        }
-
-        .meta-badge {
-            font-size: 0.78rem;
-            padding: 3px 9px;
-            border-radius: 3px;
-            background-color: #2a2a2a;
-            color: var(--text-color);
-            border: 1px solid #333;
-        }
-
-        .tech-tag {
-            font-size: 0.72rem;
-            padding: 2px 8px;
-            border-radius: 3px;
-            color: var(--secondary-text);
-            border: 1px solid #333;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 22px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-
-        .project-link.secondary {
-            color: var(--secondary-color);
-        }
-
-        .project-link.secondary:hover {
-            color: var(--hover-color);
-        }
-
-        .section-divider {
-            margin: 60px 0 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-        
-        .section-divider h2 {
-            position: relative;
-            top: -15px;
-            background-color: #121212;
-            display: inline-block;
-            padding-right: 20px;
-            margin: 0;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
             <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#resources">Resources</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                </ul>
+                <a href="blog.html">blog</a>
+                <a href="#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section id="home" class="container">
-            <h2>Technical Projects</h2>
-            <p>A collection of code-focused projects.</p>
+    <main class="wrap">
+        <section class="hero">
+            <div class="kicker">maarten brondijk · builder</div>
+            <h1>I build small, useful tools — fast, with AI.</h1>
+            <p>A personal collection of things I've made, and a place to jot some thoughts. A few run daily inside companies, some are just for fun. Here's the what and the how.</p>
         </section>
 
-        <section id="projects" class="container">
-            <div class="projects-grid">
-                <div class="project-card featured" onclick="window.open('https://wkpoulejj2026.xyz/', '_blank')">
-                    <span class="status-tag featured-tag">★ Featured · Live</span>
-                    <div class="project-header">
-                        <h3>WK 2026 Prediction Pool</h3>
-                    </div>
-                    <p>An office World Cup pool I built instead of paying Scorito €200 per group — idea to live in about an hour with AI, now used by 30 colleagues. Live scores, match minutes and goalscorers are auto-imported from a public API, the leaderboard reshuffles in real time during matches, and there are weekly bonus rounds, closest-guess metagames and fully customizable scoring. Free for everyone, no ads.</p>
-                    <div class="project-meta">
-                        <span class="meta-badge">30 players</span>
-                        <span class="meta-badge">104 matches</span>
-                        <span class="meta-badge">Live scores via API</span>
-                        <span class="meta-badge">Idea → live in 1h</span>
-                        <span class="meta-badge">€200 saved</span>
-                    </div>
-                    <div class="project-tags">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Vite</span>
-                        <span class="tech-tag">Netlify Functions</span>
-                        <span class="tech-tag">Netlify Blobs</span>
-                        <span class="tech-tag">Serverless · no DB</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://wkpoulejj2026.xyz/" class="project-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Visit the pool →</a>
-                        <a href="https://x.com/Brondijkxyz" class="project-link secondary" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Read the story →</a>
-                    </div>
+        <div id="projects"></div>
+        <div class="section-label">Featured</div>
+        <div class="grid">
+            <div class="card featured">
+                <h3>WK 2026 Prediction Pool <span class="status live"><span class="pip"></span>live</span></h3>
+                <p class="desc">An office World Cup pool I built instead of paying Scorito €200 per group — idea to live in about an hour, now used by 30 colleagues. Live scores, match minutes and goalscorers auto-import from a public API, and the leaderboard reshuffles in real time during matches. Weekly bonus rounds, closest-guess metagames, fully customizable scoring. Free, no ads.</p>
+                <div class="how"><b>How:</b> React + Vite on Netlify Functions &amp; Blobs — fully serverless, no database. Live match data pulled from a public football API.</div>
+                <div class="badges">
+                    <span class="badge">30 players</span>
+                    <span class="badge">104 matches</span>
+                    <span class="badge">live scores via API</span>
+                    <span class="badge">idea → live in 1h</span>
+                    <span class="badge">€200 saved</span>
                 </div>
-
-                <div class="project-card" onclick="window.location.href='flightvisualizer.html'">
-                    <div class="project-header">
-                        <h3>Flightvisualizer.com</h3>
-                    </div>
-                    <p>Real-time flight tracking visualization tool with global coverage</p>
-                    <a href="flightvisualizer.html" class="project-link" onclick="event.stopPropagation()">View Project →</a>
-                </div>
-
-                <div class="project-card" onclick="window.location.href='taskflow.html'">
-                    <div class="project-header">
-                        <h3>Taskflow-done.com</h3>
-                    </div>
-                    <p>Minimalist task management system with automation capabilities</p>
-                    <a href="taskflow.html" class="project-link" onclick="event.stopPropagation()">View Project →</a>
-                </div>
-
-                <div class="project-card" onclick="window.location.href='sidequests.html'">
-                    <div class="project-header">
-                        <h3>Fun Side Quests</h3>
-                    </div>
-                    <p>Collection of smaller, experimental projects and coding adventures</p>
-                    <a href="sidequests.html" class="project-link" onclick="event.stopPropagation()">View Side Quests →</a>
+                <div class="foot">
+                    <a class="cta" href="https://wkpoulejj2026.xyz/" target="_blank" rel="noopener noreferrer">Visit the pool →</a>
                 </div>
             </div>
-        </section>
-        
-        <div class="section-divider container">
-            <h2 id="resources">Resources</h2>
         </div>
-        
-        <section class="container">
-            <div class="projects-grid">
-                <div class="project-card" onclick="window.location.href='workflow.html'">
-                    <div class="project-header">
-                        <h3>Vibe-Coding Workflow</h3>
-                    </div>
-                    <p>Efficient approach to starting and managing Windsurf projects</p>
-                    <a href="workflow.html" class="project-link" onclick="event.stopPropagation()">View Workflow →</a>
-                </div>
 
-                <div class="project-card" onclick="window.location.href='globalrules.html'">
-                    <div class="project-header">
-                        <h3>Windsurf / Cursor Global Rules</h3>
+        <div class="section-label">Tools that run daily</div>
+        <div class="grid two">
+            <div class="card">
+                <div class="shot">
+                    <img src="assets/projects/stock-dashboard-jj.png" alt="Stock Dashboard JJ" loading="lazy" onerror="this.style.display='none'">
+                    <span class="ph">screenshot · stock-dashboard-jj.png</span>
+                </div>
+                <h3>Stock Dashboard · JJ <span class="status daily"><span class="pip"></span>daily</span></h3>
+                <p class="desc">An operational stock command-centre for a nutrition brand — tracks every SKU across EU &amp; US, flags below-safety and critical stock, and projects out-of-stock dates from the live subscription queue.</p>
+                <div class="how"><b>How:</b> Python pipeline off Google Sheets masters → a fast static dashboard. Automatic safety-stock and reorder logic, EU/US toggle.</div>
+                <div class="foot">
+                    <div class="badges">
+                        <span class="badge">51 SKUs</span>
+                        <span class="badge">EU + US</span>
+                        <span class="badge">€453K stock value</span>
                     </div>
-                    <p>Global rules for AI-assisted development environments</p>
-                    <a href="globalrules.html" class="project-link" onclick="event.stopPropagation()">View Global Rules →</a>
+                    <span class="nolink">internal tool · screenshots only</span>
                 </div>
             </div>
-        </section>
+
+            <div class="card">
+                <div class="shot">
+                    <img src="assets/projects/stock-dashboard-me.png" alt="Stock Dashboard ME" loading="lazy" onerror="this.style.display='none'">
+                    <span class="ph">screenshot · stock-dashboard-me.png</span>
+                </div>
+                <h3>Stock Dashboard · ME <span class="status daily"><span class="pip"></span>daily</span></h3>
+                <p class="desc">The same stock-intelligence engine adapted for a second company's catalogue and supply chain — used daily by its ops team. One build, two businesses.</p>
+                <div class="how"><b>How:</b> Reused the JJ engine, re-skinned and re-wired to a different data source — proof the tooling generalises beyond one company.</div>
+                <div class="foot">
+                    <div class="badges">
+                        <span class="badge">2nd company</span>
+                        <span class="badge">reused engine</span>
+                        <span class="badge">daily use</span>
+                    </div>
+                    <span class="nolink">internal tool · screenshots only</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="shot">
+                    <img src="assets/projects/master-insights.png" alt="Master Insights dashboard" loading="lazy" onerror="this.style.display='none'">
+                    <span class="ph">screenshot · master-insights.png</span>
+                </div>
+                <h3>Master Insights <span class="status daily"><span class="pip"></span>daily</span></h3>
+                <p class="desc">A revenue command-centre: month-to-date vs target pacing, channel split (Shopify vs Recharge, INT vs US), subscription share, and a daily revenue-vs-target curve against last year.</p>
+                <div class="how"><b>How:</b> Aggregates daily sales across channels into one EUR view (incl. USD conversion) with live pacing against monthly targets.</div>
+                <div class="foot">
+                    <div class="badges">
+                        <span class="badge">MTD pacing</span>
+                        <span class="badge">multi-channel</span>
+                        <span class="badge">EUR + USD</span>
+                    </div>
+                    <span class="nolink">internal tool · screenshots only</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="shot">
+                    <img src="assets/projects/order-visualizer.png" alt="Global Order Visualizer" loading="lazy" onerror="this.style.display='none'">
+                    <span class="ph">screenshot · order-visualizer.png</span>
+                </div>
+                <h3>Order Visualizer <span class="status daily"><span class="pip"></span>2025</span></h3>
+                <p class="desc">A 3D globe that draws every order shipped from Amsterdam to the world — glowing arcs from the warehouse to each destination city. Privacy-safe: only city and postal code, no personal data.</p>
+                <div class="how"><b>How:</b> Mapbox GL globe with great-circle arcs generated from anonymised order geodata.</div>
+                <div class="foot">
+                    <div class="badges">
+                        <span class="badge">Mapbox globe</span>
+                        <span class="badge">privacy-safe</span>
+                        <span class="badge">2025 orders</span>
+                    </div>
+                    <span class="nolink">internal tool · screenshots only</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">More projects</div>
+        <div class="grid two">
+            <div class="card">
+                <h3>Flightvisualizer.com</h3>
+                <p class="desc">Real-time flight tracking visualization with global coverage.</p>
+                <div class="foot">
+                    <div class="badges"><span class="badge">python</span><span class="badge">maps</span></div>
+                    <a class="cta" href="flightvisualizer.html">View project →</a>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Taskflow-done.com</h3>
+                <p class="desc">Minimalist task management with automation built in.</p>
+                <div class="foot">
+                    <div class="badges"><span class="badge">web</span><span class="badge">automation</span></div>
+                    <a class="cta" href="taskflow.html">View project →</a>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Fun Side Quests</h3>
+                <p class="desc">A collection of smaller, experimental projects and coding adventures.</p>
+                <div class="foot">
+                    <div class="badges"><span class="badge">experiments</span></div>
+                    <a class="cta" href="sidequests.html">View side quests →</a>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Country Tracker</h3>
+                <p class="desc">Map of everywhere I've been — a small personal travel log.</p>
+                <div class="foot">
+                    <div class="badges"><span class="badge">maps</span><span class="badge">personal</span></div>
+                    <span class="nolink">side project</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">From the blog</div>
+        <div class="post-list">
+            <article class="post">
+                <div class="meta">vibe coding</div>
+                <h4><a href="blog.html">Idea to live in an hour: building the office World Cup pool</a></h4>
+                <p>How a €200 Scorito bill turned into a serverless weekend project for 30 colleagues.</p>
+            </article>
+            <article class="post">
+                <div class="meta">tools</div>
+                <h4><a href="blog.html">One stock engine, two companies</a></h4>
+                <p>Notes on reusing a dashboard's guts across totally different catalogues.</p>
+            </article>
+            <article class="post">
+                <div class="meta">resources</div>
+                <h4><a href="workflow.html">My vibe-coding workflow &amp; global rules</a></h4>
+                <p>How I start and manage AI-assisted projects so they actually ship.</p>
+            </article>
+        </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>built with too much AI and a little coffee</span>
         </div>
     </footer>
 

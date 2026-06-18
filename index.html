@@ -47,6 +47,60 @@
             z-index: 2;
         }
         
+        /* Featured project card */
+        .project-card.featured {
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 0 1px rgba(0, 179, 179, 0.12), 0 4px 14px rgba(0, 0, 0, 0.35);
+        }
+
+        .featured-tag {
+            margin-left: 0;
+            margin-bottom: 14px;
+            background-color: rgba(0, 179, 179, 0.12);
+            border: 1px solid var(--primary-color);
+            letter-spacing: 0.04em;
+        }
+
+        .project-meta,
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .meta-badge {
+            font-size: 0.78rem;
+            padding: 3px 9px;
+            border-radius: 3px;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            border: 1px solid #333;
+        }
+
+        .tech-tag {
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: var(--secondary-text);
+            border: 1px solid #333;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .project-link.secondary {
+            color: var(--secondary-color);
+        }
+
+        .project-link.secondary:hover {
+            color: var(--hover-color);
+        }
+
         .section-divider {
             margin: 60px 0 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -88,6 +142,32 @@
 
         <section id="projects" class="container">
             <div class="projects-grid">
+                <div class="project-card featured" onclick="window.open('https://wkpoulejj2026.xyz/', '_blank')">
+                    <span class="status-tag featured-tag">★ Featured · Live</span>
+                    <div class="project-header">
+                        <h3>WK 2026 Prediction Pool</h3>
+                    </div>
+                    <p>An office World Cup pool I built instead of paying Scorito €200 per group — idea to live in about an hour with AI, now used by 30 colleagues. Live scores, match minutes and goalscorers are auto-imported from a public API, the leaderboard reshuffles in real time during matches, and there are weekly bonus rounds, closest-guess metagames and fully customizable scoring. Free for everyone, no ads.</p>
+                    <div class="project-meta">
+                        <span class="meta-badge">30 players</span>
+                        <span class="meta-badge">104 matches</span>
+                        <span class="meta-badge">Live scores via API</span>
+                        <span class="meta-badge">Idea → live in 1h</span>
+                        <span class="meta-badge">€200 saved</span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Vite</span>
+                        <span class="tech-tag">Netlify Functions</span>
+                        <span class="tech-tag">Netlify Blobs</span>
+                        <span class="tech-tag">Serverless · no DB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://wkpoulejj2026.xyz/" class="project-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Visit the pool →</a>
+                        <a href="https://x.com/Brondijkxyz" class="project-link secondary" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Read the story →</a>
+                    </div>
+                </div>
+
                 <div class="project-card" onclick="window.location.href='flightvisualizer.html'">
                     <div class="project-header">
                         <h3>Flightvisualizer.com</h3>

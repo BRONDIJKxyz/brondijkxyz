@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe-Coding Workflow - brondijk.xyz</title>
     <meta name="description" content="Efficient Vibe-Coding workflow to 'code' smart">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://brondijk.xyz/workflow.html">
@@ -14,181 +14,108 @@
     <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://brondijk.xyz/workflow.html">
     <meta name="twitter:title" content="Vibe-Coding Workflow">
     <meta name="twitter:description" content="Efficient Vibe-Coding workflow to 'code' smart">
     <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-56LC4J0MT0');
     </script>
-    
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
-    
-    <!-- Favicon -->
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#16130D;color:#F4ECDC;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
     <link rel="manifest" href="assets/favicon/site.webmanifest">
     <link rel="shortcut icon" href="assets/favicon/favicon.ico">
-    
-    <style>
-        .workflow-container {
-            padding: 40px 0;
-        }
-        
-        .workflow-step {
-            margin-bottom: 40px;
-            padding: 25px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary-color);
-        }
-        
-        .workflow-step h3 {
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background-color: var(--primary-color);
-            color: #121212;
-            border-radius: 50%;
-            margin-right: 15px;
-            font-weight: bold;
-        }
-        
-        .workflow-step p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .workflow-step p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .workflow-image {
-            margin: 30px 0;
-            border-radius: 8px;
-            max-width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .file-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--primary-color);
-            padding-bottom: 2px;
-            transition: border-bottom 0.2s;
-        }
-        
-        .file-link:hover {
-            border-bottom: 1px solid var(--primary-color);
-        }
-        
-        code {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9em;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
             <nav>
-                <ul>
-                    <li><a href="index.html#home">Home</a></li>
-                    <li><a href="index.html#projects">Projects</a></li>
-                    <li><a href="index.html#resources">Resources</a></li>
-                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                </ul>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
             </nav>
         </div>
     </header>
 
     <main>
         <div class="container">
-            <a href="index.html#resources" class="back-link project-link">← Back to Resources</a>
+            <a href="index.html#projects" class="back-link">← Back to projects</a>
             <h1>Vibe-Coding Workflow</h1>
-            
-            <p class="instruction-text" style="margin-bottom: 30px; padding: 15px; background-color: rgba(0, 179, 179, 0.1); border-left: 3px solid var(--primary-color); font-style: italic;">
+
+            <p class="instruction-text">
                 A streamlined approach to starting and managing Windsurf projects for better output and cleaner setup.
             </p>
-            
-            <div class="workflow-container">
-                <div class="workflow-step">
-                    <h3><span class="step-number">1</span> Set up your globalrules.md</h3>
-                    <p>The first step is to properly configure your <code>globalrules.md</code> file. This file acts as a foundation for all your Windsurf projects, setting consistent standards and practices.</p>
-                    <p>You can download a template from my <a href="globalrules.html" class="file-link">Global Rules</a> page and customize it to your specific needs and preferences.</p>
-                    <p>Having well-defined global rules helps AI assistants understand your coding style, preferred practices, and project organization from the start.</p>
-                </div>
-                
-                <div class="workflow-step">
-                    <h3><span class="step-number">2</span> Create a detailed instructions.md</h3>
-                    <p>Instead of trying to craft the perfect prompt, simply describe your project goal to GPT or Claude and let it draft an <code>instructions.md</code> file for you.</p>
-                    <p>A good instructions file should include:</p>
-                    <ul>
-                        <li>Clear project objectives and success criteria</li>
-                        <li>Detailed feature requirements</li>
-                        <li>Technical specifications and constraints</li>
-                        <li>Project structure and organization</li>
-                        <li>Implementation approach and milestones</li>
-                    </ul>
-                    <p>This document becomes the central reference point for your project, ensuring alignment between you and the AI assistant.</p>
-                </div>
-                
-                <div class="workflow-step">
-                    <h3><span class="step-number">3</span> Use a simple prompt to start</h3>
-                    <p>With your global rules and instructions in place, you no longer need complex prompts to begin your project. Simply use:</p>
-                    <p><code>"Read instructions and start."</code></p>
-                    <p>This minimalist approach allows the AI to focus on your well-structured instructions rather than trying to interpret a lengthy, potentially ambiguous prompt.</p>
-                    <p>The result is a cleaner setup process and better output that aligns with your actual project goals.</p>
-                </div>
-                
-                <div class="workflow-step">
-                    <h3><span class="step-number">4</span> Benefits of this approach</h3>
-                    <p>This streamlined workflow offers several advantages:</p>
-                    <ul>
-                        <li><strong>Consistency:</strong> Projects follow the same standards and practices</li>
-                        <li><strong>Efficiency:</strong> Less time spent crafting the "perfect prompt"</li>
-                        <li><strong>Clarity:</strong> Clear documentation from the beginning</li>
-                        <li><strong>Focus:</strong> AI can concentrate on implementation rather than interpreting requirements</li>
-                        <li><strong>Maintainability:</strong> Well-structured projects are easier to maintain and extend</li>
-                    </ul>
-                </div>
+
+            <div class="workflow-step">
+                <h3><span class="step-number">1</span> Set up your globalrules.md</h3>
+                <p>The first step is to properly configure your <code>globalrules.md</code> file. This file acts as a foundation for all your Windsurf projects, setting consistent standards and practices.</p>
+                <p>You can download a template from my <a href="globalrules.html" class="file-link">Global Rules</a> page and customize it to your specific needs and preferences.</p>
+                <p>Having well-defined global rules helps AI assistants understand your coding style, preferred practices, and project organization from the start.</p>
+            </div>
+
+            <div class="workflow-step">
+                <h3><span class="step-number">2</span> Create a detailed instructions.md</h3>
+                <p>Instead of trying to craft the perfect prompt, simply describe your project goal to GPT or Claude and let it draft an <code>instructions.md</code> file for you.</p>
+                <p>A good instructions file should include:</p>
+                <ul>
+                    <li>Clear project objectives and success criteria</li>
+                    <li>Detailed feature requirements</li>
+                    <li>Technical specifications and constraints</li>
+                    <li>Project structure and organization</li>
+                    <li>Implementation approach and milestones</li>
+                </ul>
+                <p>This document becomes the central reference point for your project, ensuring alignment between you and the AI assistant.</p>
+            </div>
+
+            <div class="workflow-step">
+                <h3><span class="step-number">3</span> Use a simple prompt to start</h3>
+                <p>With your global rules and instructions in place, you no longer need complex prompts to begin your project. Simply use:</p>
+                <p><code>"Read instructions and start."</code></p>
+                <p>This minimalist approach allows the AI to focus on your well-structured instructions rather than trying to interpret a lengthy, potentially ambiguous prompt.</p>
+                <p>The result is a cleaner setup process and better output that aligns with your actual project goals.</p>
+            </div>
+
+            <div class="workflow-step">
+                <h3><span class="step-number">4</span> Benefits of this approach</h3>
+                <p>This streamlined workflow offers several advantages:</p>
+                <ul>
+                    <li><strong>Consistency:</strong> Projects follow the same standards and practices</li>
+                    <li><strong>Efficiency:</strong> Less time spent crafting the "perfect prompt"</li>
+                    <li><strong>Clarity:</strong> Clear documentation from the beginning</li>
+                    <li><strong>Focus:</strong> AI can concentrate on implementation rather than interpreting requirements</li>
+                    <li><strong>Maintainability:</strong> Well-structured projects are easier to maintain and extend</li>
+                </ul>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>built with too much AI and a little coffee</span>
         </div>
     </footer>
 

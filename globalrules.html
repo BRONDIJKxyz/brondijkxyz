@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Rules - brondijk.xyz</title>
     <meta name="description" content="Windsurf / Cursor Global Rules">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://brondijk.xyz/globalrules.html">
@@ -14,219 +14,159 @@
     <meta property="og:image" content="https://brondijk.xyz/assets/images/social-image.svg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://brondijk.xyz/globalrules.html">
     <meta name="twitter:title" content="Windsurf / Cursor Global Rules">
     <meta name="twitter:description" content="Windsurf / Cursor Global Rules">
     <meta name="twitter:image" content="https://brondijk.xyz/assets/images/social-image.svg">
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-56LC4J0MT0');
     </script>
-    
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
-    
-    <!-- Favicon -->
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#16130D;color:#F4ECDC;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
     <link rel="manifest" href="assets/favicon/site.webmanifest">
     <link rel="shortcut icon" href="assets/favicon/favicon.ico">
-    
-    <style>
-        .rules-container {
-            padding: 40px 0;
-        }
-        
-        .rule-section {
-            margin-bottom: 40px;
-        }
-        
-        .rule-section h2 {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .rule-section h2 .emoji {
-            margin-right: 10px;
-        }
-        
-        .rule-section ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-        
-        .rule-section ul li {
-            position: relative;
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        
-        .rule-section ul li::before {
-            content: "•";
-            color: var(--primary-color);
-            position: absolute;
-            left: -20px;
-        }
-        
-        .rule-section ul ul {
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-        
-        code {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9em;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="index.html" style="text-decoration: none; color: inherit;">brondijk.xyz</a></h1>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
             <nav>
-                <ul>
-                    <li><a href="index.html#home">Home</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="index.html#projects">Projects</a></li>
-                    <li><a href="index.html#resources">Resources</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="https://github.com/maartenbrondijk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                </ul>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
             </nav>
         </div>
     </header>
 
     <main>
         <div class="container">
-            <a href="index.html#resources" class="back-link project-link">← Back to Resources</a>
+            <a href="index.html#projects" class="back-link">← Back to projects</a>
             <h1>Windsurf / Cursor Global Rules</h1>
-            
-            <p class="instruction-text" style="margin-bottom: 30px; padding: 15px; background-color: rgba(0, 179, 179, 0.1); border-left: 3px solid var(--primary-color); font-style: italic;">
+
+            <p class="instruction-text">
                 You can paste the text below into your globalrules.md file in Cursor or Windsurf. These will help you to have clear documentation, a more secure implementation and will make your project better.
             </p>
-            
-            <div style="text-align: center; margin-bottom: 30px;">
-                <a href="Generalrules.md" download class="download-btn" style="display: inline-block; padding: 10px 20px; background-color: var(--primary-color); color: #121212; border-radius: 4px; text-decoration: none; font-weight: 500;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Generalrules.md
-                </a>
+
+            <div style="margin-bottom: 30px;">
+                <a href="Generalrules.md" download class="download-btn">↓ Download Generalrules.md</a>
             </div>
-            
-            <div class="rules-container">
-                <div class="rule-section">
-                    <h2><span class="emoji">🔐</span> Secrets Management</h2>
-                    <ul>
-                        <li>Store secrets (API keys, DB credentials) in <code>.env</code> files</li>
-                        <li>NEVER expose secrets to client-side code</li>
-                        <li>Add <code>.env</code> and other sensitive files to <code>.gitignore</code></li>
-                    </ul>
-                </div>
 
-                <div class="rule-section">
-                    <h2><span class="emoji">📝</span> Documentation</h2>
-                    <ul>
-                        <li>Always use Markdown for documentation and <code>README.md</code> files</li>
-                        <li>Each project must include a <code>README.md</code> with:
-                            <ul>
-                                <li>Title</li>
-                                <li>Description</li>
-                                <li>Setup instructions</li>
-                                <li>Usage examples</li>
-                                <li>License information</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+            <div class="rule-section">
+                <h2><span class="emoji">🔐</span> Secrets Management</h2>
+                <ul>
+                    <li>Store secrets (API keys, DB credentials) in <code>.env</code> files</li>
+                    <li>NEVER expose secrets to client-side code</li>
+                    <li>Add <code>.env</code> and other sensitive files to <code>.gitignore</code></li>
+                </ul>
+            </div>
 
-                <div class="rule-section">
-                    <h2><span class="emoji">🧭</span> Project Planning</h2>
-                    <ul>
-                        <li>Every project must begin with an <code>instructions.md</code> file</li>
-                        <li>This file should describe:
-                            <ul>
-                                <li>The end goal and success criteria</li>
-                                <li>Scope and key features</li>
-                                <li>Tech stack decisions</li>
-                            </ul>
-                        </li>
-                        <li>It must be written before any code is committed</li>
-                    </ul>
-                </div>
+            <div class="rule-section">
+                <h2><span class="emoji">📝</span> Documentation</h2>
+                <ul>
+                    <li>Always use Markdown for documentation and <code>README.md</code> files</li>
+                    <li>Each project must include a <code>README.md</code> with:
+                        <ul>
+                            <li>Title</li>
+                            <li>Description</li>
+                            <li>Setup instructions</li>
+                            <li>Usage examples</li>
+                            <li>License information</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
-                <div class="rule-section">
-                    <h2><span class="emoji">🧪</span> Local Testing</h2>
-                    <ul>
-                        <li>Kill any running local servers before starting a new one</li>
-                        <li>Always run Python-related tests using Python 3 (<code>python3</code>)</li>
-                    </ul>
-                </div>
+            <div class="rule-section">
+                <h2><span class="emoji">🧭</span> Project Planning</h2>
+                <ul>
+                    <li>Every project must begin with an <code>instructions.md</code> file</li>
+                    <li>This file should describe:
+                        <ul>
+                            <li>The end goal and success criteria</li>
+                            <li>Scope and key features</li>
+                            <li>Tech stack decisions</li>
+                        </ul>
+                    </li>
+                    <li>It must be written before any code is committed</li>
+                </ul>
+            </div>
 
-                <div class="rule-section">
-                    <h2><span class="emoji">🪓</span> File Size & Modularity</h2>
-                    <ul>
-                        <li>Avoid single files exceeding 500 lines unless justified (e.g., auto-generated code)</li>
-                        <li>For styles: split large <code>styles.css</code> files into domain-based or component-based partials
-                            <ul>
-                                <li>Use <code>@import</code> or PostCSS includes to compose them</li>
-                                <li>Example: <code>layout.css</code>, <code>buttons.css</code>, <code>modals.css</code></li>
-                            </ul>
-                        </li>
-                        <li>For JS/TS: split functions and classes into separate modules or services when possible</li>
-                        <li>For Markdown: split long documentation into logical subpages (e.g., <code>usage.md</code>, <code>api.md</code>)</li>
-                        <li>Use folder-based organization with an index file for clean exports (e.g., <code>index.ts</code>)</li>
-                    </ul>
-                </div>
+            <div class="rule-section">
+                <h2><span class="emoji">🧪</span> Local Testing</h2>
+                <ul>
+                    <li>Kill any running local servers before starting a new one</li>
+                    <li>Always run Python-related tests using Python 3 (<code>python3</code>)</li>
+                </ul>
+            </div>
 
-                <div class="rule-section">
-                    <h2><span class="emoji">🌐</span> Multi-Page HTML Projects</h2>
-                    <ul>
-                        <li><strong>Base Template (<code>base.html</code>)</strong>
-                            <ul>
-                                <li>If your project includes <strong>more than one HTML page</strong>, always create a <code>base.html</code> to serve as the layout scaffold</li>
-                                <li>Include shared elements: <code>&lt;head&gt;</code>, GTAG script, header, footer</li>
-                                <li>Inherit or import <code>base.html</code> to reduce duplication and ensure consistency</li>
-                            </ul>
-                        </li>
-                        <li><strong>Clean URLs with <code>.htaccess</code></strong>
-                            <ul>
-                                <li>Always include an <code>.htaccess</code> file to:
-                                    <ul>
-                                        <li><strong>Remove <code>.html</code> extensions</strong> from URLs</li>
-                                        <li><strong>Redirect <code>/index</code> to <code>/</code></strong></li>
-                                        <li>(Optional) Enforce HTTPS and <code>www.</code> prefix in production</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+            <div class="rule-section">
+                <h2><span class="emoji">🪓</span> File Size & Modularity</h2>
+                <ul>
+                    <li>Avoid single files exceeding 500 lines unless justified (e.g., auto-generated code)</li>
+                    <li>For styles: split large <code>styles.css</code> files into domain-based or component-based partials
+                        <ul>
+                            <li>Use <code>@import</code> or PostCSS includes to compose them</li>
+                            <li>Example: <code>layout.css</code>, <code>buttons.css</code>, <code>modals.css</code></li>
+                        </ul>
+                    </li>
+                    <li>For JS/TS: split functions and classes into separate modules or services when possible</li>
+                    <li>For Markdown: split long documentation into logical subpages (e.g., <code>usage.md</code>, <code>api.md</code>)</li>
+                    <li>Use folder-based organization with an index file for clean exports (e.g., <code>index.ts</code>)</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h2><span class="emoji">🌐</span> Multi-Page HTML Projects</h2>
+                <ul>
+                    <li><strong>Base Template (<code>base.html</code>)</strong>
+                        <ul>
+                            <li>If your project includes <strong>more than one HTML page</strong>, always create a <code>base.html</code> to serve as the layout scaffold</li>
+                            <li>Include shared elements: <code>&lt;head&gt;</code>, GTAG script, header, footer</li>
+                            <li>Inherit or import <code>base.html</code> to reduce duplication and ensure consistency</li>
+                        </ul>
+                    </li>
+                    <li><strong>Clean URLs with <code>.htaccess</code></strong>
+                        <ul>
+                            <li>Always include an <code>.htaccess</code> file to:
+                                <ul>
+                                    <li><strong>Remove <code>.html</code> extensions</strong> from URLs</li>
+                                    <li><strong>Redirect <code>/index</code> to <code>/</code></strong></li>
+                                    <li>(Optional) Enforce HTTPS and <code>www.</code> prefix in production</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="current-year"></span> brondijk.xyz</p>
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>built with too much AI and a little coffee</span>
         </div>
     </footer>
 

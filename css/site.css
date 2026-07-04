@@ -1,5 +1,5 @@
 /* ============================================================
-   brondijk.xyz — soft neo-brutalist theme
+   brondijk.xyz: soft neo-brutalist theme
    warm paper · chunky thin outlines · hard offset shadows
    one red accent · mono for small accents only
    ============================================================ */
@@ -51,6 +51,7 @@ body.dark {
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
+html, body { overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -178,6 +179,10 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
 .card .shot .ph::before {
   content: "◆"; font-size: 16px; line-height: 1; color: var(--accent); opacity: 0.6;
 }
+/* tall band for portrait / phone screenshots: show the whole shot, centered on the branded backdrop */
+.card .shot.shot-tall { height: 360px; }
+.card .shot.shot-tall img { object-fit: contain; object-position: center; padding: 16px 0; }
+@media (max-width: 560px) { .card .shot.shot-tall { height: 300px; } }
 
 .card h3 {
   font-size: 19px; font-weight: 700; letter-spacing: -0.02em;
@@ -272,7 +277,7 @@ footer.site a:hover { color: var(--accent); }
 }
 
 /* ============================================================
-   LEGACY ALIASES — map old variable names onto the new palette
+   LEGACY ALIASES: map old variable names onto the new palette
    so any leftover inline styles render on-theme.
    ============================================================ */
 :root {
@@ -288,7 +293,7 @@ footer.site a:hover { color: var(--accent); }
 }
 
 /* ============================================================
-   CONTENT PAGES — blog, project detail, resources
+   CONTENT PAGES: blog, project detail, resources
    Re-themes the class vocabulary used across subpages.
    ============================================================ */
 .container { max-width: var(--maxw); margin: 0 auto; padding: 36px var(--pad) 60px; }
@@ -443,6 +448,17 @@ hr.section-divider, .section-divider { border: none; border-top: 1.5px solid var
   font-family: var(--font-mono); font-size: 13px; box-shadow: var(--shadow-sm);
 }
 .code-block pre { margin: 0; white-space: pre; }
+
+/* bare <pre><code> blocks (blog posts): scroll inside the block, never widen the page */
+pre {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px; margin: 20px 0; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  font-family: var(--font-mono); font-size: 13px; line-height: 1.6; box-shadow: var(--shadow-sm);
+}
+pre code {
+  background: none; border: none; padding: 0; font-size: inherit; color: var(--ink);
+  white-space: pre;
+}
 .demo-image, .workflow-image, .image-container img {
   max-width: 100%; border-radius: var(--radius-sm); border: 1.5px solid var(--border); margin: 20px 0;
 }

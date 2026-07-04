@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>brondijk.xyz — design preview</title>
+<title>brondijk.xyz: design preview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   PREVIEW HARNESS — switch themes with the top bar.
+   PREVIEW HARNESS: switch themes with the top bar.
    Same content renders in all three so you can compare
    readability + feel. Screenshots are placeholder boxes.
    ============================================================ */
@@ -175,12 +175,12 @@ footer.site {
 }
 
 /* ============================================================
-   THEME 1 — EDITORIAL (warm minimal)  [default tokens above]
+   THEME 1: EDITORIAL (warm minimal)  [default tokens above]
    ============================================================ */
 body.t-editorial { --shadow: none; }
 
 /* ============================================================
-   THEME 2 — MONO TERMINAL (light)
+   THEME 2: MONO TERMINAL (light)
    ============================================================ */
 body.t-mono {
   --bg: #F4F1EA;
@@ -205,7 +205,7 @@ body.t-mono .card h3::before { content: "› "; color: var(--accent); }
 body.t-mono .section-label::before { content: "// "; }
 
 /* ============================================================
-   THEME 3 — SOFT NEO-BRUTALIST (toned-down WK)
+   THEME 3: SOFT NEO-BRUTALIST (toned-down WK)
    ============================================================ */
 body.t-brutal {
   --bg: #FAF3E7;
@@ -270,7 +270,7 @@ body.dark.t-brutal {
 
   <section class="hero">
     <div class="kicker">maarten brondijk · builder</div>
-    <h1>I build small, useful tools — fast, with AI.</h1>
+    <h1>I build small, useful tools, fast, with AI.</h1>
     <p>A personal collection of things I've made and a place to jot some thoughts. Some run daily inside companies, some are just for fun. Here's the what and the how.</p>
   </section>
 
@@ -278,8 +278,8 @@ body.dark.t-brutal {
   <div class="grid">
     <div class="card featured">
       <h3>WK 2026 Prediction Pool <span class="status live"><span class="pip"></span>live</span></h3>
-      <p class="desc">An office World Cup pool I built instead of paying Scorito €200 per group — idea to live in about an hour, now used by 30 colleagues. Live scores, goalscorers and the leaderboard reshuffle in real time during matches.</p>
-      <div class="how"><b>How:</b> React + Vite on Netlify Functions &amp; Blobs — serverless, no database. Live match data auto-imported from a public API.</div>
+      <p class="desc">An office World Cup pool I built instead of paying Scorito €200 per group: idea to live in about an hour, now used by 30 colleagues. Live scores, goalscorers and the leaderboard reshuffle in real time during matches.</p>
+      <div class="how"><b>How:</b> React + Vite on Netlify Functions &amp; Blobs, serverless, no database. Live match data auto-imported from a public API.</div>
       <div class="badges">
         <span class="badge">30 players</span>
         <span class="badge">104 matches</span>
@@ -295,26 +295,26 @@ body.dark.t-brutal {
     <div class="card">
       <div class="shot">screenshot · stock-dashboard-jj</div>
       <h3>Stock Dashboard · JJ <span class="status daily"><span class="pip"></span>daily</span></h3>
-      <p class="desc">Operational stock dashboard for a nutrition brand — tracks SKUs across EU &amp; US, flags below-safety and critical stock, and projects out-of-stock dates from the subscription queue.</p>
+      <p class="desc">Operational stock dashboard for a nutrition brand that tracks SKUs across EU &amp; US, flags below-safety and critical stock, and projects out-of-stock dates from the subscription queue.</p>
       <div class="how"><b>How:</b> Python pipeline off Google Sheets masters → static dashboard. Auto safety-stock + reorder logic.</div>
       <div class="badges">
         <span class="badge">51 SKUs</span>
         <span class="badge">EU + US</span>
         <span class="badge">€453K stock value</span>
       </div>
-      <span class="nolink">internal tool — screenshots only</span>
+      <span class="nolink">internal tool, screenshots only</span>
     </div>
 
     <div class="card">
       <div class="shot">screenshot · stock-dashboard-me</div>
       <h3>Stock Dashboard · ME <span class="status daily"><span class="pip"></span>daily</span></h3>
-      <p class="desc">The same stock-intelligence engine adapted for a second company's catalogue and supply chain — used daily by the ops team.</p>
+      <p class="desc">The same stock-intelligence engine adapted for a second company's catalogue and supply chain, used daily by the ops team.</p>
       <div class="how"><b>How:</b> Reused the JJ engine, re-skinned and re-wired to a different data source. One build, two companies.</div>
       <div class="badges">
         <span class="badge">2nd company</span>
         <span class="badge">reused engine</span>
       </div>
-      <span class="nolink">internal tool — screenshots only</span>
+      <span class="nolink">internal tool, screenshots only</span>
     </div>
 
     <div class="card">
@@ -327,19 +327,19 @@ body.dark.t-brutal {
         <span class="badge">multi-channel</span>
         <span class="badge">EUR + USD</span>
       </div>
-      <span class="nolink">internal tool — screenshots only</span>
+      <span class="nolink">internal tool, screenshots only</span>
     </div>
 
     <div class="card">
       <div class="shot">screenshot · order-visualizer</div>
       <h3>Order Visualizer <span class="status daily"><span class="pip"></span>2025</span></h3>
-      <p class="desc">A 3D globe that draws every order shipped from Amsterdam to the world — arcs from the warehouse to each destination city, privacy-safe (city + postal code only).</p>
+      <p class="desc">A 3D globe that draws every order shipped from Amsterdam to the world: arcs from the warehouse to each destination city, privacy-safe (city + postal code only).</p>
       <div class="how"><b>How:</b> Mapbox GL globe with great-circle arcs generated from anonymised order geodata.</div>
       <div class="badges">
         <span class="badge">Mapbox globe</span>
         <span class="badge">privacy-safe</span>
       </div>
-      <span class="nolink">internal tool — screenshots only</span>
+      <span class="nolink">internal tool, screenshots only</span>
     </div>
   </div>
 

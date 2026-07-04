@@ -14,7 +14,7 @@
     <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="brondijk.xyz — builds useful tools, fast">
+    <meta property="og:image:alt" content="brondijk.xyz: builds useful tools, fast">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Setting up a devbox with Hetzner - brondijk.xyz">
     <meta name="twitter:description" content="A short, practical guide to spinning up a cheap, always-on cloud development box on Hetzner in about ten minutes.">
@@ -64,14 +64,14 @@
             <h1 class="post-title">Setting up a devbox with Hetzner</h1>
             <div class="post-meta">2026-07-04</div>
             <div class="post-content">
-                <p>A devbox is just a cloud machine you develop <em>on</em> instead of your laptop. It's always on, always reachable, and it doesn't drain your battery or spin up your fans. Hetzner makes this cheap — a capable box runs a few euros a month. Here's the whole thing in about ten minutes.</p>
+                <p>A devbox is just a cloud machine you develop <em>on</em> instead of your laptop. It's always on, always reachable, and it doesn't drain your battery or spin up your fans. Hetzner makes this cheap: a capable box runs a few euros a month. Here's the whole thing in about ten minutes.</p>
 
                 <h2>1. Create the server</h2>
                 <p>Sign up at <a href="https://www.hetzner.com/cloud" target="_blank" rel="noopener noreferrer">Hetzner Cloud</a>, then <strong>New Project → Add Server</strong>. Sensible defaults:</p>
                 <ul>
                     <li><strong>Location:</strong> whichever is closest to you (lower latency for SSH).</li>
                     <li><strong>Image:</strong> Ubuntu 24.04 LTS.</li>
-                    <li><strong>Type:</strong> a shared vCPU <code>CAX</code> (Arm) or <code>CX</code> (x86) — start small, you can resize later.</li>
+                    <li><strong>Type:</strong> a shared vCPU <code>CAX</code> (Arm) or <code>CX</code> (x86). Start small, you can resize later.</li>
                     <li><strong>SSH key:</strong> paste your public key here. Never rely on password login.</li>
                 </ul>
                 <p>If you don't have a key yet, make one first:</p>
@@ -92,7 +92,7 @@ cat ~/.ssh/id_ed25519.pub</code></pre>
                 <pre><code>adduser dev
 usermod -aG sudo dev
 rsync --archive --chown=dev:dev ~/.ssh /home/dev</code></pre>
-                <p>Then lock down the essentials — disable root login and turn on the firewall:</p>
+                <p>Then lock down the essentials. Disable root login and turn on the firewall:</p>
                 <pre><code>sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
 systemctl restart ssh
 ufw allow OpenSSH && ufw enable</code></pre>
@@ -112,7 +112,7 @@ apt install -y git build-essential tmux</code></pre>
 
                 <h2>Why bother</h2>
                 <p>Your laptop becomes a thin client. Builds run on server-grade CPU, long jobs survive a closed lid, and every device you own points at the same environment. When you outgrow the box, resize it in the dashboard. When you're done, delete it and stop paying.</p>
-                <p>That's it — a real, always-on dev environment for the price of a coffee.</p>
+                <p>That's it: a real, always-on dev environment for the price of a coffee.</p>
             </div>
             <div class="post-nav">
                 <a href="../blog.html">← Back to Blog</a>

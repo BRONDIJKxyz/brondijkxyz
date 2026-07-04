@@ -72,37 +72,51 @@
             </div>
 
             <div class="post-content">
-                <figure class="case-figure phone">
-                    <img src="assets/projects/wk-pool.jpg" alt="The WK 2026 pool home screen: World Cup fact of the day, a live match, and the essentials view" loading="lazy">
-                    <figcaption>The player home screen — live match, this week's bonus, and the essentials view.</figcaption>
+                <figure class="case-figure">
+                    <img src="assets/projects/wk-pool.jpg" alt="The WK 2026 pool essentials view: World Cup fact of the day, this week's bonus, and the next match to predict" loading="lazy">
+                    <figcaption>The player home screen: this week's bonus, and the next matches still to predict.</figcaption>
                 </figure>
 
                 <h2>The problem</h2>
-                <p>Every tournament, the office wants a prediction pool. The default option, Scorito, charges around <strong>€200 per group</strong> for the features that make it fun, and even then you're locked into their scoring and their UI. I figured a World Cup pool is really just three things: collect predictions, pull in live results, and rank everyone. That's a weekend project. It turned out to be closer to an hour.</p>
+                <p>Every tournament, the office wants a prediction pool. The default option, Scorito, charges around <strong>€200 per group</strong> for the features that make it fun, and even then you're locked into their scoring and their UI. I figured a World Cup pool is really just three things: collect predictions, pull in live results, and rank everyone. That sounded like a weekend project. It turned out to be closer to an hour.</p>
 
                 <h2>What I built</h2>
                 <p>A full prediction pool for the 104-match World Cup, free and ad-free, that 30 colleagues now use:</p>
                 <ul>
-                    <li><strong>Predict every match</strong> — or just the next three match days if you're short on time (the "essentials" view lowers the barrier for casual players).</li>
-                    <li><strong>Live everything</strong> — scores, match minutes and goalscorers auto-import from a public football API, and the leaderboard reshuffles in real time <em>during</em> matches.</li>
-                    <li><strong>Weekly bonus rounds</strong> and closest-guess metagames (e.g. "will there be a 0–0 draw anywhere this week?") to keep people coming back between their own matches.</li>
-                    <li><strong>Fully customizable scoring</strong> — spot-on vs. correct-result points, bonuses, all tweakable by the admin.</li>
-                    <li><strong>Admin + "view as player"</strong> so I can run the pool and still see exactly what everyone else sees.</li>
+                    <li><strong>Predict every match</strong>, or just the next three match days if you're short on time. The "essentials" view lowers the barrier for casual players.</li>
+                    <li><strong>Live everything.</strong> Scores, match minutes and goalscorers auto-import from a public football API, and the leaderboard reshuffles in real time <em>during</em> matches.</li>
+                    <li><strong>Weekly bonus rounds</strong> and closest-guess metagames (like "how many goals across the quarter-finals?") that keep people coming back between their own matches.</li>
+                    <li><strong>Fully customizable scoring:</strong> spot-on vs. correct-result points and bonuses, all tweakable by the admin.</li>
+                    <li><strong>Admin plus "view as player"</strong> so I can run the pool and still see exactly what everyone else sees.</li>
                 </ul>
 
+                <figure class="case-figure">
+                    <img src="assets/projects/wk-weekly.jpg" alt="Weekly bonus view showing a closest-guess question and every player's answer with results" loading="lazy">
+                    <figcaption>Weekly bonus rounds: a fresh question each week, with everyone's answers scored once it settles.</figcaption>
+                </figure>
+
                 <h2>How it works</h2>
-                <p>The whole thing is serverless, with <strong>no database</strong>. A React + Vite frontend talks to <strong>Netlify Functions</strong> for logic and <strong>Netlify Blobs</strong> for storage — predictions, scoring config and standings all live as blobs. Live match data is pulled from a public football API and cached, so the leaderboard can recompute on every score change without hammering the source. No servers to babysit, no DB to migrate, and it costs effectively nothing to run.</p>
+                <p>The whole thing is serverless, with <strong>no database</strong>. A React + Vite frontend talks to <strong>Netlify Functions</strong> for logic and <strong>Netlify Blobs</strong> for storage, so predictions, scoring config and standings all live as blobs. Live match data is pulled from a public football API and cached, so the leaderboard can recompute on every score change without hammering the source. No servers to babysit, no database to migrate, and it costs effectively nothing to run.</p>
+
+                <figure class="case-figure">
+                    <img src="assets/projects/wk-results.jpg" alt="Results log listing which player got what points for a finished match" loading="lazy">
+                    <figcaption>Every finished match writes a "who got what" results log, so scoring is transparent.</figcaption>
+                </figure>
+
+                <p>The knockout bracket fills itself in as rounds are played, and tracks which players still have their champion pick alive:</p>
+                <figure class="case-figure">
+                    <img src="assets/projects/wk-bracket.jpg" alt="Knockout bracket that auto-fills teams and scores, with champions still standing per player" loading="lazy">
+                    <figcaption>The knockout bracket updates automatically from the live results.</figcaption>
+                </figure>
 
                 <h2>Results</h2>
                 <div class="case-metrics">
                     <div class="case-metric"><div class="num">30</div><div class="lbl">colleagues playing</div></div>
                     <div class="case-metric"><div class="num">104</div><div class="lbl">matches covered</div></div>
-                    <div class="case-metric"><div class="num">~1h</div><div class="lbl">idea → live</div></div>
+                    <div class="case-metric"><div class="num">~1h</div><div class="lbl">idea to live</div></div>
                     <div class="case-metric"><div class="num">€200</div><div class="lbl">saved vs. Scorito</div></div>
                 </div>
-                <p>The point wasn't to beat Scorito on features — it was to prove that a focused build ships in an afternoon and does exactly what the office needs, for free. Execution over perfection: it went live, people played, and it's been running through the tournament ever since.</p>
-
-                <p class="note"><em>More screenshots (standings, admin, live scoring) coming soon.</em></p>
+                <p>The point wasn't to beat Scorito on features. It was to prove that a focused build ships in an afternoon and does exactly what the office needs, for free. Execution over perfection: it went live, people played, and it's been running through the tournament ever since.</p>
             </div>
 
             <div class="post-nav">

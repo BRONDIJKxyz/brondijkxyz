@@ -35,14 +35,14 @@
 }
 
 body.dark {
-  --bg: #16130D;
-  --surface: #211C13;
-  --ink: #F4ECDC;
-  --muted: #b3a98f;
-  --faint: #4a4334;
+  --bg: #060607;
+  --surface: #141416;
+  --ink: #F2F0EA;
+  --muted: #928D84;
+  --faint: #29292C;
   --accent: #FF6B70;
-  --accent-soft: rgba(255, 107, 112, 0.14);
-  --border: #F4ECDC;
+  --accent-soft: rgba(255, 107, 112, 0.16);
+  --border: #E9E4D7;
   --shadow: 4px 4px 0 #000;
   --shadow-sm: 2px 2px 0 #000;
   --shadow-hover: 6px 6px 0 #000;

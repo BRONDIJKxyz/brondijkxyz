@@ -71,14 +71,14 @@
                 <ul>
                     <li><strong>Tasks keep running.</strong> Give Claude a refactor at 23:00, check the result at 8:00. The box worked the night shift; your laptop slept.</li>
                     <li><strong>Every device is the same session.</strong> Phone, laptop, iPad all attach to one shared terminal. Start a task at your desk, answer Claude's question from the supermarket queue.</li>
-                    <li><strong>Your subscription, no extra AI costs.</strong> Claude Code on the box logs into your existing Claude Pro/Max plan. The only new cost is the server: ~€5–8/month.</li>
+                    <li><strong>Your subscription, no extra AI costs.</strong> Claude Code on the box logs into your existing Claude Pro/Max plan. The only new cost is the server: ~€5-8/month.</li>
                     <li><strong>Safe by construction.</strong> The server has <em>zero</em> open ports to the internet. SSH only works over your private Tailscale network. Key-only login, and the dev user has no sudo.</li>
                 </ul>
                 <p>There's also Claude's own cloud option you can drive from your phone, but it runs in a <em>fresh sandbox per task</em>, which is less great: no persistent state, not your installed tools, and none of the context from your last session. This box is the opposite. It's <em>your</em> machine, always on, exactly where you left it.</p>
 
                 <h2>What you need</h2>
                 <ul>
-                    <li>A <a href="https://console.hetzner.cloud" target="_blank" rel="noopener noreferrer">Hetzner Cloud</a> account (the server, ~€5–8/month)</li>
+                    <li>A <a href="https://console.hetzner.cloud" target="_blank" rel="noopener noreferrer">Hetzner Cloud</a> account (the server, ~€5-8/month)</li>
                     <li>A <a href="https://tailscale.com" target="_blank" rel="noopener noreferrer">Tailscale</a> account (free tier, the private network)</li>
                     <li>A <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a> account (repos are how the box and your laptop stay in sync)</li>
                     <li>A Claude Pro or Max subscription (or another supported agent: Codex, Cursor, Gemini…)</li>
@@ -137,10 +137,10 @@ pocketdev setup</code></pre>
 tmux new -A -s main     # attach if it exists, create if not
 cd ~/your-project &amp;&amp; claude</code></pre>
                 <p>tmux is a terminal that lives <em>on the server</em>. Your phone and laptop are just two windows into the same screen: type on one, watch it appear on the other. Close everything, reconnect tomorrow, and it's exactly where you left it. The mental model that finally made it click for me:</p>
-                <pre><code>your device            ← disposable window
-  └─ ssh devbox        ← the always-on box
-       └─ tmux main    ← the session that never dies
-            └─ claude  ← the agent doing the work</code></pre>
+                <pre><code>your device        &lt;- disposable window
+  ssh devbox       &lt;- the always-on box
+    tmux main      &lt;- the session that never dies
+      claude       &lt;- the agent doing the work</code></pre>
                 <p>The tmux crash course: <code>Ctrl+b c</code> new window, <code>Ctrl+b n</code> next window, <code>Ctrl+b d</code> detach. One window per project, each with its own Claude. That's how you run three projects in parallel.</p>
 
                 <h2>How I actually work with it</h2>
@@ -153,7 +153,7 @@ cd ~/your-project &amp;&amp; claude</code></pre>
                 </ul>
 
                 <h2>Cost and safety, honestly</h2>
-                <p>Total: the Hetzner box (~€5–8/month, billed afterwards, per hour). Tailscale free, Termius free, pocketdev free and open source, Claude via the subscription you already pay for. A stopped Hetzner server still bills; <code>pocketdev destroy</code> deletes it when you want out.</p>
+                <p>Total: the Hetzner box (~€5-8/month, billed afterwards, per hour). Tailscale free, Termius free, pocketdev free and open source, Claude via the subscription you already pay for. A stopped Hetzner server still bills; <code>pocketdev destroy</code> deletes it when you want out.</p>
                 <p>And the part that makes me comfortable leaving an AI agent running unattended on the internet: it isn't <em>on</em> the internet. Empty inbound firewall, access only via your tailnet, key-only SSH, non-sudo user, unattended security updates. The attack surface is close to zero.</p>
                 <p>Credit where due: <a href="https://github.com/0xMassi/pocketdev" target="_blank" rel="noopener noreferrer">pocketdev</a> by <a href="https://x.com/0xMassi" target="_blank" rel="noopener noreferrer">@0xMassi</a>, inspired by <a href="https://x.com/levelsio" target="_blank" rel="noopener noreferrer">@levelsio</a>'s phone-coding posts. If you already run a plain devbox (I wrote about <a href="setting-up-a-devbox-with-hetzner.html">setting one up by hand</a>), pocketdev can also adopt an existing server instead of creating a new one.</p>
                 <p>Now if you'll excuse me, Claude and I have a site to ship. From the couch.</p>

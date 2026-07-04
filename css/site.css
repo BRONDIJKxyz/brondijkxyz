@@ -225,6 +225,26 @@ footer.site a:hover { color: var(--accent); }
   header.site nav { gap: 16px; }
 }
 
+/* ---------- mobile header: two-row, evenly aligned ---------- */
+@media (max-width: 560px) {
+  header.site .wrap {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding-top: 13px; padding-bottom: 13px;
+  }
+  .logo { order: 1; font-size: 16px; }
+  .theme-toggle { order: 2; }
+  header.site nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 11px;
+    border-top: 1.5px solid var(--faint);
+  }
+  header.site nav a { font-size: 12.5px; }
+}
+
 /* ============================================================
    LEGACY ALIASES — map old variable names onto the new palette
    so any leftover inline styles render on-theme.

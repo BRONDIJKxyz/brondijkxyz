@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting up a devbox with Hetzner - brondijk.xyz</title>
+    <meta name="description" content="A short, practical guide to spinning up a cheap, always-on cloud development box on Hetzner in about ten minutes.">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#16130D;color:#F4ECDC;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="../index.html" class="logo">brondijk.xyz</a>
+            <nav>
+                <a href="../blog.html">blog</a>
+                <a href="../index.html#projects">projects</a>
+                <a href="../contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1 class="post-title">Setting up a devbox with Hetzner</h1>
+            <div class="post-meta">2026-07-04</div>
+            <div class="post-content">
+                <p>A devbox is just a cloud machine you develop <em>on</em> instead of your laptop. It's always on, always reachable, and it doesn't drain your battery or spin up your fans. Hetzner makes this cheap — a capable box runs a few euros a month. Here's the whole thing in about ten minutes.</p>
+
+                <h2>1. Create the server</h2>
+                <p>Sign up at <a href="https://www.hetzner.com/cloud" target="_blank" rel="noopener noreferrer">Hetzner Cloud</a>, then <strong>New Project → Add Server</strong>. Sensible defaults:</p>
+                <ul>
+                    <li><strong>Location:</strong> whichever is closest to you (lower latency for SSH).</li>
+                    <li><strong>Image:</strong> Ubuntu 24.04 LTS.</li>
+                    <li><strong>Type:</strong> a shared vCPU <code>CAX</code> (Arm) or <code>CX</code> (x86) — start small, you can resize later.</li>
+                    <li><strong>SSH key:</strong> paste your public key here. Never rely on password login.</li>
+                </ul>
+                <p>If you don't have a key yet, make one first:</p>
+                <pre><code>ssh-keygen -t ed25519 -C "devbox"
+cat ~/.ssh/id_ed25519.pub</code></pre>
+
+                <h2>2. First SSH in</h2>
+                <p>Grab the server's IP from the dashboard and connect:</p>
+                <pre><code>ssh root@YOUR_SERVER_IP</code></pre>
+                <p>Add a shortcut to <code>~/.ssh/config</code> so you can just type <code>ssh devbox</code>:</p>
+                <pre><code>Host devbox
+    HostName YOUR_SERVER_IP
+    User dev
+    IdentityFile ~/.ssh/id_ed25519</code></pre>
+
+                <h2>3. Make it yours (and safer)</h2>
+                <p>Working as <code>root</code> is a bad habit. Create a normal user, give it sudo, and copy your key over:</p>
+                <pre><code>adduser dev
+usermod -aG sudo dev
+rsync --archive --chown=dev:dev ~/.ssh /home/dev</code></pre>
+                <p>Then lock down the essentials — disable root login and turn on the firewall:</p>
+                <pre><code>sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+systemctl restart ssh
+ufw allow OpenSSH && ufw enable</code></pre>
+
+                <h2>4. Install your toolchain</h2>
+                <p>Update, then install whatever you actually build with:</p>
+                <pre><code>apt update && apt upgrade -y
+apt install -y git build-essential tmux</code></pre>
+                <p>I usually add <code>mise</code> (or <code>nvm</code>/<code>pyenv</code>) for language versions, and <code>tmux</code> so a dropped connection never kills a running task.</p>
+
+                <h2>5. Actually code on it</h2>
+                <p>Two ways I switch between:</p>
+                <ul>
+                    <li><strong>VS Code Remote-SSH:</strong> install the extension, point it at <code>devbox</code>, and your editor runs locally while everything else runs on the server.</li>
+                    <li><strong>Terminal + tmux:</strong> <code>ssh devbox</code>, <code>tmux new -s work</code>, and detach with <code>Ctrl-b d</code>. Reattach later from anywhere with <code>tmux a</code>.</li>
+                </ul>
+
+                <h2>Why bother</h2>
+                <p>Your laptop becomes a thin client. Builds run on server-grade CPU, long jobs survive a closed lid, and every device you own points at the same environment. When you outgrow the box, resize it in the dashboard. When you're done, delete it and stop paying.</p>
+                <p>That's it — a real, always-on dev environment for the price of a coffee.</p>
+            </div>
+            <div class="post-nav">
+                <a href="../blog.html">← Back to Blog</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>built with too much AI and a little coffee</span>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

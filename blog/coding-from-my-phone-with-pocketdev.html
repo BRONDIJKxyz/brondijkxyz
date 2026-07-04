@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding from my phone with pocketdev and Claude Code - brondijk.xyz</title>
+    <meta name="description" content="Step-by-step: an always-on €5/month cloud box running Claude Code, reachable only through your private VPN, that you can drive from your phone. Every command, every screen, every gotcha.">
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="brondijk.xyz">
+    <meta property="og:title" content="Coding from my phone with pocketdev and Claude Code - brondijk.xyz">
+    <meta property="og:description" content="Step-by-step: an always-on €5/month cloud box running Claude Code, reachable only through your private VPN, that you can drive from your phone.">
+    <meta property="og:url" content="https://brondijk.xyz/blog/coding-from-my-phone-with-pocketdev.html">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="brondijk.xyz — builds useful tools, fast">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Coding from my phone with pocketdev and Claude Code - brondijk.xyz">
+    <meta name="twitter:description" content="Step-by-step: an always-on €5/month cloud box running Claude Code, reachable only through your private VPN, that you can drive from your phone.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#16130D;color:#F4ECDC;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="../index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="../blog.html">blog</a>
+                <a href="../index.html#projects">projects</a>
+                <a href="../contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1 class="post-title">Coding from my phone with pocketdev and Claude Code</h1>
+            <div class="post-meta">2026-07-04</div>
+            <div class="post-content">
+                <p>I saw <a href="https://x.com/0xMassi/status/2071692848542703770" target="_blank" rel="noopener noreferrer">a post by @0xMassi</a> about <a href="https://github.com/0xMassi/pocketdev" target="_blank" rel="noopener noreferrer">pocketdev</a> — one command that gives you a cheap cloud server running Claude Code, reachable only through your own private VPN, that you can drive from your phone. An hour later I was giving Claude tasks from my couch while my laptop was closed. This post is the complete setup, every command included, plus the things that tripped me up so they don't trip you up.</p>
+
+                <h2>Why not just run Claude Code on your laptop?</h2>
+                <p>You can, and I did. But a laptop session dies when you close the lid. The whole point of an agent like Claude Code is that it can work <em>without you</em> — and for that it needs a machine that never sleeps:</p>
+                <ul>
+                    <li><strong>Tasks keep running.</strong> Give Claude a refactor at 23:00, check the result at 8:00. The box worked the night shift; your laptop slept.</li>
+                    <li><strong>Every device is the same session.</strong> Phone, laptop, iPad — they all attach to one shared terminal. Start a task at your desk, answer Claude's question from the supermarket queue.</li>
+                    <li><strong>Your subscription, no extra AI costs.</strong> Claude Code on the box logs into your existing Claude Pro/Max plan. The only new cost is the server: ~€5–8/month.</li>
+                    <li><strong>Safe by construction.</strong> The server has <em>zero</em> open ports to the internet. SSH only works over your private Tailscale network. Key-only login, and the dev user has no sudo.</li>
+                </ul>
+
+                <h2>What you need</h2>
+                <ul>
+                    <li>A <a href="https://console.hetzner.cloud" target="_blank" rel="noopener noreferrer">Hetzner Cloud</a> account (the server, ~€5–8/month — the only thing that costs money)</li>
+                    <li>A <a href="https://tailscale.com" target="_blank" rel="noopener noreferrer">Tailscale</a> account (free tier — the private network)</li>
+                    <li>A <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a> account (repos are how the box and your laptop stay in sync)</li>
+                    <li>A Claude Pro or Max subscription (or another supported agent: Codex, Cursor, Gemini…)</li>
+                    <li>An iPhone or Android with the free Tailscale and <a href="https://termius.com" target="_blank" rel="noopener noreferrer">Termius</a> apps</li>
+                </ul>
+
+                <h2>Part 1 — On your Mac</h2>
+
+                <h3>1. Install pocketdev</h3>
+                <p>Grab the binary for your platform from the <a href="https://github.com/0xMassi/pocketdev/releases" target="_blank" rel="noopener noreferrer">releases page</a>. On an Apple Silicon Mac:</p>
+                <pre><code>cd /tmp
+curl -sLO https://github.com/0xMassi/pocketdev/releases/download/v0.1.0/pocketdev_0.1.0_darwin_arm64.tar.gz
+curl -sLO https://github.com/0xMassi/pocketdev/releases/download/v0.1.0/checksums.txt
+shasum -a 256 -c &lt;(grep darwin_arm64 checksums.txt)   # should say: OK
+tar xzf pocketdev_0.1.0_darwin_arm64.tar.gz
+mv pocketdev /opt/homebrew/bin/
+pocketdev version</code></pre>
+
+                <h3>2. Install Tailscale</h3>
+                <pre><code>brew install --cask tailscale</code></pre>
+                <p>Open the Tailscale app, sign in (I used GitHub login), and make sure the menu-bar icon shows connected. Your Mac is now on your private network.</p>
+
+                <h3>3. Get your two keys</h3>
+                <p><strong>Hetzner API token:</strong> in the <a href="https://console.hetzner.cloud" target="_blank" rel="noopener noreferrer">Hetzner Console</a>, open your project → <strong>Security → API tokens → Generate API token</strong>, permission <strong>Read &amp; Write</strong>. Copy it immediately — it's shown once. Don't create a server in the console; pocketdev does that.</p>
+                <p><strong>Tailscale auth key:</strong> at <a href="https://login.tailscale.com/admin/settings/keys" target="_blank" rel="noopener noreferrer">login.tailscale.com/admin/settings/keys</a> → <strong>Generate auth key</strong>, toggle <strong>Reusable</strong> on. (If Tailscale keeps showing you an onboarding wizard, click "Skip this introduction" at the bottom.)</p>
+
+                <h3>4. Run it</h3>
+                <pre><code>pocketdev</code></pre>
+                <p>A terminal wizard asks for both keys and a few choices. Mine: create a new box, name <code>devbox</code> (keep the default — it becomes your hostname), <strong>Shared</strong> resources (cheap and plenty for agents), a small instance in Nuremberg, clone my portfolio repo as the starting project, agent: Claude Code. Two minutes later the box existed, firewalled shut, on my tailnet. Say <strong>Yes</strong> when it offers to add <code>devbox</code> to your SSH config.</p>
+                <p>Nice detail: your Hetzner token and Tailscale key never leave your laptop — the box only gets a single-use, 30-minute Tailscale key.</p>
+
+                <h3>5. One-time setup on the box</h3>
+                <pre><code>ssh devbox
+pocketdev setup</code></pre>
+                <p>This logs the box into GitHub (pick <strong>HTTPS</strong> as the git protocol — the gh CLI then handles all auth for clone/push, private repos included) and into Claude Code via a paste-code flow with your existing subscription. It clones your repo and you're done.</p>
+
+                <h2>Part 2 — On your phone</h2>
+
+                <h3>1. Tailscale app</h3>
+                <p>Install from the App Store, sign in with the <strong>same account</strong>, flip the VPN toggle on. Without this, your phone can't even resolve the box's address — I learned this via an "unknown node or service" error in Termius.</p>
+
+                <h3>2. Termius (the free plan is enough)</h3>
+                <p>Termius will offer you a ~€15/month Pro trial at signup. You don't need it — plain SSH with keys is free. Dismiss the upsell.</p>
+                <p>Give your phone a key the box trusts. Easiest is pocketdev's own flow: run <code>pocketdev mobile</code> on your Mac and follow it. The free-plan route: in Termius, <strong>Keychain → + → New Key</strong> (ed25519), then paste the <em>public</em> half into pocketdev when it asks. The private key never leaves your phone.</p>
+                <p>Then create the host: <strong>Hosts → +</strong>, address <code>devbox.&lt;your-tailnet&gt;.ts.net</code>, username <code>dev</code>, attach your key. There is no password anywhere in this setup — if you see a password prompt, the username or key is missing from the host config.</p>
+
+                <h3>3. Two settings that matter</h3>
+                <ul>
+                    <li><strong>Startup command:</strong> edit the host and set it to <code>tmux new -A -s main</code>. Now every tap drops you straight into the shared session.</li>
+                    <li><strong>Turn off Termius's AI bar.</strong> By default the input field "helpfully" rewrites what you type into shell commands — which is chaos when you're actually talking to Claude. Tap the <code>ABC</code> button on the keyboard toolbar for direct typing.</li>
+                </ul>
+
+                <h2>Part 3 — The glue: tmux</h2>
+                <p>This is the piece that makes the magic work, and it's one command. On any device:</p>
+                <pre><code>ssh devbox
+tmux new -A -s main     # attach if it exists, create if not
+cd ~/your-project &amp;&amp; claude</code></pre>
+                <p>tmux is a terminal that lives <em>on the server</em>. Your phone and laptop are just two windows into the same screen — type on one, watch it appear on the other. Close everything, reconnect tomorrow, and it's exactly where you left it. The mental model that finally made it click for me:</p>
+                <pre><code>your device            ← disposable window
+  └─ ssh devbox        ← the always-on box
+       └─ tmux main    ← the session that never dies
+            └─ claude  ← the agent doing the work</code></pre>
+                <p>The tmux crash course: <code>Ctrl+b c</code> new window, <code>Ctrl+b n</code> next window, <code>Ctrl+b d</code> detach. One window per project, each with its own Claude — that's how you run three projects in parallel.</p>
+
+                <h2>How I actually work with it</h2>
+                <ul>
+                    <li><strong>Scoped tasks, clear finish line.</strong> "Add dark mode, test it, commit and push when done" beats "improve the site". End every prompt with <em>commit and push when done</em> — results land on GitHub before you even reconnect.</li>
+                    <li><strong>Run <code>/init</code> once per repo</strong> so Claude writes itself a CLAUDE.md and starts every session knowing your stack.</li>
+                    <li><strong>Git is the bridge.</strong> Pull before you start, push when you stop — on both box and laptop. That's the entire sync strategy.</li>
+                    <li><strong>Live previews from anywhere:</strong> <code>pocketdev publish 3000</code> opens an outbound Cloudflare tunnel and hands you a public URL for whatever runs on port 3000. No account, no open ports, great for checking Claude's work from your phone browser.</li>
+                    <li><strong>Check-ins take 30 seconds.</strong> Open Termius → read what Claude did → answer its question or queue the next task → pocket. Repeat between sets at the gym.</li>
+                </ul>
+
+                <h2>Cost and safety, honestly</h2>
+                <p>Total: the Hetzner box (~€5–8/month, billed afterwards, per hour). Tailscale free, Termius free, pocketdev free and open source, Claude via the subscription you already pay for. A stopped Hetzner server still bills — <code>pocketdev destroy</code> deletes it when you want out.</p>
+                <p>And the part that makes me comfortable leaving an AI agent running unattended on the internet: it isn't <em>on</em> the internet. Empty inbound firewall, access only via your tailnet, key-only SSH, non-sudo user, unattended security updates. The attack surface is close to zero.</p>
+                <p>Credit where due: <a href="https://github.com/0xMassi/pocketdev" target="_blank" rel="noopener noreferrer">pocketdev</a> by <a href="https://x.com/0xMassi" target="_blank" rel="noopener noreferrer">@0xMassi</a>, inspired by <a href="https://x.com/levelsio" target="_blank" rel="noopener noreferrer">@levelsio</a>'s phone-coding posts. If you already run a plain devbox (I wrote about <a href="setting-up-a-devbox-with-hetzner.html">setting one up by hand</a>), pocketdev can also adopt an existing server instead of creating a new one.</p>
+                <p>Now if you'll excuse me, Claude and I have a site to ship. From the couch.</p>
+            </div>
+            <div class="post-nav">
+                <a href="../blog.html">← Back to Blog</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>built with too much AI and a little coffee</span>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

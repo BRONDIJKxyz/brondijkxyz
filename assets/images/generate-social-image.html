@@ -1,149 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Social Image</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background-color: #121212;
-            font-family: monospace;
-            color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        canvas {
-            border: 1px solid #333;
-            margin-bottom: 20px;
-        }
-        
-        button {
-            padding: 10px 20px;
-            background-color: #00b3b3;
-            color: #121212;
-            border: none;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background-color: #00e6e6;
-        }
-        
-        .instructions {
-            margin-top: 20px;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate social card — brondijk.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:32px; background:#16130D; color:#F4ECDC;
+         font-family:'JetBrains Mono',monospace; display:flex; flex-direction:column; align-items:center; gap:20px; }
+  canvas { width:600px; height:315px; border:1px solid #4a4334; border-radius:8px; }
+  button { font:600 15px 'JetBrains Mono',monospace; padding:12px 22px; cursor:pointer;
+           background:#FF6B70; color:#16130D; border:none; border-radius:8px; }
+  button:hover { filter:brightness(1.08); }
+  .hint { max-width:600px; font-size:13px; line-height:1.7; color:#b3a98f; text-align:center; }
+  code { background:#211C13; padding:2px 6px; border-radius:4px; }
+</style>
 </head>
 <body>
-    <h1>Social Image Generator</h1>
-    <canvas id="socialCanvas" width="1200" height="630"></canvas>
-    <button id="downloadBtn">Download Image</button>
-    
-    <div class="instructions">
-        <p>Instructions:</p>
-        <ol>
-            <li>Click the "Download Image" button to save the social sharing image</li>
-            <li>The image will be saved as "social-image.png"</li>
-            <li>Place this image in your assets/images folder</li>
-        </ol>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('socialCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Background
-            ctx.fillStyle = '#121212';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Pattern overlay
-            ctx.save();
-            ctx.globalAlpha = 0.05;
-            
-            // Create pattern
-            for (let x = 0; x < canvas.width; x += 20) {
-                for (let y = 0; y < canvas.height; y += 20) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, y);
-                    ctx.lineTo(x + 10, y + 10);
-                    ctx.strokeStyle = '#00b3b3';
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                }
-            }
-            ctx.restore();
-            
-            // Title
-            ctx.font = 'bold 48px monospace';
-            ctx.fillStyle = '#00b3b3';
-            ctx.fillText('Windsurf / Cursor Global Rules', 60, 120);
-            
-            // Subtitle
-            ctx.font = '24px monospace';
-            ctx.fillStyle = '#cccccc';
-            ctx.fillText('Best practices for AI-assisted development environments', 60, 170);
-            
-            // Rule boxes
-            const rules = [
-                { emoji: '🔐', text: 'Secrets Management' },
-                { emoji: '📝', text: 'Documentation' },
-                { emoji: '🧭', text: 'Project Planning' },
-                { emoji: '🧪', text: 'Local Testing' },
-                { emoji: '🪓', text: 'File Size & Modularity' }
-            ];
-            
-            const boxWidth = 520;
-            const boxHeight = 70;
-            const startX = 60;
-            let startY = 220;
-            const gap = 20;
-            
-            rules.forEach((rule, index) => {
-                const x = index % 2 === 0 ? startX : startX + boxWidth + gap;
-                const y = startY + Math.floor(index / 2) * (boxHeight + gap);
-                
-                // Box
-                ctx.fillStyle = '#1e1e1e';
-                ctx.fillRect(x, y, boxWidth, boxHeight);
-                ctx.strokeStyle = '#333';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(x, y, boxWidth, boxHeight);
-                
-                // Emoji
-                ctx.font = '28px Arial';
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(rule.emoji, x + 20, y + 45);
-                
-                // Text
-                ctx.font = '18px monospace';
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(rule.text, x + 70, y + 45);
-            });
-            
-            // Website URL
-            ctx.font = '24px monospace';
-            ctx.fillStyle = '#00b3b3';
-            ctx.fillText('brondijk.xyz', 60, 580);
-            
-            // Download button
-            const downloadBtn = document.getElementById('downloadBtn');
-            downloadBtn.addEventListener('click', function() {
-                const link = document.createElement('a');
-                link.download = 'social-image.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        });
-    </script>
+  <h2 style="font-weight:500;margin:0">social card generator</h2>
+  <canvas id="c" width="1200" height="630"></canvas>
+  <button id="dl">Download social-card.png</button>
+  <p class="hint">Click download, then save the file as <code>social-card.png</code> into the
+     <code>assets/</code> folder (next to <code>social-card.svg</code>) and commit it.
+     The OG tags across the site already point at that path.</p>
+
+<script>
+const paper='#FAF3E7', ink='#141414', white='#FFFFFF', accent='#E5484D', muted='#6F6A60';
+const cv=document.getElementById('c'), x=cv.getContext('2d');
+
+function rr(c,X,Y,W,H,r){c.beginPath();c.moveTo(X+r,Y);c.arcTo(X+W,Y,X+W,Y+H,r);
+  c.arcTo(X+W,Y+H,X,Y+H,r);c.arcTo(X,Y+H,X,Y,r);c.arcTo(X,Y,X+W,Y,r);c.closePath();}
+
+function chip(label,X,W){
+  x.lineWidth=2; x.strokeStyle=ink; rr(x,X,470,W,40,20); x.stroke();
+  x.fillStyle=ink; x.font="500 20px 'JetBrains Mono',monospace"; x.textAlign='center';
+  x.fillText(label, X+W/2, 497);
+}
+
+function draw(){
+  x.fillStyle=paper; x.fillRect(0,0,1200,630);
+  // accent hatch, top-right
+  x.save(); x.beginPath(); x.rect(760,0,440,300); x.clip();
+  x.strokeStyle='rgba(229,72,77,0.14)'; x.lineWidth=13;
+  for(let i=-300;i<1300;i+=26){x.beginPath();x.moveTo(i,-20);x.lineTo(i+320,300);x.stroke();}
+  x.restore();
+  // shadow + card
+  x.fillStyle=ink; rr(x,84,84,1032,462,22); x.fill();
+  x.fillStyle=white; rr(x,70,70,1032,462,22); x.fill();
+  x.lineWidth=3; x.strokeStyle=ink; rr(x,70,70,1032,462,22); x.stroke();
+  // brand row
+  x.textAlign='left';
+  x.fillStyle=ink; x.font="800 34px Inter,sans-serif"; x.fillText('brondijk.xyz',118,162);
+  x.fillStyle=muted; x.font="400 21px 'JetBrains Mono',monospace";
+  x.fillText('· builds useful tools, fast',355,162);
+  // headline
+  x.fillStyle=ink; x.font="800 88px Inter,sans-serif";
+  x.fillText('I build useful',114,322);
+  const t='tools. '; x.fillText(t,114,418);
+  x.fillStyle=accent; x.fillText('Fast.',114+x.measureText(t).width,418);
+  // accent diamond
+  x.fillStyle='rgba(229,72,77,0.85)'; x.font="60px Inter,sans-serif"; x.textAlign='center';
+  x.fillText('◆',1012,378);
+  // chips + name
+  chip('ships fast',116,176); chip('runs in production',304,248); chip('built with AI',564,196);
+  x.fillStyle=muted; x.font="500 20px 'JetBrains Mono',monospace"; x.textAlign='right';
+  x.fillText('maarten brondijk',1054,497);
+}
+
+document.getElementById('dl').onclick=()=>{
+  const a=document.createElement('a');
+  a.download='social-card.png'; a.href=cv.toDataURL('image/png'); a.click();
+};
+
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(draw); setTimeout(draw,600); }
+else { window.onload=draw; }
+</script>
 </body>
 </html>

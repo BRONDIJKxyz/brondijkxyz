@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Hide a card's placeholder tile once its screenshot actually loads
+    // (the .ph is absolutely positioned, so without this it paints over the image)
+    document.querySelectorAll('.shot img').forEach(img => {
+        const reveal = () => img.closest('.shot')?.classList.add('has-shot');
+        if (img.complete && img.naturalWidth > 0) reveal();
+        else img.addEventListener('load', reveal);
+    });
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

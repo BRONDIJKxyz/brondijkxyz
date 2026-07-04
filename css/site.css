@@ -197,6 +197,8 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
 .card .shot .ph::before {
   content: "◆"; font-size: 16px; line-height: 1; color: var(--accent); opacity: 0.6;
 }
+/* once the real screenshot loads, drop the placeholder tile so it can't cover the image */
+.card .shot.has-shot .ph { display: none; }
 /* tall band for portrait / phone screenshots: show the whole shot, centered on the branded backdrop */
 .card .shot.shot-tall { height: 360px; }
 .card .shot.shot-tall img { object-fit: contain; object-position: center; padding: 16px 0; }
@@ -381,6 +383,7 @@ hr.section-divider, .section-divider { border: none; border-top: 1.5px solid var
 .blog-post { max-width: 720px; margin: 0 auto; }
 .post-title { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 8px; }
 .post-content { line-height: 1.8; font-size: 16.5px; }
+.post-content p, .post-content li { text-align: justify; hyphens: auto; }
 .post-content p { margin-bottom: 1.3em; }
 .post-content h2 { font-size: 22px; margin: 1.6em 0 .5em; }
 .post-content h3 { font-size: 18px; margin: 1.4em 0 .5em; }

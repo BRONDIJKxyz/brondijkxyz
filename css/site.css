@@ -205,6 +205,9 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
 }
 /* once the real screenshot loads, drop the placeholder tile so it can't cover the image */
 .card .shot.has-shot .ph { display: none; }
+/* featured card shows a taller overview band */
+.card.featured .shot { height: 280px; }
+@media (max-width: 560px) { .card.featured .shot { height: 210px; } }
 /* tall band for portrait / phone screenshots: show the whole shot, centered on the branded backdrop */
 .card .shot.shot-tall { height: 360px; }
 .card .shot.shot-tall img { object-fit: contain; object-position: center; padding: 16px 0; }

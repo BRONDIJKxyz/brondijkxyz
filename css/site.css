@@ -51,7 +51,6 @@ body.dark {
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
-html, body { overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -116,7 +115,7 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
   font-size: clamp(30px, 5.5vw, 48px); line-height: 1.08;
   letter-spacing: -0.03em; font-weight: 800; margin-bottom: 18px;
 }
-.hero p { font-size: 18px; color: var(--muted); max-width: 620px; }
+.hero p { font-size: 18px; color: var(--muted); }
 .hero h1 .hl {
   color: var(--accent);
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));

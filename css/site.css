@@ -115,7 +115,7 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
   font-size: clamp(30px, 5.5vw, 48px); line-height: 1.08;
   letter-spacing: -0.03em; font-weight: 800; margin-bottom: 18px;
 }
-.hero p { font-size: 18px; color: var(--muted); }
+.hero p { font-size: 18px; color: var(--muted); text-align: justify; hyphens: auto; }
 .hero h1 .hl {
   color: var(--accent);
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
@@ -289,20 +289,28 @@ footer.site a:hover { color: var(--accent); }
 @media (max-width: 560px) {
   header.site .wrap {
     flex-wrap: wrap;
-    row-gap: 12px;
-    padding-top: 13px; padding-bottom: 13px;
+    row-gap: 7px;
+    padding-top: 9px; padding-bottom: 9px;
   }
-  .logo { order: 1; font-size: 16px; }
-  .theme-toggle { order: 2; }
+  .logo { order: 1; font-size: 15.5px; }
+  .theme-toggle { order: 2; width: 30px; height: 30px; font-size: 13px; }
   header.site nav {
     order: 3;
     width: 100%;
     justify-content: space-between;
-    gap: 10px;
-    padding-top: 11px;
+    gap: 8px;
+    padding-top: 7px;
     border-top: 1.5px solid var(--faint);
   }
   header.site nav a { font-size: 12.5px; }
+
+  /* tighten the hero + latest-post on small screens */
+  .hero { padding-top: 26px; }
+  .hero h1 { margin-bottom: 14px; }
+  .hero-proof { margin-top: 16px; gap: 7px 16px; }
+  .hero-latest { margin-top: 20px; padding: 12px 14px; gap: 6px 10px; }
+  .hero-latest .hl-title { font-size: 14px; flex-basis: 100%; }
+  .hero-latest .hl-date { margin-left: 0; }
 }
 
 /* ============================================================

@@ -106,7 +106,9 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
 .theme-toggle:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--ink); }
 
 /* ---------- hero ---------- */
-.hero { padding: 70px 0 22px; }
+.hero { padding: 70px 0 0; }
+/* tighten the gap between the hero and the first section */
+#projects + .section-label { margin-top: 36px; }
 .hero .kicker {
   font-family: var(--font-mono); font-size: 12px; color: var(--accent);
   text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px;

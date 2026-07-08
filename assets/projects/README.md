@@ -13,7 +13,6 @@ Dashboards ("Tools that run daily"):
 More projects (public):
 - taskflow.png              — Taskflow-done.com
 - sidequests.png            — Fun Side Quests
-- country-tracker.png       — Country Tracker map
   (Flightvisualizer already uses assets/images/Flightvisualizer/final_flight_map.png)
 
 Tip: landscape shots look best (cards crop to a 168px-tall band,

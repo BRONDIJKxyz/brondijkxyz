@@ -54,10 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
             .then(data => {
                 const cutoff = new Date(); cutoff.setUTCHours(0, 0, 0, 0);
-                cutoff.setUTCDate(cutoff.getUTCDate() - 90); // ~last 3 months
+                cutoff.setUTCDate(cutoff.getUTCDate() - 183); // ~last 6 months
                 const days = (data.contributions || []).filter(d => new Date(d.date + 'T00:00:00Z') >= cutoff);
                 const sum = days.reduce((s, d) => s + d.count, 0);
-                if (totalEl) totalEl.textContent = sum.toLocaleString() + ' contributions · last 3 months';
+                if (totalEl) totalEl.textContent = sum.toLocaleString() + ' contributions · last 6 months';
 
                 // column-major cells, padded so weekday rows line up (row 0 = Sunday)
                 const cells = [];

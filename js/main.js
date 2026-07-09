@@ -44,6 +44,37 @@ document.addEventListener('DOMContentLoaded', () => {
         else img.addEventListener('load', reveal);
     });
 
+    // GitHub contribution heatmap (front page only)
+    const contribGraph = document.getElementById('contrib-graph');
+    if (contribGraph) {
+        const totalEl = document.getElementById('contrib-total');
+        fetch('https://github-contributions-api.jogruber.de/v4/brondijkxyz?y=last')
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(data => {
+                const days = data.contributions || [];
+                const total = (data.total && data.total.lastYear != null)
+                    ? data.total.lastYear : days.reduce((s, d) => s + d.count, 0);
+                if (totalEl) totalEl.textContent = total.toLocaleString() + ' contributions in the last year';
+                const frag = document.createDocumentFragment();
+                if (days.length) {
+                    const dow = new Date(days[0].date + 'T00:00:00Z').getUTCDay(); // pad so weekdays align
+                    for (let i = 0; i < dow; i++) {
+                        const p = document.createElement('span');
+                        p.className = 'contrib-cell pad';
+                        frag.appendChild(p);
+                    }
+                }
+                days.forEach(d => {
+                    const c = document.createElement('span');
+                    c.className = 'contrib-cell l' + (d.level || 0);
+                    c.title = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' on ' + d.date;
+                    frag.appendChild(c);
+                });
+                contribGraph.replaceChildren(frag);
+            })
+            .catch(() => { if (totalEl) totalEl.textContent = 'GitHub activity unavailable right now.'; });
+    }
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

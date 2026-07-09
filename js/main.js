@@ -44,33 +44,59 @@ document.addEventListener('DOMContentLoaded', () => {
         else img.addEventListener('load', reveal);
     });
 
-    // GitHub contribution heatmap (front page only)
+    // GitHub contribution heatmap — last 3 months, GitHub-style month labels (front page only)
     const contribGraph = document.getElementById('contrib-graph');
     if (contribGraph) {
         const totalEl = document.getElementById('contrib-total');
+        const monthsEl = document.getElementById('contrib-months');
+        const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         fetch('https://github-contributions-api.jogruber.de/v4/brondijkxyz?y=last')
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
             .then(data => {
-                const days = data.contributions || [];
-                const total = (data.total && data.total.lastYear != null)
-                    ? data.total.lastYear : days.reduce((s, d) => s + d.count, 0);
-                if (totalEl) totalEl.textContent = total.toLocaleString() + ' contributions in the last year';
-                const frag = document.createDocumentFragment();
+                const cutoff = new Date(); cutoff.setUTCHours(0, 0, 0, 0);
+                cutoff.setUTCDate(cutoff.getUTCDate() - 90); // ~last 3 months
+                const days = (data.contributions || []).filter(d => new Date(d.date + 'T00:00:00Z') >= cutoff);
+                const sum = days.reduce((s, d) => s + d.count, 0);
+                if (totalEl) totalEl.textContent = sum.toLocaleString() + ' contributions · last 3 months';
+
+                // column-major cells, padded so weekday rows line up (row 0 = Sunday)
+                const cells = [];
                 if (days.length) {
-                    const dow = new Date(days[0].date + 'T00:00:00Z').getUTCDay(); // pad so weekdays align
-                    for (let i = 0; i < dow; i++) {
-                        const p = document.createElement('span');
-                        p.className = 'contrib-cell pad';
-                        frag.appendChild(p);
-                    }
+                    const dow = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+                    for (let i = 0; i < dow; i++) cells.push(null);
                 }
-                days.forEach(d => {
+                days.forEach(d => cells.push(d));
+
+                const gfrag = document.createDocumentFragment();
+                cells.forEach(d => {
                     const c = document.createElement('span');
-                    c.className = 'contrib-cell l' + (d.level || 0);
-                    c.title = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' on ' + d.date;
-                    frag.appendChild(c);
+                    if (!d) { c.className = 'contrib-cell pad'; }
+                    else {
+                        c.className = 'contrib-cell l' + (d.level || 0);
+                        const dt = new Date(d.date + 'T00:00:00Z');
+                        const nice = dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                        c.title = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' · ' + nice;
+                    }
+                    gfrag.appendChild(c);
                 });
-                contribGraph.replaceChildren(frag);
+                contribGraph.replaceChildren(gfrag);
+
+                // month labels above the columns where a new month begins
+                if (monthsEl) {
+                    const numCols = Math.ceil(cells.length / 7);
+                    const mfrag = document.createDocumentFragment();
+                    let lastMonth = -1;
+                    for (let col = 0; col < numCols; col++) {
+                        const span = document.createElement('span');
+                        const colDay = cells.slice(col * 7, col * 7 + 7).find(Boolean);
+                        if (colDay) {
+                            const m = new Date(colDay.date + 'T00:00:00Z').getUTCMonth();
+                            if (m !== lastMonth) { span.textContent = MON[m]; lastMonth = m; }
+                        }
+                        mfrag.appendChild(span);
+                    }
+                    monthsEl.replaceChildren(mfrag);
+                }
             })
             .catch(() => { if (totalEl) totalEl.textContent = 'GitHub activity unavailable right now.'; });
     }

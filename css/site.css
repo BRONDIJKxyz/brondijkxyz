@@ -561,12 +561,15 @@ a.contrib.card:hover { text-decoration: none; }
 .contrib-handle { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
 
 .contrib-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
+.contrib-cal { width: 100%; }
+/* desktop: fill the card width with flexible square cells (JS sets --cols) */
 .contrib-graph {
   display: grid; grid-auto-flow: column;
-  grid-template-rows: repeat(7, 11px); grid-auto-columns: 11px;
-  gap: 3px; width: max-content;
+  grid-template-columns: repeat(var(--cols, 26), minmax(0, 1fr));
+  grid-template-rows: repeat(7, auto);
+  gap: 3px; width: 100%;
 }
-.contrib-cell { width: 11px; height: 11px; border-radius: 2px; background: var(--cl0); }
+.contrib-cell { aspect-ratio: 1 / 1; border-radius: 3px; background: var(--cl0); }
 .contrib-cell.pad { background: transparent; }
 .contrib-cell.l1 { background: var(--cl1); }
 .contrib-cell.l2 { background: var(--cl2); }
@@ -587,25 +590,41 @@ a.contrib.card:hover { text-decoration: none; }
 /* tighter rhythm around the GitHub activity card */
 .section-label.contrib-label { margin-top: 22px; }
 .contrib.card + #projects + .section-label { margin-top: 34px; }
-.contrib-scroll { display: flex; justify-content: center; }   /* center the graph in the card */
-.contrib-cal { display: inline-block; }
+.contrib.card { position: relative; }   /* anchor for the hover tooltip */
 
 /* month labels above the columns, aligned to the graph's column grid */
 .contrib-months {
-  display: grid; grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px;
-  height: 13px; margin-bottom: 4px;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 26), minmax(0, 1fr));
+  gap: 3px; height: 13px; margin-bottom: 4px;
 }
 .contrib-months span {
   font-family: var(--font-mono); font-size: 10px; color: var(--muted);
   white-space: nowrap; overflow: visible; line-height: 1;
 }
 
+/* GitHub-style hover tooltip */
+.contrib-tip {
+  position: absolute; z-index: 20; pointer-events: none;
+  left: 0; top: 0; transform: translate(-50%, calc(-100% - 7px));
+  background: var(--ink); color: var(--bg);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  padding: 4px 8px; border-radius: 6px; white-space: nowrap;
+  box-shadow: var(--shadow-sm); opacity: 0; transition: opacity 0.12s;
+}
+.contrib-tip.show { opacity: 1; }
+
 @media (max-width: 560px) {
   .section-label { margin: 30px 0 14px; }          /* less dead space between sections on phone */
   .contrib.card { padding: 15px; }
-  .contrib-scroll { justify-content: flex-start; } /* left-align so horizontal scroll starts at week 1 */
-  .contrib-graph { grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px; gap: 2.5px; }
-  .contrib-months { grid-auto-columns: 10px; gap: 2.5px; }
+  .contrib-cal { width: max-content; }             /* shrink so the graph scrolls */
+  .contrib-graph {
+    grid-template-columns: repeat(var(--cols, 26), 10px);
+    grid-template-rows: repeat(7, 10px);
+    gap: 2.5px; width: max-content;
+  }
+  .contrib-cell { aspect-ratio: auto; }
+  .contrib-months { grid-template-columns: repeat(var(--cols, 26), 10px); gap: 2.5px; }
   .contrib-head { margin-bottom: 12px; }
   .contrib-total { font-size: 14px; }
 }

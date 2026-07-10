@@ -44,11 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
         else img.addEventListener('load', reveal);
     });
 
-    // GitHub contribution heatmap — last 3 months, GitHub-style month labels (front page only)
+    // GitHub contribution heatmap — last 6 months, month labels + hover tooltip (front page only)
     const contribGraph = document.getElementById('contrib-graph');
     if (contribGraph) {
         const totalEl = document.getElementById('contrib-total');
         const monthsEl = document.getElementById('contrib-months');
+        const tip = document.getElementById('contrib-tip');
+        const card = contribGraph.closest('.contrib');
         const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         fetch('https://github-contributions-api.jogruber.de/v4/brondijkxyz?y=last')
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
@@ -66,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     for (let i = 0; i < dow; i++) cells.push(null);
                 }
                 days.forEach(d => cells.push(d));
+                const numCols = Math.ceil(cells.length / 7);
+                contribGraph.style.setProperty('--cols', numCols);   // drives the fill grid
+                if (monthsEl) monthsEl.style.setProperty('--cols', numCols);
 
                 const gfrag = document.createDocumentFragment();
                 cells.forEach(d => {
@@ -73,9 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!d) { c.className = 'contrib-cell pad'; }
                     else {
                         c.className = 'contrib-cell l' + (d.level || 0);
-                        const dt = new Date(d.date + 'T00:00:00Z');
-                        const nice = dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-                        c.title = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' · ' + nice;
+                        const nice = new Date(d.date + 'T00:00:00Z').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                        c.dataset.tip = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' · ' + nice;
                     }
                     gfrag.appendChild(c);
                 });
@@ -83,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // month labels above the columns where a new month begins
                 if (monthsEl) {
-                    const numCols = Math.ceil(cells.length / 7);
                     const mfrag = document.createDocumentFragment();
                     let lastMonth = -1;
                     for (let col = 0; col < numCols; col++) {
@@ -96,6 +99,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         mfrag.appendChild(span);
                     }
                     monthsEl.replaceChildren(mfrag);
+                }
+
+                // GitHub-style hover tooltip — works fine even though the card is a link
+                if (tip && card) {
+                    contribGraph.addEventListener('mouseover', e => {
+                        const cell = e.target.closest('.contrib-cell');
+                        if (!cell || !cell.dataset.tip) { tip.classList.remove('show'); return; }
+                        tip.textContent = cell.dataset.tip;
+                        const cr = cell.getBoundingClientRect(), pr = card.getBoundingClientRect();
+                        tip.style.left = (cr.left - pr.left + cr.width / 2) + 'px';
+                        tip.style.top = (cr.top - pr.top) + 'px';
+                        tip.classList.add('show');
+                    });
+                    contribGraph.addEventListener('mouseout', () => tip.classList.remove('show'));
                 }
             })
             .catch(() => { if (totalEl) totalEl.textContent = 'GitHub activity unavailable right now.'; });

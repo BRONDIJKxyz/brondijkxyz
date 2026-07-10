@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else img.addEventListener('load', reveal);
     });
 
-    // GitHub contribution heatmap — last 6 months, month labels + hover tooltip (front page only)
+    // GitHub contribution heatmap — full year on desktop, 6 months on phone (front page only)
     const contribGraph = document.getElementById('contrib-graph');
     if (contribGraph) {
         const totalEl = document.getElementById('contrib-total');
@@ -52,70 +52,79 @@ document.addEventListener('DOMContentLoaded', () => {
         const tip = document.getElementById('contrib-tip');
         const card = contribGraph.closest('.contrib');
         const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const smallScreen = window.matchMedia('(max-width: 560px)');
+        let allDays = null;   // full-year data from the API, cached so re-renders don't refetch
+
+        function draw() {
+            if (!allDays) return;
+            const win = smallScreen.matches ? 183 : 365;   // 6 months on phone, full year on desktop
+            const cutoff = new Date(); cutoff.setUTCHours(0, 0, 0, 0);
+            cutoff.setUTCDate(cutoff.getUTCDate() - win);
+            const days = allDays.filter(d => new Date(d.date + 'T00:00:00Z') >= cutoff);
+            const sum = days.reduce((s, d) => s + d.count, 0);
+            if (totalEl) totalEl.textContent = sum.toLocaleString() + ' contributions · ' + (win >= 365 ? 'last year' : 'last 6 months');
+
+            // column-major cells, padded so weekday rows line up (row 0 = Sunday)
+            const cells = [];
+            if (days.length) {
+                const dow = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+                for (let i = 0; i < dow; i++) cells.push(null);
+            }
+            days.forEach(d => cells.push(d));
+            const numCols = Math.ceil(cells.length / 7);
+            contribGraph.style.setProperty('--cols', numCols);
+            if (monthsEl) monthsEl.style.setProperty('--cols', numCols);
+
+            const gfrag = document.createDocumentFragment();
+            cells.forEach(d => {
+                const c = document.createElement('span');
+                if (!d) { c.className = 'contrib-cell pad'; }
+                else {
+                    c.className = 'contrib-cell l' + (d.level || 0);
+                    const nice = new Date(d.date + 'T00:00:00Z').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                    c.dataset.tip = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' · ' + nice;
+                }
+                gfrag.appendChild(c);
+            });
+            contribGraph.replaceChildren(gfrag);
+
+            if (monthsEl) {
+                const mfrag = document.createDocumentFragment();
+                let lastMonth = -1;
+                for (let col = 0; col < numCols; col++) {
+                    const span = document.createElement('span');
+                    const colDay = cells.slice(col * 7, col * 7 + 7).find(Boolean);
+                    if (colDay) {
+                        const m = new Date(colDay.date + 'T00:00:00Z').getUTCMonth();
+                        if (m !== lastMonth) { span.textContent = MON[m]; lastMonth = m; }
+                    }
+                    mfrag.appendChild(span);
+                }
+                monthsEl.replaceChildren(mfrag);
+            }
+        }
+
+        // GitHub-style hover tooltip — attached once; delegation survives re-renders,
+        // and works fine even though the whole card links to the GitHub profile
+        if (tip && card) {
+            contribGraph.addEventListener('mouseover', e => {
+                const cell = e.target.closest('.contrib-cell');
+                if (!cell || !cell.dataset.tip) { tip.classList.remove('show'); return; }
+                tip.textContent = cell.dataset.tip;
+                const cr = cell.getBoundingClientRect(), pr = card.getBoundingClientRect();
+                tip.style.left = (cr.left - pr.left + cr.width / 2) + 'px';
+                tip.style.top = (cr.top - pr.top) + 'px';
+                tip.classList.add('show');
+            });
+            contribGraph.addEventListener('mouseout', () => tip.classList.remove('show'));
+        }
+
         fetch('https://github-contributions-api.jogruber.de/v4/brondijkxyz?y=last')
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
-            .then(data => {
-                const cutoff = new Date(); cutoff.setUTCHours(0, 0, 0, 0);
-                cutoff.setUTCDate(cutoff.getUTCDate() - 183); // ~last 6 months
-                const days = (data.contributions || []).filter(d => new Date(d.date + 'T00:00:00Z') >= cutoff);
-                const sum = days.reduce((s, d) => s + d.count, 0);
-                if (totalEl) totalEl.textContent = sum.toLocaleString() + ' contributions · last 6 months';
-
-                // column-major cells, padded so weekday rows line up (row 0 = Sunday)
-                const cells = [];
-                if (days.length) {
-                    const dow = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
-                    for (let i = 0; i < dow; i++) cells.push(null);
-                }
-                days.forEach(d => cells.push(d));
-                const numCols = Math.ceil(cells.length / 7);
-                contribGraph.style.setProperty('--cols', numCols);   // drives the fill grid
-                if (monthsEl) monthsEl.style.setProperty('--cols', numCols);
-
-                const gfrag = document.createDocumentFragment();
-                cells.forEach(d => {
-                    const c = document.createElement('span');
-                    if (!d) { c.className = 'contrib-cell pad'; }
-                    else {
-                        c.className = 'contrib-cell l' + (d.level || 0);
-                        const nice = new Date(d.date + 'T00:00:00Z').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-                        c.dataset.tip = d.count + (d.count === 1 ? ' contribution' : ' contributions') + ' · ' + nice;
-                    }
-                    gfrag.appendChild(c);
-                });
-                contribGraph.replaceChildren(gfrag);
-
-                // month labels above the columns where a new month begins
-                if (monthsEl) {
-                    const mfrag = document.createDocumentFragment();
-                    let lastMonth = -1;
-                    for (let col = 0; col < numCols; col++) {
-                        const span = document.createElement('span');
-                        const colDay = cells.slice(col * 7, col * 7 + 7).find(Boolean);
-                        if (colDay) {
-                            const m = new Date(colDay.date + 'T00:00:00Z').getUTCMonth();
-                            if (m !== lastMonth) { span.textContent = MON[m]; lastMonth = m; }
-                        }
-                        mfrag.appendChild(span);
-                    }
-                    monthsEl.replaceChildren(mfrag);
-                }
-
-                // GitHub-style hover tooltip — works fine even though the card is a link
-                if (tip && card) {
-                    contribGraph.addEventListener('mouseover', e => {
-                        const cell = e.target.closest('.contrib-cell');
-                        if (!cell || !cell.dataset.tip) { tip.classList.remove('show'); return; }
-                        tip.textContent = cell.dataset.tip;
-                        const cr = cell.getBoundingClientRect(), pr = card.getBoundingClientRect();
-                        tip.style.left = (cr.left - pr.left + cr.width / 2) + 'px';
-                        tip.style.top = (cr.top - pr.top) + 'px';
-                        tip.classList.add('show');
-                    });
-                    contribGraph.addEventListener('mouseout', () => tip.classList.remove('show'));
-                }
-            })
+            .then(data => { allDays = data.contributions || []; draw(); })
             .catch(() => { if (totalEl) totalEl.textContent = 'GitHub activity unavailable right now.'; });
+
+        smallScreen.addEventListener('change', draw);   // re-render when crossing the breakpoint
     }
 
     // Smooth scrolling for anchor links

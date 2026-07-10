@@ -561,7 +561,7 @@ a.contrib.card:hover { text-decoration: none; }
 .contrib-handle { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
 
 .contrib-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
-.contrib-cal { width: 100%; max-width: 520px; }   /* cap so cells stay tidy, not chunky */
+.contrib-cal { width: 100%; }   /* desktop shows a full year, so it fills at a normal cell size */
 /* desktop: fill the card width with flexible square cells (JS sets --cols) */
 .contrib-graph {
   display: grid; grid-auto-flow: column;

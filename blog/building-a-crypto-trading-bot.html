@@ -11,14 +11,14 @@
     <meta property="og:title" content="I built a memecoin trading bot (and it's losing money) - brondijk.xyz">
     <meta property="og:description" content="Building an autonomous crypto trading bot on Robinhood Chain from my phone: the architecture, the Telegram control, the scams, the honest scoreboard, and why I'm not done.">
     <meta property="og:url" content="https://brondijk.xyz/blog/building-a-crypto-trading-bot.html">
-    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card-crypto-bot.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="brondijk.xyz: builds useful tools, fast">
+    <meta property="og:image:alt" content="I built a memecoin trading bot on Robinhood Chain. $100 down to $60: the honest scoreboard.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="I built a memecoin trading bot (and it's losing money) - brondijk.xyz">
     <meta name="twitter:description" content="Building an autonomous crypto trading bot on Robinhood Chain from my phone: the architecture, the Telegram control, the scams, the honest scoreboard, and why I'm not done.">
-    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card-crypto-bot.png">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
@@ -89,6 +89,7 @@
             <div class="post-meta">2026-07-13</div>
             <div class="post-content">
                 <p>I built an <strong>autonomous trading bot</strong>, handed it a <strong>$100 crypto wallet</strong>, and told it to trade memecoins on <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">Robinhood Chain</a> by itself: find tokens, buy them, manage the trades, sell them. I controlled the whole thing from <strong>Telegram</strong>, and I built and ran it entirely from my phone on a cheap always-on cloud box.</p>
+                <p>The $100 and the <strong>~$5 per trade</strong> were deliberate: small on purpose, real money but cheap enough to be a test bed. The whole point was to tweak the strategy against live markets without betting anything I'd miss, tuition, not a bankroll.</p>
                 <p>Let me spoil the ending: <strong>it lost money.</strong> Down about a third. But it was one of the most educational things I've shipped, and the failure is more interesting than a win would've been. Here's the honest journey, the full setup so you can try it too, and where I'm taking it next.</p>
 
                 <div class="statgrid">
@@ -129,7 +130,7 @@ record: 1 win · total +$1.90</div>
                 <p>Here's the thing nobody tells you about trading tiny memecoins: <strong>most of the chain is a minefield of scams</strong>, and they get more creative than you'd believe. Two-thirds of my losses had nothing to do with my strategy being wrong, they were tokens designed to steal from you.</p>
 
                 <h3>Honeypots</h3>
-                <p>You can buy, but you <em>can't sell</em>, the token's code blocks it. Your money's just stuck. I built a <strong>pre-buy simulation</strong> that fakes owning the token and simulates a sale on-chain <em>before spending a cent</em>. If the sale reverts, we don't buy. It blocks the classic ones cleanly.</p>
+                <p>You can buy, but you <em>can't sell</em>, the token's code blocks it. Your money's just stuck. I learned this the hard way early, got trapped in one and watched the money sit there, unsellable. So preventing scams was baked into the plan from the start: right after that first hit I built a <strong>pre-buy simulation</strong> that fakes owning the token and simulates a sale on-chain <em>before spending a cent</em>. If the sale reverts, we don't buy. From then on it blocked the classic ones cleanly.</p>
 
                 <h3>Fee-on-transfer tokens</h3>
                 <p>These tax every transfer, which breaks the exact-swap math and makes the buy itself revert. The simulation catches these too, we just skip them and move on.</p>

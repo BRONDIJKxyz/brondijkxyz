@@ -55,6 +55,17 @@
       .statgrid .s .n { font-size: 22px; font-weight: 700; } .statgrid .s .l { font-size: 12px; opacity:.7; text-transform: uppercase; letter-spacing:.04em; }
       .dashframe { width: 100%; height: 560px; border: 1px solid rgba(128,128,128,.3); border-radius: 12px; margin: 8px 0; background:#101014; }
       .callout { border: 1px solid rgba(128,128,128,.3); border-left: 4px solid #6ab3f3; border-radius: 10px; padding: 12px 16px; margin: 18px 0; }
+      /* static snapshot of the bot's dashboard (recreated, not a live embed) */
+      .dash { background:#101014; border:1px solid rgba(128,128,128,.3); border-radius:14px; padding:16px 16px 18px; margin:14px 0; color:#e9edf0; }
+      .dash-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+      .dash-top .t { font-weight:700; font-size:15px; } .dash-top .st { font-size:12px; color:#8a9aa8; }
+      .dash-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-bottom:14px; }
+      .dash-kpis .k { background:#17212b; border:1px solid rgba(128,128,128,.22); border-radius:10px; padding:10px 12px; }
+      .dash-kpis .k .n { font-size:20px; font-weight:700; } .dash-kpis .k .l { font-size:11px; color:#8a9aa8; text-transform:uppercase; letter-spacing:.04em; }
+      .dash .eq { width:100%; height:auto; display:block; }
+      .dash .eqcap { font-size:11px; color:#8a9aa8; margin:4px 2px 0; display:flex; justify-content:space-between; }
+      .dash-how { font-size:13px; color:#c7d0d8; margin-top:14px; line-height:1.55; }
+      .dash-how b { color:#e9edf0; }
     </style>
 </head>
 <body>
@@ -77,7 +88,7 @@
             <h1 class="post-title">I built a memecoin trading bot (and it's losing money)</h1>
             <div class="post-meta">2026-07-13</div>
             <div class="post-content">
-                <p>I gave an autonomous bot a <strong>$100 crypto wallet</strong> and told it to trade memecoins on <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">Robinhood Chain</a> by itself: find tokens, buy them, manage the trades, sell them. I controlled the whole thing from <strong>Telegram</strong>, and I built and ran it entirely from my phone on a cheap always-on cloud box.</p>
+                <p>I built an <strong>autonomous trading bot</strong>, handed it a <strong>$100 crypto wallet</strong>, and told it to trade memecoins on <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">Robinhood Chain</a> by itself: find tokens, buy them, manage the trades, sell them. I controlled the whole thing from <strong>Telegram</strong>, and I built and ran it entirely from my phone on a cheap always-on cloud box.</p>
                 <p>Let me spoil the ending: <strong>it lost money.</strong> Down about a third. But it was one of the most educational things I've shipped, and the failure is more interesting than a win would've been. Here's the honest journey, the full setup so you can try it too, and where I'm taking it next.</p>
 
                 <div class="statgrid">
@@ -139,10 +150,33 @@ wrote off <span class="r">-0.00300 ETH (~-$5.40)</span></div>
                 <p>The <strong>engineering</strong> worked beautifully. Honeypot defense, multi-fork routing to reach the deepest pool, on-chain pricing instead of a laggy API, laddered take-profit, an adaptive trailing stop that tightens as a winner runs, a full live dashboard. All of it does exactly what it should. When the bot caught a real runner, it milked it perfectly.</p>
                 <p>What <em>didn't</em> work is the part no amount of engineering fixes: <strong>the edge.</strong> On this chain, the tokens that pass every quality filter still mostly pop ~12% and reverse. Whether I chased momentum or waited for pullbacks, entries kept landing near -20%. The market itself is hostile, thin, scam-ridden, and slow. You can build a perfect machine and still be fishing in a bad pond.</p>
 
-                <h2>The live dashboard</h2>
-                <p>Everything the bot does is published to a self-updating dashboard: total P&amp;L split into <em>trading</em> vs <em>scams</em>, an equity curve, every trade with a win/loss badge, and a plain-English explainer of exactly how it enters and exits. It's paused now (final state below), but here's the real thing:</p>
-                <iframe class="dashframe" src="https://brondijkxyz.github.io/crypto-tracker/" title="Bot dashboard" loading="lazy"></iframe>
-                <p class="m" style="font-size:13px"><a href="https://brondijkxyz.github.io/crypto-tracker/" target="_blank" rel="noopener noreferrer">Open the dashboard →</a>, the honest scoreboard, split so you can see the strategy (-13%) apart from the scam tax (-21%).</p>
+                <h2>The dashboard</h2>
+                <p>Everything the bot did was published to a self-updating dashboard: total P&amp;L split into <em>trading</em> vs <em>scams</em>, an equity curve, every trade with a win/loss badge, and a plain-English explainer of exactly how it entered and exited. Here's the final state, the honest scoreboard, split so you can see the strategy apart from the scam tax:</p>
+                <div class="dash">
+                    <div class="dash-top">
+                        <span class="t">🤖 Bot dashboard</span>
+                        <span class="st">final snapshot · paused</span>
+                    </div>
+                    <div class="dash-kpis">
+                        <div class="k"><div class="l">Wallet value</div><div class="n">$60.36</div></div>
+                        <div class="k"><div class="l">Since start</div><div class="n r">-39.6%</div></div>
+                        <div class="k"><div class="l">Trading P&amp;L</div><div class="n r">-$15.77</div></div>
+                        <div class="k"><div class="l">Scam losses</div><div class="n r">-$21.39</div></div>
+                    </div>
+                    <svg class="eq" viewBox="0 0 620 150" preserveAspectRatio="none" role="img" aria-label="Equity curve from $100 down to $60">
+                        <defs><linearGradient id="eqg" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#f85149" stop-opacity="0.28"/>
+                            <stop offset="1" stop-color="#f85149" stop-opacity="0"/>
+                        </linearGradient></defs>
+                        <line x1="10" y1="11.4" x2="610" y2="11.4" stroke="rgba(255,255,255,.08)" stroke-dasharray="3 4"/>
+                        <path d="M 10.0,140 L 10.0,11.4 L 23.3,15.9 L 36.7,10.0 L 50.0,15.4 L 63.3,20.1 L 76.7,24.0 L 90.0,41.4 L 103.3,58.7 L 116.7,76.1 L 130.0,75.4 L 143.3,77.7 L 156.7,83.8 L 170.0,87.5 L 183.3,85.9 L 196.7,89.1 L 210.0,90.9 L 223.3,90.7 L 236.7,89.5 L 250.0,94.3 L 263.3,97.8 L 276.7,94.9 L 290.0,97.5 L 303.3,102.3 L 316.7,100.0 L 330.0,99.1 L 343.3,101.0 L 356.7,97.8 L 370.0,96.9 L 383.3,95.0 L 396.7,94.7 L 410.0,98.4 L 423.3,101.1 L 436.7,104.7 L 450.0,108.7 L 463.3,112.6 L 476.7,116.2 L 490.0,114.5 L 503.3,113.7 L 516.7,110.4 L 530.0,108.5 L 543.3,125.8 L 556.7,129.6 L 570.0,133.3 L 583.3,130.6 L 596.7,131.9 L 610.0,140.0 L 610.0,140 Z" fill="url(#eqg)"/>
+                        <path d="M 10.0,11.4 L 23.3,15.9 L 36.7,10.0 L 50.0,15.4 L 63.3,20.1 L 76.7,24.0 L 90.0,41.4 L 103.3,58.7 L 116.7,76.1 L 130.0,75.4 L 143.3,77.7 L 156.7,83.8 L 170.0,87.5 L 183.3,85.9 L 196.7,89.1 L 210.0,90.9 L 223.3,90.7 L 236.7,89.5 L 250.0,94.3 L 263.3,97.8 L 276.7,94.9 L 290.0,97.5 L 303.3,102.3 L 316.7,100.0 L 330.0,99.1 L 343.3,101.0 L 356.7,97.8 L 370.0,96.9 L 383.3,95.0 L 396.7,94.7 L 410.0,98.4 L 423.3,101.1 L 436.7,104.7 L 450.0,108.7 L 463.3,112.6 L 476.7,116.2 L 490.0,114.5 L 503.3,113.7 L 516.7,110.4 L 530.0,108.5 L 543.3,125.8 L 556.7,129.6 L 570.0,133.3 L 583.3,130.6 L 596.7,131.9 L 610.0,140.0" fill="none" stroke="#f85149" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="eqcap"><span>equity · $100 start</span><span>34 trades · 32% win rate · 4 honeypots</span></div>
+                    <div class="dash-how">
+                        <b>How it traded:</b> entry on a sustained climber (liquidity &gt; $75k, age &gt; 12h, healthy buy pressure, not overheated); size ~$5 per trade, max 4 open at once. Every token is sell-simulated on-chain <b>before</b> buying to block honeypots. Exit: bank a third at <b>+30%</b>, then a trailing stop that <b>tightens as the winner runs</b> (25% → 35% → 50%), with a hard <b>-20%</b> stop underneath and a delayed re-check that flags sweeper scams.
+                    </div>
+                </div>
 
                 <h2>Want to build your own?</h2>
                 <p>The blueprint is genuinely simple, and it's a fantastic project because you get a tight feedback loop with real stakes. If you want to try:</p>

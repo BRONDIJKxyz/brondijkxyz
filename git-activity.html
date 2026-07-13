@@ -109,19 +109,19 @@
         <div class="container">
             <a href="index.html" class="back-link">← Back to projects</a>
             <h1>Git commit activity</h1>
-            <p class="gc-lead">Every git commit I pushed across all my repositories (public&nbsp;+&nbsp;private) over the last two years &mdash; the cumulative curve and the day-by-day rhythm. Hover any point for the exact numbers.</p>
+            <p class="gc-lead">Every git commit I pushed across all my repositories (public&nbsp;+&nbsp;private) over the last two years: the cumulative curve and the day-by-day rhythm. Hover any point for the exact numbers.</p>
 
             <div class="gc-stats">
-                <div class="gc-stat"><div class="n" id="stat-total">&mdash;</div><div class="k">Total commits</div><div class="s">last 2 years</div></div>
-                <div class="gc-stat"><div class="n" id="stat-active">&mdash;</div><div class="k">Active days</div><div class="s">with &ge;1 commit</div></div>
-                <div class="gc-stat"><div class="n" id="stat-busy">&mdash;</div><div class="k">Busiest day</div><div class="s" id="stat-busy-sub">&mdash;</div></div>
-                <div class="gc-stat"><div class="n" id="stat-streak">&mdash;</div><div class="k">Longest streak</div><div class="s">days in a row</div></div>
+                <div class="gc-stat"><div class="n" id="stat-total">&hellip;</div><div class="k">Total commits</div><div class="s">last 2 years</div></div>
+                <div class="gc-stat"><div class="n" id="stat-active">&hellip;</div><div class="k">Active days</div><div class="s">with &ge;1 commit</div></div>
+                <div class="gc-stat"><div class="n" id="stat-busy">&hellip;</div><div class="k">Busiest day</div><div class="s" id="stat-busy-sub">&hellip;</div></div>
+                <div class="gc-stat"><div class="n" id="stat-streak">&hellip;</div><div class="k">Longest streak</div><div class="s">days in a row</div></div>
             </div>
 
             <div class="gc-chart-block">
                 <div class="gc-chart-head">
                     <h2>Cumulative commits</h2>
-                    <span class="sub">total over time &middot; <span id="stat-avg">&mdash;</span>/day avg</span>
+                    <span class="sub">total over time &middot; <span id="stat-avg">&hellip;</span>/day avg</span>
                 </div>
                 <div class="gc-card" id="chart-cumulative" data-label="Cumulative commits over the last two years"></div>
             </div>
@@ -132,7 +132,7 @@
                     <span class="sub">daily activity</span>
                 </div>
                 <div class="gc-card" id="chart-daily" data-label="Commits per day over the last two years"></div>
-                <p class="gc-note">The tall spike at the end of the window is my <code>crypto-tracker</code> bot auto-committing its trade log every few minutes &mdash; real commits, just machine-paced rather than hand-typed.</p>
+                <p class="gc-note">The tall spike at the end of the window is my <code>crypto-tracker</code> bot auto-committing its trade log every few minutes, real commits, just machine-paced rather than hand-typed.</p>
             </div>
         </div>
     </main>
@@ -152,7 +152,7 @@
     </script>
     <script src="js/main.js"></script>
     <script>
-    /* ===== Git commit charts — two responsive, theme-aware SVG charts =====
+    /* ===== Git commit charts: two responsive, theme-aware SVG charts =====
    COMMITS (map date->count), WIN_START, WIN_END are injected above this file. */
 (function () {
   if (typeof COMMITS === 'undefined') return;

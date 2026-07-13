@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I built a memecoin trading bot (and it's losing money) - brondijk.xyz</title>
+    <meta name="description" content="Building an autonomous crypto trading bot on Robinhood Chain from my phone: the architecture, the Telegram control, the scams, the honest scoreboard, and why I'm not done.">
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="brondijk.xyz">
+    <meta property="og:title" content="I built a memecoin trading bot (and it's losing money) - brondijk.xyz">
+    <meta property="og:description" content="Building an autonomous crypto trading bot on Robinhood Chain from my phone: the architecture, the Telegram control, the scams, the honest scoreboard, and why I'm not done.">
+    <meta property="og:url" content="https://brondijk.xyz/blog/building-a-crypto-trading-bot.html">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="brondijk.xyz: builds useful tools, fast">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="I built a memecoin trading bot (and it's losing money) - brondijk.xyz">
+    <meta name="twitter:description" content="Building an autonomous crypto trading bot on Robinhood Chain from my phone: the architecture, the Telegram control, the scams, the honest scoreboard, and why I'm not done.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+    <style>
+      /* recreated Telegram messages (from the bot's real alerts) */
+      .tg { max-width: 420px; margin: 18px auto; background: #17212b; border-radius: 14px; padding: 10px 12px; font: 14px/1.5 -apple-system,"Segoe UI",sans-serif; color: #e9edf0; }
+      .tg-hdr { color: #6ab3f3; font-weight: 600; font-size: 12px; margin-bottom: 8px; }
+      .tg-msg { background: #182533; border-left: 3px solid #2b5278; border-radius: 8px; padding: 8px 10px; margin: 6px 0; white-space: pre-wrap; }
+      .tg-msg.win { border-left-color: #3fb950; } .tg-msg.loss { border-left-color: #f85149; }
+      .tg-msg.warn { border-left-color: #e6b43c; }
+      .tg-b { font-weight: 700; } .g { color: #3fb950; } .r { color: #f85149; } .m { color: #8a9aa8; }
+      .statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin: 18px 0; }
+      .statgrid .s { border: 1px solid rgba(128,128,128,.25); border-radius: 10px; padding: 12px 14px; }
+      .statgrid .s .n { font-size: 22px; font-weight: 700; } .statgrid .s .l { font-size: 12px; opacity:.7; text-transform: uppercase; letter-spacing:.04em; }
+      .dashframe { width: 100%; height: 560px; border: 1px solid rgba(128,128,128,.3); border-radius: 12px; margin: 8px 0; background:#101014; }
+      .callout { border: 1px solid rgba(128,128,128,.3); border-left: 4px solid #6ab3f3; border-radius: 10px; padding: 12px 16px; margin: 18px 0; }
+    </style>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="../index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="../blog.html">blog</a>
+                <a href="../index.html#projects">projects</a>
+                <a href="../contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <h1 class="post-title">I built a memecoin trading bot (and it's losing money)</h1>
+            <div class="post-meta">2026-07-13</div>
+            <div class="post-content">
+                <p>I gave an autonomous bot a <strong>$100 crypto wallet</strong> and told it to trade memecoins on <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">Robinhood Chain</a> by itself — find tokens, buy them, manage the trades, sell them. I controlled the whole thing from <strong>Telegram</strong>, and I built and ran it entirely from my phone on a cheap always-on cloud box.</p>
+                <p>Let me spoil the ending: <strong>it lost money.</strong> Down about a third. But it was one of the most educational things I've shipped, and the failure is more interesting than a win would've been. Here's the honest journey, the full setup so you can try it too, and where I'm taking it next.</p>
+
+                <div class="statgrid">
+                    <div class="s"><div class="l">Trades</div><div class="n">34</div></div>
+                    <div class="s"><div class="l">Win rate</div><div class="n">32%</div></div>
+                    <div class="s"><div class="l">Trading P&amp;L</div><div class="n r">−13%</div></div>
+                    <div class="s"><div class="l">Lost to scams</div><div class="n r">−21%</div></div>
+                    <div class="s"><div class="l">Wallet</div><div class="n">$100 → ~$62</div></div>
+                </div>
+
+                <h2>The setup: a bot you drive from Telegram</h2>
+                <p>The whole system runs on a <a href="setting-up-a-devbox-with-hetzner.html">€5/month Hetzner devbox</a> — always on, so the bot trades 24/7 whether my laptop is open or not. I built the entire thing <a href="coding-from-my-phone-with-pocketdev.html">from my phone</a> with Claude Code over SSH, which meant I could tweak the strategy from a café, ship it, and watch the results come into Telegram minutes later. That feedback loop is the whole point.</p>
+                <p>The architecture is simple:</p>
+                <ul>
+                    <li><strong>A scanner</strong> polls the chain every ~45s (new launches, trending, top-volume pools), scores each token, and decides what's worth buying.</li>
+                    <li><strong>An on-chain executor</strong> places the actual swaps through the chain's Uniswap forks, paying in native ETH and unwrapping proceeds back.</li>
+                    <li><strong>A risk manager</strong> rides each position with a hard stop-loss, a laddered take-profit, and a trailing stop.</li>
+                    <li><strong>Telegram</strong> is the cockpit: every buy, sell and take-profit pings my phone, and I can check stats or sell a position with a tap.</li>
+                </ul>
+
+                <p>Every action shows up like this:</p>
+                <div class="tg">
+                    <div class="tg-hdr">🤖 Robinhood Bot</div>
+                    <div class="tg-msg">🟢 <span class="tg-b">LIVE BUY DATABEAR</span> 📈 climber
+score 74 · liq $189,000 · age 74h · buyR 0.57
+trend 1h +8% · 6h +30% · 24h +52,651% · vol/liq 116
+spent 0.0030 ETH (~$5.4) · got 3,611 DATABEAR
+<span class="tg-b">avg buy $0.0132</span> · trail 30%</div>
+                    <div class="tg-msg win">💰 <span class="tg-b">TOOK PROFIT DATABEAR</span> +30% tier · sold 50%
+banked <span class="g">+0.00049 ETH (~+$0.89)</span> · rest rides trailing stop</div>
+                    <div class="tg-msg win">🔴 <span class="tg-b">LIVE SELL DATABEAR</span> · ✅ win (trailing-stop)
+<span class="g">+21% · +0.00016 ETH</span> · held 1.2h
+record: 1 win · total +$1.90</div>
+                </div>
+                <p class="m" style="text-align:center;font-size:13px">DATABEAR: bought a deep-liquidity climber, banked a third at +30%, trailed the rest out for a clean +35% on the trade.</p>
+
+                <h2>What made it <em>hard</em> — the scams</h2>
+                <p>Here's the thing nobody tells you about trading tiny memecoins: <strong>most of the chain is a minefield of scams</strong>, and they get more creative than you'd believe. Two-thirds of my losses had nothing to do with my strategy being wrong — they were tokens designed to steal from you.</p>
+
+                <h3>Honeypots</h3>
+                <p>You can buy, but you <em>can't sell</em> — the token's code blocks it. Your money's just stuck. I built a <strong>pre-buy simulation</strong> that fakes owning the token and simulates a sale on-chain <em>before spending a cent</em>. If the sale reverts, we don't buy. It blocks the classic ones cleanly.</p>
+
+                <h3>Fee-on-transfer tokens</h3>
+                <p>These tax every transfer, which breaks the exact-swap math and makes the buy itself revert. The simulation catches these too — we just skip them and move on.</p>
+
+                <h3>Sweepers (the nasty one)</h3>
+                <div class="tg">
+                    <div class="tg-hdr">🤖 Robinhood Bot</div>
+                    <div class="tg-msg loss">🍯 <span class="tg-b">SCAM SCATMAN</span> — drained/swept scam, tokens gone.
+wrote off <span class="r">−0.00300 ETH (~−$5.40)</span></div>
+                </div>
+                <p>A token called SCATMAN passed <em>both</em> my buy and sell simulations — because in a fresh simulation it genuinely is sellable. But look at the on-chain trail: I bought 10,428 tokens at 06:40:45, and <strong>three seconds later</strong> a malicious hook forwarded every one of them out of my wallet to the scammer's address. The theft only fires when real tokens land in a real wallet, so no pre-buy check can see it. That's an unblockable-by-design attack, and it cost the price of the position.</p>
+                <p>I added a delayed balance re-check that catches sweepers a minute after buying — it can't recover the money, but it flags them instantly and never touches that token again.</p>
+
+                <h3>The slow chain</h3>
+                <p>Robinhood Chain has <strong>~101-second blocks.</strong> That means every order lands ~2 minutes after you decide, so your fill is at a different price than you saw, and a trailing stop reacts to a dump two minutes late. On volatile memecoins that lag is brutal — you buy a pop and it's already reversed by the time you're filled.</p>
+
+                <h2>What worked, and what didn't</h2>
+                <p>The <strong>engineering</strong> worked beautifully. Honeypot defense, multi-fork routing to reach the deepest pool, on-chain pricing instead of a laggy API, laddered take-profit, an adaptive trailing stop that tightens as a winner runs, a full live dashboard — all of it does exactly what it should. When the bot caught a real runner, it milked it perfectly.</p>
+                <p>What <em>didn't</em> work is the part no amount of engineering fixes: <strong>the edge.</strong> On this chain, the tokens that pass every quality filter still mostly pop ~12% and reverse. Whether I chased momentum or waited for pullbacks, entries kept landing near −20%. The market itself is hostile — thin, scam-ridden, and slow. You can build a perfect machine and still be fishing in a bad pond.</p>
+
+                <h2>The live dashboard</h2>
+                <p>Everything the bot does is published to a self-updating dashboard — total P&amp;L split into <em>trading</em> vs <em>scams</em>, an equity curve, every trade with a win/loss badge, and a plain-English explainer of exactly how it enters and exits. It's paused now (final state below), but here's the real thing:</p>
+                <iframe class="dashframe" src="https://brondijkxyz.github.io/crypto-tracker/" title="Bot dashboard" loading="lazy"></iframe>
+                <p class="m" style="font-size:13px"><a href="https://brondijkxyz.github.io/crypto-tracker/" target="_blank" rel="noopener noreferrer">Open the dashboard →</a> — the honest scoreboard, split so you can see the strategy (−13%) apart from the scam tax (−21%).</p>
+
+                <h2>Want to build your own?</h2>
+                <p>The blueprint is genuinely simple, and it's a fantastic project because you get a tight feedback loop with real stakes. If you want to try:</p>
+                <ul>
+                    <li><strong>Get an always-on box</strong> so it trades 24/7 — <a href="setting-up-a-devbox-with-hetzner.html">here's the €5/month devbox setup</a>. Bonus: you can <a href="coding-from-my-phone-with-pocketdev.html">build and babysit the whole thing from your phone</a>.</li>
+                    <li><strong>Make Telegram your cockpit.</strong> Create a bot with <code>@BotFather</code>, and have your script send a message on every trade and answer commands like <code>/stats</code> and <code>/sell</code>. Being able to see and steer from your pocket is what makes it fun.</li>
+                    <li><strong>Defend before you trade.</strong> Simulate a sell (and a buy) on-chain before spending. Assume every token is a scam until proven otherwise — that lesson cost me real money.</li>
+                    <li><strong>Split your scoreboard.</strong> Track scam losses separately from trading losses. It's the difference between "my strategy is broken" and "this market is a swamp."</li>
+                    <li><strong>Start with $100.</strong> Enough to be real, cheap enough to be a tuition bill.</li>
+                </ul>
+
+                <h2>So… now what?</h2>
+                <p>Not a success. But I'd do it again in a heartbeat, and I'm not stopping. The takeaway is clear: the machine is good, the pond is bad. So I'm changing ponds.</p>
+                <p>The next bot is deliberately the opposite of this one: <strong>one real, deep-liquidity asset (HYPE on Hyperliquid), one dead-simple strategy</strong> — a bounded grid that buys dips and sells small bounces, with hard caps so a downtrend can't blow it up. No scams, no thin pools, no 2-minute blocks. It's already running in paper mode, proving itself against real prices before a cent goes in.</p>
+                <div class="callout">
+                    <strong>The philosophy:</strong> execution over perfection, just ship. You don't find an edge by theorizing — you find it by shipping something small, watching it fail in a specific way, fixing that, and shipping again. Ten cheap failures beat one expensive plan. There'll be a day one of these works. I'll report back either way.
+                </div>
+                <p>Follow along — I'll write up the HYPE bot and its results next. If you build your own, <a href="../contact.html">tell me how it goes</a>.</p>
+            </div>
+            <div class="post-nav">
+                <a href="../blog.html">← Back to Blog</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

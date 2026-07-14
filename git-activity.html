@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git commit activity - brondijk.xyz</title>
+    <meta name="description" content="Two years of git commits, visualised: cumulative growth and commits per day across all my repositories.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/git-activity.html">
+    <meta property="og:title" content="Git commit activity">
+    <meta property="og:description" content="Two years of git commits, visualised: cumulative growth and commits per day.">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/git-activity.html">
+    <meta name="twitter:title" content="Git commit activity">
+    <meta name="twitter:description" content="Two years of git commits, visualised: cumulative growth and commits per day.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=7">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+
+    <style>
+      /* ---------- git commit charts ---------- */
+      .gc-lead { color: var(--muted); max-width: 60ch; margin-bottom: 26px; }
+      .gc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 26px 0 34px; }
+      .gc-stat {
+        background: var(--surface); border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); padding: 14px 16px;
+      }
+      .gc-stat .n { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+      .gc-stat .k { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-top: 4px; }
+      .gc-stat .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+      @media (max-width: 640px) { .gc-stats { grid-template-columns: repeat(2, 1fr); } }
+
+      .gc-chart-block { margin: 0 0 40px; }
+      .gc-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+      .gc-chart-head h2 { font-size: 20px; letter-spacing: -0.01em; }
+      .gc-chart-head .sub { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+      .gc-card {
+        position: relative; background: var(--surface);
+        border: 1.5px solid var(--border); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 14px 12px 6px;
+      }
+      .gc-svg { display: block; width: 100%; height: auto; }
+      .gc-grid { stroke: var(--faint); stroke-width: 1; stroke-dasharray: 2 4; }
+      .gc-axis { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+      .gc-area { fill: var(--accent-soft); stroke: none; }
+      .gc-line { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+      .gc-bar  { fill: var(--accent); }
+      .gc-hover-line { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0; transition: opacity .1s; }
+      .gc-hover-line.on { opacity: 0.45; }
+      .gc-hover-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; opacity: 0; transition: opacity .1s; }
+      .gc-hover-dot.on { opacity: 1; }
+      .gc-tip {
+        position: absolute; top: 10px; pointer-events: none; opacity: 0; transform: translateY(-2px);
+        transition: opacity .12s; background: var(--surface); color: var(--ink);
+        border: 1.5px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+        padding: 7px 10px; font-size: 12px; line-height: 1.45; white-space: nowrap; z-index: 5;
+      }
+      .gc-tip.show { opacity: 1; }
+      .gc-tip b { display: block; font-size: 16px; font-weight: 800; margin: 1px 0; }
+      .gc-tip span { display: block; color: var(--muted); font-size: 11px; }
+      .gc-note { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+      .gc-note code { font-family: var(--font-mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to projects</a>
+            <h1>Git commit activity</h1>
+            <p class="gc-lead">Every git commit I pushed across all my repositories (public&nbsp;+&nbsp;private) over the last two years: the cumulative curve and the day-by-day rhythm. Hover any point for the exact numbers.</p>
+
+            <div class="gc-stats">
+                <div class="gc-stat"><div class="n" id="stat-total">&hellip;</div><div class="k">Total commits</div><div class="s">last 2 years</div></div>
+                <div class="gc-stat"><div class="n" id="stat-active">&hellip;</div><div class="k">Active days</div><div class="s">with &ge;1 commit</div></div>
+                <div class="gc-stat"><div class="n" id="stat-busy">&hellip;</div><div class="k">Busiest day</div><div class="s" id="stat-busy-sub">&hellip;</div></div>
+                <div class="gc-stat"><div class="n" id="stat-streak">&hellip;</div><div class="k">Longest streak</div><div class="s">days in a row</div></div>
+            </div>
+
+            <div class="gc-chart-block">
+                <div class="gc-chart-head">
+                    <h2>Cumulative commits</h2>
+                    <span class="sub">total over time &middot; <span id="stat-avg">&hellip;</span>/day avg</span>
+                </div>
+                <div class="gc-card" id="chart-cumulative" data-label="Cumulative commits over the last two years"></div>
+            </div>
+
+            <div class="gc-chart-block">
+                <div class="gc-chart-head">
+                    <h2>Commits per day</h2>
+                    <span class="sub">daily activity</span>
+                </div>
+                <div class="gc-card" id="chart-daily" data-label="Commits per day over the last two years"></div>
+                <p class="gc-note">The tall spike at the end of the window is my <code>crypto-tracker</code> bot auto-committing its trade log every few minutes, real commits, just machine-paced rather than hand-typed.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>&copy; <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script>
+      /* Daily commit counts, GitHub user BRONDIJKxyz, author-date 2024-07-13 .. 2026-07-13.
+         Source: GitHub commit search across all repos (public + private), default branches. */
+      var WIN_START = "2024-07-13", WIN_END = "2026-07-13";
+      var COMMITS = {"2024-08-26": 19, "2024-08-27": 10, "2024-08-29": 2, "2024-08-30": 5, "2024-08-31": 2, "2024-09-03": 8, "2024-09-07": 3, "2024-09-10": 2, "2024-09-11": 6, "2024-09-12": 11, "2024-09-13": 7, "2024-09-14": 12, "2024-09-15": 8, "2024-09-16": 7, "2024-09-17": 15, "2024-09-18": 3, "2024-09-19": 7, "2024-09-20": 11, "2024-09-21": 7, "2024-09-22": 4, "2024-09-23": 12, "2024-09-24": 6, "2024-09-25": 3, "2024-09-26": 11, "2024-09-27": 10, "2024-09-28": 4, "2024-09-29": 2, "2024-09-30": 2, "2024-10-01": 7, "2024-10-02": 13, "2024-10-03": 8, "2024-10-04": 3, "2024-10-05": 6, "2024-10-06": 2, "2024-10-07": 4, "2024-10-08": 4, "2024-10-09": 4, "2024-10-14": 4, "2024-10-15": 5, "2024-10-16": 3, "2024-10-17": 1, "2024-10-18": 6, "2024-10-19": 4, "2024-10-21": 1, "2024-10-22": 2, "2024-10-23": 4, "2024-10-24": 3, "2024-10-25": 2, "2024-10-27": 2, "2024-10-28": 12, "2024-10-29": 9, "2024-10-30": 2, "2024-10-31": 13, "2024-11-01": 3, "2024-11-02": 2, "2024-11-03": 1, "2024-11-04": 7, "2024-11-05": 1, "2024-11-06": 13, "2024-11-07": 16, "2024-11-08": 1, "2024-11-10": 5, "2024-11-11": 1, "2024-11-12": 2, "2024-11-13": 1, "2024-11-14": 1, "2024-11-16": 13, "2024-11-17": 1, "2024-11-18": 5, "2024-11-19": 3, "2024-11-21": 1, "2024-11-24": 4, "2024-11-26": 1, "2024-11-28": 3, "2024-12-02": 1, "2024-12-04": 1, "2024-12-05": 2, "2024-12-06": 2, "2024-12-07": 1, "2024-12-08": 22, "2024-12-09": 1, "2024-12-10": 6, "2024-12-11": 1, "2024-12-13": 13, "2024-12-14": 6, "2024-12-15": 1, "2024-12-16": 12, "2024-12-17": 17, "2024-12-18": 1, "2024-12-19": 3, "2024-12-29": 1, "2024-12-30": 3, "2024-12-31": 5, "2025-01-01": 1, "2025-01-02": 2, "2025-01-03": 3, "2025-01-04": 1, "2025-01-05": 1, "2025-01-06": 1, "2025-01-07": 3, "2025-01-08": 1, "2025-01-09": 1, "2025-01-13": 1, "2025-01-21": 1, "2025-01-26": 8, "2025-02-03": 5, "2025-02-20": 5, "2025-02-21": 24, "2025-02-22": 8, "2025-02-23": 3, "2025-02-24": 5, "2025-02-25": 4, "2025-02-26": 7, "2025-02-27": 3, "2025-02-28": 2, "2025-03-01": 12, "2025-03-02": 4, "2025-03-03": 3, "2025-03-04": 7, "2025-03-05": 8, "2025-03-06": 5, "2025-03-07": 3, "2025-03-08": 2, "2025-03-09": 3, "2025-03-10": 4, "2025-03-11": 3, "2025-03-12": 3, "2025-03-13": 3, "2025-03-14": 2, "2025-03-15": 1, "2025-03-16": 3, "2025-03-17": 3, "2025-03-18": 9, "2025-03-19": 6, "2025-03-20": 3, "2025-03-21": 4, "2025-03-22": 17, "2025-03-23": 5, "2025-03-24": 4, "2025-03-25": 2, "2025-03-26": 1, "2025-03-27": 5, "2025-03-28": 11, "2025-03-29": 2, "2025-03-30": 14, "2025-03-31": 2, "2025-04-01": 1, "2025-04-02": 11, "2025-04-03": 4, "2025-04-04": 4, "2025-04-05": 19, "2025-04-06": 2, "2025-04-07": 1, "2025-04-08": 2, "2025-04-09": 1, "2025-04-10": 1, "2025-04-11": 2, "2025-04-12": 1, "2025-04-26": 3, "2025-05-04": 1, "2025-05-05": 2, "2025-05-06": 31, "2025-05-07": 13, "2025-05-08": 6, "2025-05-09": 7, "2025-05-12": 1, "2025-05-13": 1, "2025-05-14": 2, "2025-05-15": 1, "2025-05-16": 2, "2025-05-18": 1, "2025-05-19": 4, "2025-05-20": 4, "2025-05-28": 2, "2025-06-01": 13, "2025-06-03": 10, "2025-06-09": 1, "2025-06-10": 4, "2025-06-12": 7, "2025-06-13": 2, "2025-06-16": 1, "2025-06-18": 2, "2025-06-21": 5, "2025-07-05": 6, "2025-07-07": 2, "2025-07-08": 2, "2025-07-14": 1, "2025-07-15": 1, "2025-11-20": 4, "2025-11-21": 1, "2025-12-14": 4, "2025-12-15": 4, "2025-12-16": 3, "2025-12-18": 3, "2025-12-21": 2, "2025-12-22": 15, "2025-12-23": 9, "2025-12-24": 5, "2025-12-25": 1, "2025-12-28": 15, "2025-12-29": 7, "2025-12-30": 2, "2025-12-31": 4, "2026-01-03": 4, "2026-01-04": 16, "2026-01-05": 9, "2026-01-06": 7, "2026-01-11": 3, "2026-01-12": 3, "2026-01-13": 2, "2026-01-15": 8, "2026-01-25": 6, "2026-01-26": 2, "2026-01-27": 8, "2026-01-31": 5, "2026-02-06": 1, "2026-02-16": 2, "2026-02-17": 7, "2026-02-19": 4, "2026-02-22": 2, "2026-02-25": 1, "2026-03-03": 2, "2026-03-11": 2, "2026-03-15": 5, "2026-03-16": 14, "2026-03-17": 22, "2026-03-19": 1, "2026-03-20": 8, "2026-03-22": 5, "2026-03-23": 1, "2026-03-25": 2, "2026-03-29": 12, "2026-03-31": 1, "2026-04-01": 2, "2026-04-05": 12, "2026-04-06": 7, "2026-04-09": 3, "2026-04-13": 2, "2026-04-14": 1, "2026-04-16": 2, "2026-04-19": 1, "2026-04-20": 4, "2026-04-23": 2, "2026-04-27": 2, "2026-04-28": 19, "2026-05-02": 7, "2026-05-04": 5, "2026-05-05": 4, "2026-05-06": 4, "2026-05-07": 4, "2026-05-08": 9, "2026-05-10": 7, "2026-05-11": 2, "2026-05-12": 2, "2026-05-13": 1, "2026-05-14": 2, "2026-05-18": 1, "2026-05-23": 5, "2026-05-26": 9, "2026-05-27": 2, "2026-05-28": 6, "2026-05-29": 2, "2026-05-31": 1, "2026-06-01": 11, "2026-06-02": 4, "2026-06-03": 4, "2026-06-08": 2, "2026-06-09": 3, "2026-06-10": 20, "2026-06-11": 18, "2026-06-12": 15, "2026-06-13": 2, "2026-06-14": 1, "2026-06-15": 3, "2026-06-16": 1, "2026-06-17": 5, "2026-06-18": 3, "2026-06-19": 1, "2026-06-21": 1, "2026-06-22": 5, "2026-06-24": 3, "2026-06-25": 14, "2026-06-26": 4, "2026-06-28": 2, "2026-06-29": 6, "2026-06-30": 4, "2026-07-01": 13, "2026-07-02": 2, "2026-07-03": 2, "2026-07-04": 19, "2026-07-05": 18, "2026-07-06": 13, "2026-07-07": 5, "2026-07-08": 1, "2026-07-09": 9, "2026-07-10": 10, "2026-07-11": 9, "2026-07-12": 110, "2026-07-13": 202};
+    </script>
+    <script src="js/main.js"></script>
+    <script>
+    /* ===== Git commit charts: two responsive, theme-aware SVG charts =====
+   COMMITS (map date->count), WIN_START, WIN_END are injected above this file. */
+(function () {
+  if (typeof COMMITS === 'undefined') return;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // ---- dense daily series across the whole window ----
+  var start = new Date(WIN_START + 'T00:00:00Z');
+  var end   = new Date(WIN_END   + 'T00:00:00Z');
+  var days = [], cum = 0;
+  for (var d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
+    var iso = d.toISOString().slice(0, 10);
+    var c = COMMITS[iso] || 0;
+    cum += c;
+    days.push({ date: iso, count: c, cum: cum });
+  }
+  var total = cum;
+  var maxDaily = days.reduce(function (m, x) { return Math.max(m, x.count); }, 0);
+  var activeDays = days.filter(function (x) { return x.count > 0; }).length;
+  var busiest = days.reduce(function (a, b) { return b.count > a.count ? b : a; }, days[0]);
+  var longest = 0, run = 0;
+  days.forEach(function (x) { run = x.count > 0 ? run + 1 : 0; longest = Math.max(longest, run); });
+
+  var fmt = function (n) { return n.toLocaleString('en-US'); };
+  var niceDate = function (iso) {
+    return new Date(iso + 'T00:00:00Z').toLocaleDateString('en-US',
+      { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+  };
+  var setTxt = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+
+  // ---- stat tiles ----
+  setTxt('stat-total', fmt(total));
+  setTxt('stat-active', fmt(activeDays));
+  setTxt('stat-busy', fmt(busiest.count));
+  setTxt('stat-busy-sub', niceDate(busiest.date));
+  setTxt('stat-avg', (total / days.length).toFixed(1));
+  setTxt('stat-streak', fmt(longest));
+
+  var el = function (n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; };
+  var H = 300, PADL = 54, PADR = 16, PADT = 16, PADB = 34;
+
+  function monthTicks() {
+    var ticks = [], prev = '';
+    days.forEach(function (dd, i) {
+      var m = dd.date.slice(0, 7);
+      if (m !== prev) {
+        ticks.push({ i: i, label: new Date(dd.date + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', year: '2-digit', timeZone: 'UTC' }) });
+        prev = m;
+      }
+    });
+    return ticks;
+  }
+
+  // Generic chart renderer. kind: 'area' | 'bars'
+  function makeChart(host, kind, maxV, valOf, tipText) {
+    var tip = document.createElement('div');
+    tip.className = 'gc-tip';
+    host.appendChild(tip);
+
+    function render() {
+      var W = Math.max(host.clientWidth || 640, 320);
+      var iw = W - PADL - PADR, ih = H - PADT - PADB;
+      var xAt = function (i) { return PADL + (days.length === 1 ? 0 : (i / (days.length - 1)) * iw); };
+      var yAt = function (v) { return PADT + ih - (v / maxV) * ih; };
+
+      var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, class: 'gc-svg',
+        role: 'img', 'aria-label': host.getAttribute('data-label') || '' });
+
+      // y grid + labels
+      var steps = 4;
+      for (var s = 0; s <= steps; s++) {
+        var v = (maxV / steps) * s, y = yAt(v);
+        svg.appendChild(el('line', { x1: PADL, y1: y, x2: W - PADR, y2: y, class: 'gc-grid' }));
+        var ty = el('text', { x: PADL - 9, y: y + 4, class: 'gc-axis', 'text-anchor': 'end' });
+        ty.textContent = v >= 1000 ? (v / 1000).toFixed(v >= 1e4 ? 0 : 1) + 'k' : Math.round(v);
+        svg.appendChild(ty);
+      }
+      // x month labels
+      var ticks = monthTicks();
+      var every = ticks.length > 16 ? 3 : (ticks.length > 9 ? 2 : 1);
+      ticks.forEach(function (tk, idx) {
+        if (idx % every !== 0 && idx !== ticks.length - 1) return;
+        var tx = el('text', { x: xAt(tk.i), y: H - 11, class: 'gc-axis', 'text-anchor': 'middle' });
+        tx.textContent = tk.label;
+        svg.appendChild(tx);
+      });
+
+      if (kind === 'area') {
+        var line = '', i;
+        for (i = 0; i < days.length; i++) {
+          line += (i ? 'L' : 'M') + xAt(i).toFixed(1) + ' ' + yAt(valOf(days[i])).toFixed(1) + ' ';
+        }
+        var area = line + 'L' + xAt(days.length - 1).toFixed(1) + ' ' + (PADT + ih) + ' L' + PADL + ' ' + (PADT + ih) + ' Z';
+        svg.appendChild(el('path', { d: area, class: 'gc-area' }));
+        svg.appendChild(el('path', { d: line, class: 'gc-line' }));
+      } else {
+        var bw = Math.max(iw / days.length * 0.8, 0.8);
+        for (var j = 0; j < days.length; j++) {
+          var val = valOf(days[j]);
+          if (!val) continue;
+          var h = (val / maxV) * ih;
+          svg.appendChild(el('rect', { x: (xAt(j) - bw / 2).toFixed(2), y: (PADT + ih - h).toFixed(2),
+            width: bw.toFixed(2), height: h.toFixed(2), rx: Math.min(bw / 2, 1.3), class: 'gc-bar' }));
+        }
+      }
+
+      var hv = el('line', { class: 'gc-hover-line', x1: -9, y1: PADT, x2: -9, y2: PADT + ih });
+      svg.appendChild(hv);
+      var dot = null;
+      if (kind === 'area') { dot = el('circle', { class: 'gc-hover-dot', r: 4, cx: -9, cy: -9 }); svg.appendChild(dot); }
+
+      host.querySelectorAll('svg.gc-svg').forEach(function (n) { n.remove(); });
+      host.insertBefore(svg, tip);
+
+      function idxAt(clientX) {
+        var r = svg.getBoundingClientRect();
+        var rel = (clientX - r.left) / r.width * W;
+        return Math.max(0, Math.min(days.length - 1, Math.round((rel - PADL) / iw * (days.length - 1))));
+      }
+      function onMove(e) {
+        var cx = e.touches ? e.touches[0].clientX : e.clientX;
+        var i = idxAt(cx), x = xAt(i);
+        hv.setAttribute('x1', x); hv.setAttribute('x2', x); hv.classList.add('on');
+        if (dot) { dot.setAttribute('cx', x); dot.setAttribute('cy', yAt(valOf(days[i]))); dot.classList.add('on'); }
+        tip.innerHTML = tipText(days[i]);
+        tip.classList.add('show');
+        var hr = host.getBoundingClientRect();
+        var left = cx - hr.left + 14;
+        if (left + tip.offsetWidth > hr.width) left = cx - hr.left - tip.offsetWidth - 14;
+        tip.style.left = Math.max(4, left) + 'px';
+      }
+      function onLeave() { tip.classList.remove('show'); hv.classList.remove('on'); if (dot) dot.classList.remove('on'); }
+      svg.addEventListener('mousemove', onMove);
+      svg.addEventListener('mouseleave', onLeave);
+      svg.addEventListener('touchstart', onMove, { passive: true });
+      svg.addEventListener('touchmove', onMove, { passive: true });
+      svg.addEventListener('touchend', onLeave);
+    }
+
+    render();
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(render, 120); });
+  }
+
+  var cumHost = document.getElementById('chart-cumulative');
+  var dayHost = document.getElementById('chart-daily');
+  if (cumHost) makeChart(cumHost, 'area', Math.max(total, 1),
+    function (dd) { return dd.cum; },
+    function (dd) { return niceDate(dd.date) + '<b>' + fmt(dd.cum) + '</b> total commits<span>+' + dd.count + ' that day</span>'; });
+  if (dayHost) makeChart(dayHost, 'bars', Math.max(maxDaily, 1),
+    function (dd) { return dd.count; },
+    function (dd) { return niceDate(dd.date) + '<b>' + fmt(dd.count) + '</b> commit' + (dd.count === 1 ? '' : 's'); });
+})();
+
+    </script>
+</body>
+</html>

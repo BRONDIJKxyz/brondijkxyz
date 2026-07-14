@@ -11,14 +11,14 @@
     <meta property="og:title" content="Setting up a devbox with Hetzner - brondijk.xyz">
     <meta property="og:description" content="A short, practical guide to spinning up a cheap, always-on cloud development box on Hetzner in about ten minutes.">
     <meta property="og:url" content="https://brondijk.xyz/blog/setting-up-a-devbox-with-hetzner.html">
-    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card-devbox.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="brondijk.xyz: builds useful tools, fast">
+    <meta property="og:image:alt" content="Setting up a cheap, always-on cloud dev box with Hetzner in about ten minutes.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Setting up a devbox with Hetzner - brondijk.xyz">
     <meta name="twitter:description" content="A short, practical guide to spinning up a cheap, always-on cloud development box on Hetzner in about ten minutes.">
-    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card-devbox.png">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
@@ -36,7 +36,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site.css">
+    <link rel="stylesheet" href="../css/site.css?v=8">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
@@ -61,7 +61,7 @@
     <main class="container">
         <article class="blog-post">
             <h1 class="post-title">Setting up a devbox with Hetzner</h1>
-            <div class="post-meta">2026-07-04</div>
+            <div class="post-meta">2026-07-04 &middot; 2 min read</div>
             <div class="post-content">
                 <p>A devbox is just a cloud machine you develop <em>on</em> instead of your laptop. It's always on, always reachable, and it doesn't drain your battery or spin up your fans. Hetzner makes this cheap: a capable box runs a few euros a month. Here's the whole thing in about ten minutes.</p>
 
@@ -113,9 +113,11 @@ apt install -y git build-essential tmux</code></pre>
                 <p>Your laptop becomes a thin client. Builds run on server-grade CPU, long jobs survive a closed lid, and every device you own points at the same environment. When you outgrow the box, resize it in the dashboard. When you're done, delete it and stop paying.</p>
                 <p>That's it: a real, always-on dev environment for the price of a coffee.</p>
             </div>
-            <div class="post-nav">
-                <a href="../blog.html">← Back to Blog</a>
-            </div>
+                        <nav class="post-nav">
+                <a class="pn older" href="first-post.html"><span class="pn-k">← Older</span><span class="pn-t">You're the byproduct of what you prioritise</span></a>
+                <a class="pn-home" href="../blog.html">All posts</a>
+                <a class="pn newer" href="coding-from-my-phone-with-pocketdev.html"><span class="pn-k">Newer →</span><span class="pn-t">Coding from my phone with pocketdev and Claude Code</span></a>
+            </nav>
         </article>
     </main>
 

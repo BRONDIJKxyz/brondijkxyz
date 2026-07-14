@@ -11,14 +11,14 @@
     <meta property="og:title" content="Coding from my phone with pocketdev and Claude Code - brondijk.xyz">
     <meta property="og:description" content="Step-by-step: an always-on €5/month cloud box running Claude Code, reachable only through your private VPN, that you can drive from your phone.">
     <meta property="og:url" content="https://brondijk.xyz/blog/coding-from-my-phone-with-pocketdev.html">
-    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card-pocketdev.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="brondijk.xyz: builds useful tools, fast">
+    <meta property="og:image:alt" content="Coding from my phone with pocketdev + Claude Code: an always-on cloud box you drive from your phone.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Coding from my phone with pocketdev and Claude Code - brondijk.xyz">
     <meta name="twitter:description" content="Step-by-step: an always-on €5/month cloud box running Claude Code, reachable only through your private VPN, that you can drive from your phone.">
-    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card-pocketdev.png">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
@@ -36,7 +36,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site.css">
+    <link rel="stylesheet" href="../css/site.css?v=8">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
@@ -61,7 +61,7 @@
     <main class="container">
         <article class="blog-post">
             <h1 class="post-title">Coding from my phone with pocketdev and Claude Code</h1>
-            <div class="post-meta">2026-07-04 &middot; updated 2026-07-08</div>
+            <div class="post-meta">2026-07-04 &middot; updated 2026-07-08 &middot; 9 min read</div>
             <div class="post-content">
                 <p>I saw <a href="https://x.com/0xMassi/status/2071692848542703770" target="_blank" rel="noopener noreferrer">a post by @0xMassi</a> about <a href="https://github.com/0xMassi/pocketdev" target="_blank" rel="noopener noreferrer">pocketdev</a>: one command that gives you a cheap cloud server running Claude Code, reachable only through your own private VPN, that you can drive from your phone. An hour later I was giving Claude tasks from my couch while my laptop was closed. This post is the complete setup, every command included, plus the things that tripped me up so they don't trip you up.</p>
 
@@ -152,10 +152,10 @@ cd ~/your-project &amp;&amp; claude</code></pre>
                 </ul>
 
                 <h2>Upgrades I added after a few days</h2>
-                <p>Things I bolted on once I actually lived with the setup — each small, each a real difference. <em>(Added 2026-07-08.)</em></p>
+                <p>Things I bolted on once I actually lived with the setup, each small, each a real difference. <em>(Added 2026-07-08.)</em></p>
 
                 <h3>Make scrolling work like scrolling</h3>
-                <p>Out of the box, swiping in Termius (or two-finger scrolling on the Mac) sends <em>arrow keys</em> — which Claude Code interprets as browsing your prompt history instead of scrolling its output. One tmux setting fixes it everywhere, permanently:</p>
+                <p>Out of the box, swiping in Termius (or two-finger scrolling on the Mac) sends <em>arrow keys</em>, which Claude Code interprets as browsing your prompt history instead of scrolling its output. One tmux setting fixes it everywhere, permanently:</p>
                 <pre><code>echo "set -g mouse on" &gt;&gt; ~/.tmux.conf
 tmux set -g mouse on</code></pre>
                 <p>Now phone swipes and trackpad scrolling move through the actual transcript. If you end up in a frozen-looking scrollback view, press <code>q</code> to snap back to live. Related: Claude Code&#39;s <code>Ctrl+O</code> toggles an expanded transcript view for reading long output, and on a Mac keyboard PgUp/PgDn are <code>Fn+&uarr;</code>/<code>Fn+&darr;</code> (in Termius, swipe the shortcut toolbar sideways to find <code>pgup</code>/<code>pgdn</code>).</p>
@@ -163,12 +163,12 @@ tmux set -g mouse on</code></pre>
                 <h3>One word to get in from the Mac</h3>
                 <p>The phone auto-attaches to the shared session via Termius&#39;s startup command, but on the Mac I kept ssh-ing into a fresh shell and wondering why it didn&#39;t match my phone. An alias ends that:</p>
                 <pre><code>echo &#39;alias devbox=&#34;ssh devbox -t \&#34;tmux new -A -s main\&#34;&#34;&#39; &gt;&gt; ~/.zshrc</code></pre>
-                <p>Type <code>devbox</code> in any terminal &rarr; same live screen as the phone. If a session ever <em>doesn&#39;t</em> match across devices, you&#39;re not attached to the same tmux session — that&#39;s always the answer.</p>
+                <p>Type <code>devbox</code> in any terminal &rarr; same live screen as the phone. If a session ever <em>doesn&#39;t</em> match across devices, you&#39;re not attached to the same tmux session, that&#39;s always the answer.</p>
 
                 <h3>Private previews beat public tunnels</h3>
                 <p>For sharing something publicly, <code>pocketdev publish</code> is great. But for checking your own work-in-progress, you don&#39;t need a tunnel at all: anything listening on the box is already reachable from every device on your tailnet. Dev server on port 3000? Open this on your phone:</p>
                 <pre><code>http://devbox.&lt;your-tailnet&gt;.ts.net:3000</code></pre>
-                <p>Works from anywhere (5G included), and it&#39;s private by construction — the port is never exposed to the internet, only to your Tailscale devices. Safari&#39;s <em>Share &rarr; Add to Home Screen</em> turns a dashboard Claude is building into a one-tap app while it keeps iterating.</p>
+                <p>Works from anywhere (5G included), and it&#39;s private by construction, the port is never exposed to the internet, only to your Tailscale devices. Safari&#39;s <em>Share &rarr; Add to Home Screen</em> turns a dashboard Claude is building into a one-tap app while it keeps iterating.</p>
 
                 <h2>Cost and safety, honestly</h2>
                 <p>Total: the Hetzner box (~€5-8/month, billed afterwards, per hour). Tailscale free, Termius free, pocketdev free and open source, Claude via the subscription you already pay for. A stopped Hetzner server still bills; <code>pocketdev destroy</code> deletes it when you want out.</p>
@@ -176,9 +176,11 @@ tmux set -g mouse on</code></pre>
                 <p>Credit where due: <a href="https://github.com/0xMassi/pocketdev" target="_blank" rel="noopener noreferrer">pocketdev</a> by <a href="https://x.com/0xMassi" target="_blank" rel="noopener noreferrer">@0xMassi</a>, inspired by <a href="https://x.com/levelsio" target="_blank" rel="noopener noreferrer">@levelsio</a>'s phone-coding posts. If you already run a plain devbox (I wrote about <a href="setting-up-a-devbox-with-hetzner.html">setting one up by hand</a>), pocketdev can also adopt an existing server instead of creating a new one.</p>
                 <p>Now if you'll excuse me, Claude and I have a site to ship. From the couch.</p>
             </div>
-            <div class="post-nav">
-                <a href="../blog.html">← Back to Blog</a>
-            </div>
+                        <nav class="post-nav">
+                <a class="pn older" href="setting-up-a-devbox-with-hetzner.html"><span class="pn-k">← Older</span><span class="pn-t">Setting up a devbox with Hetzner</span></a>
+                <a class="pn-home" href="../blog.html">All posts</a>
+                <a class="pn newer" href="building-a-crypto-trading-bot.html"><span class="pn-k">Newer →</span><span class="pn-t">I built a memecoin trading bot (and it's losing money)</span></a>
+            </nav>
         </article>
     </main>
 

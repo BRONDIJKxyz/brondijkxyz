@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - page not found - brondijk.xyz</title>
+    <meta name="description" content="That page doesn't exist. Head back to brondijk.xyz.">
+    <meta name="robots" content="noindex">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=7">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <style>
+      .nf { text-align: center; padding: 90px 0 70px; }
+      .nf .code { font-family: var(--font-mono); font-size: clamp(72px, 16vw, 140px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+      .nf .code .hl { color: var(--accent); }
+      .nf h1 { font-size: clamp(22px, 4vw, 30px); font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 10px; }
+      .nf p { color: var(--muted); max-width: 460px; margin: 0 auto 26px; }
+      .nf .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+      .nf .actions a { font-family: var(--font-mono); font-size: 14px; font-weight: 600; text-decoration: none; padding: 10px 18px; border-radius: 10px; border: 1.5px solid var(--faint); color: var(--ink); }
+      .nf .actions a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .nf .actions a:hover { border-color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="nf">
+            <div class="code">4<span class="hl">0</span>4</div>
+            <h1>This page didn't ship.</h1>
+            <p>The link is broken or the page moved. No harm done, let's get you back to something that works.</p>
+            <div class="actions">
+                <a class="primary" href="index.html">Back to home</a>
+                <a href="blog.html">Read the blog</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

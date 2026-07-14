@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://brondijk.xyz/</loc><lastmod>2026-07-14</lastmod><priority>1.0</priority></url>
+  <url><loc>https://brondijk.xyz/blog.html</loc><lastmod>2026-07-14</lastmod><priority>0.9</priority></url>
+  <url><loc>https://brondijk.xyz/contact.html</loc><lastmod>2026-07-14</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/git-activity.html</loc><lastmod>2026-07-14</lastmod><priority>0.5</priority></url>
+  <url><loc>https://brondijk.xyz/wk-pool.html</loc><lastmod>2026-07-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://brondijk.xyz/taskflow.html</loc><lastmod>2026-07-10</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/workflow.html</loc><lastmod>2026-07-10</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/flightvisualizer.html</loc><lastmod>2026-07-10</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/globalrules.html</loc><lastmod>2026-07-10</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/sidequests.html</loc><lastmod>2026-07-10</lastmod><priority>0.6</priority></url>
+  <url><loc>https://brondijk.xyz/blog/building-a-crypto-trading-bot.html</loc><lastmod>2026-07-13</lastmod><priority>0.8</priority></url>
+  <url><loc>https://brondijk.xyz/blog/coding-from-my-phone-with-pocketdev.html</loc><lastmod>2026-07-08</lastmod><priority>0.7</priority></url>
+  <url><loc>https://brondijk.xyz/blog/setting-up-a-devbox-with-hetzner.html</loc><lastmod>2026-07-04</lastmod><priority>0.7</priority></url>
+  <url><loc>https://brondijk.xyz/blog/first-post.html</loc><lastmod>2025-05-16</lastmod><priority>0.5</priority></url>
+</urlset>

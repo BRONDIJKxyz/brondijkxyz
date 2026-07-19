@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude usage in your menu bar - brondijk.xyz</title>
+    <meta name="description" content="A SwiftBar plugin that shows your Claude Code plan usage and rate limits in the macOS menu bar, so you see a limit coming before you hit it.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/claude-usage.html">
+    <meta property="og:title" content="Claude usage in your menu bar">
+    <meta property="og:description" content="A SwiftBar plugin that shows your Claude Code plan usage and rate limits in the macOS menu bar, so you see a limit coming before you hit it.">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/claude-usage.html">
+    <meta name="twitter:title" content="Claude usage in your menu bar">
+    <meta name="twitter:description" content="A SwiftBar plugin that shows your Claude Code plan usage and rate limits in the macOS menu bar, so you see a limit coming before you hit it.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-56LC4J0MT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-56LC4J0MT0');
+    </script>
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=8">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to projects</a>
+            <h1>Claude usage in your menu bar</h1>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔍</span> Overview</h2>
+                <p>A <a href="https://github.com/swiftbar/SwiftBar" target="_blank" rel="noopener noreferrer">SwiftBar</a> plugin that shows your <strong>Claude Code plan usage and rate limits</strong> right in the macOS menu bar, so you see a limit coming before you hit it. The menu bar shows your worst limit as one compact percentage (<code>✳23%</code>), which turns orange at 80% and red at 95%. Click it for the full breakdown.</p>
+
+                <div class="tech-stack">
+                    <div class="tech-item">SwiftBar</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">macOS Keychain</div>
+                    <div class="tech-item">Anthropic API</div>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <div class="image-container" style="margin: 24px 0; text-align: center;">
+                    <img src="assets/projects/claude-usage-dropdown.png" alt="The dropdown showing session, weekly and per-model Claude usage with progress bars" style="max-width: 340px; width: 100%; border-radius: 10px;">
+                </div>
+                <div class="image-container" style="margin: 8px 0 0; text-align: center;">
+                    <img src="assets/projects/claude-usage-menubar.png" alt="The compact menu bar indicator showing the worst limit as a percentage" style="max-width: 180px; width: 60%; border-radius: 8px;">
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 8px;">One glanceable number in the menu bar; the full picture on click.</p>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">✨</span> What it shows</h2>
+                <ul class="feature-list">
+                    <li><strong>Session (5h):</strong> the rolling 5-hour limit, with its reset time</li>
+                    <li><strong>Week (all models):</strong> the weekly limit across every model</li>
+                    <li><strong>Week (per model):</strong> scoped weekly limits (like Fable or Opus) when your plan has them</li>
+                    <li><strong>Extra usage credits:</strong> spend against your configured credit cap</li>
+                    <li><strong>Color-coded severity:</strong> green normally, orange at 80%, red at 95%, so a wall is visible early</li>
+                    <li><strong>Configurable refresh:</strong> rename the file to <code>.1m.js</code> or <code>.30s.js</code> for faster updates (default 5 minutes)</li>
+                </ul>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔒</span> How it works, and privacy</h2>
+                <p>The plugin reads your Claude Code OAuth token from the macOS Keychain (the <code>Claude Code-credentials</code> item that Claude Code itself creates) and calls the same usage endpoint the <code>/usage</code> command uses. Your token never leaves your machine, is never written to disk, and nothing is sent anywhere except Anthropic's own API.</p>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🛠️</span> Install</h2>
+                <p>Needs macOS, SwiftBar (<code>brew install --cask swiftbar</code>), Node.js 18+ (<code>brew install node</code>), and Claude Code signed in. Then:</p>
+                <ul class="feature-list">
+                    <li><code>git clone https://github.com/BRONDIJKxyz/claude-usage-swiftbar.git</code></li>
+                    <li><code>cd claude-usage-swiftbar &amp;&amp; ./install.sh</code></li>
+                </ul>
+                <p>The installer finds your Node, pins the plugin's shebang to it (SwiftBar runs plugins with a minimal PATH), copies it into your SwiftBar plugin folder, and launches SwiftBar.</p>
+            </div>
+
+            <a href="https://github.com/BRONDIJKxyz/claude-usage-swiftbar" target="_blank" rel="noopener noreferrer" class="visit-site">View on GitHub →</a>
+        </div>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

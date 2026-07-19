@@ -20,7 +20,7 @@ def wrap(draw,text,font,maxw):
     if cur: lines.append(cur)
     return lines
 
-def make(out,title,subtitle):
+def make(out,title,subtitle,tag="blog",cta="read it →"):
     W,H=1200,630
     img=Image.new("RGB",(W,H),PAPER); d=ImageDraw.Draw(img)
     # faint red hatch top-right
@@ -34,7 +34,7 @@ def make(out,title,subtitle):
     # brand row
     d.text((L,120),"brondijk.xyz",font=bold(30),fill=INK)
     bw=d.textlength("brondijk.xyz",font=bold(30))
-    d.text((L+bw+16,128),"· blog",font=mono(20),fill=RED)
+    d.text((L+bw+16,128),"· "+tag,font=mono(20),fill=RED)
     # title (fit to <=3 lines, shrink font if needed)
     maxw=R-L
     for size in (64,58,52,46,42):
@@ -49,8 +49,8 @@ def make(out,title,subtitle):
     for ln in wrap(d,subtitle,sf,maxw)[:2]:
         d.text((L,y),ln,font=sf,fill=MUT); y+=32
     # footer accent
-    d.text((R,505),"read it →",font=mono(20),fill=RED,anchor="ra")
+    d.text((R,505),cta,font=mono(20),fill=RED,anchor="ra")
     img.save(out,"PNG"); print("wrote",out,img.size)
 
 if __name__=="__main__":
-    make(sys.argv[1],sys.argv[2],sys.argv[3])
+    make(*sys.argv[1:6])

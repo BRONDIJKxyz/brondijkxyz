@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics opt-out - brondijk.xyz</title>
+    <meta name="description" content="Exclude this browser from brondijk.xyz analytics.">
+    <meta name="robots" content="noindex">
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=8">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <style>
+      .oo { text-align: center; padding: 80px 0 70px; }
+      .oo h1 { font-size: clamp(24px, 4vw, 32px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; }
+      .oo p { color: var(--muted); max-width: 480px; margin: 0 auto 26px; }
+      .oo .status { font-family: var(--font-mono); font-size: 15px; font-weight: 600; padding: 12px 18px; border-radius: 10px; display: inline-block; margin-bottom: 24px; border: 1.5px solid var(--faint); }
+      .oo .status.is-off { color: var(--accent); border-color: var(--accent); }
+      .oo .status.is-on { color: var(--muted); }
+      .oo button.toggle { font-family: var(--font-mono); font-size: 14px; font-weight: 600; cursor: pointer; padding: 12px 22px; border-radius: 10px; border: 1.5px solid var(--accent); background: var(--accent); color: #fff; }
+      .oo button.toggle:hover { opacity: .9; }
+      .oo .note { font-size: 13px; color: var(--muted); margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="oo">
+            <h1>Analytics opt-out</h1>
+            <p>This flips a private flag stored only in this browser. When it is off, this browser is never counted in the site's analytics. Do this once on each browser or device you use.</p>
+            <div id="status" class="status">Checking...</div>
+            <div>
+                <button id="toggle" class="toggle">...</button>
+            </div>
+            <p class="note">Note: the flag lives in this browser's local storage, so it resets if you clear site data or use private/incognito windows.</p>
+        </section>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script>
+      (function(){
+        var KEY = 'umami.disabled';
+        function isDisabled(){ try { return localStorage.getItem(KEY) === '1'; } catch(e){ return false; } }
+        function render(){
+          var off = isDisabled();
+          var s = document.getElementById('status');
+          var b = document.getElementById('toggle');
+          s.textContent = off ? 'Tracking is OFF on this browser' : 'Tracking is ON on this browser';
+          s.className = 'status ' + (off ? 'is-off' : 'is-on');
+          b.textContent = off ? 'Re-enable tracking here' : 'Exclude this browser';
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+          render();
+          document.getElementById('toggle').addEventListener('click', function(){
+            try {
+              if (isDisabled()) localStorage.removeItem(KEY);
+              else localStorage.setItem(KEY, '1');
+            } catch(e){ alert('This browser blocked local storage, so the setting could not be saved.'); return; }
+            render();
+          });
+        });
+      })();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

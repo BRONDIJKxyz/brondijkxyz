@@ -177,13 +177,14 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
   padding: 22px;
   transition: transform var(--t), box-shadow var(--t);
   display: flex; flex-direction: column;
+  position: relative;
 }
 .card:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover); }
-.card.featured { box-shadow: 5px 5px 0 var(--accent); position: relative; }
+.card.featured { box-shadow: 5px 5px 0 var(--accent); }
 .card.featured:hover { box-shadow: 7px 7px 0 var(--accent); }
-/* whole featured card is clickable via its case-study CTA (stretched link) */
-.card.featured .cta::after { content: ""; position: absolute; inset: 0; z-index: 1; }
-.card.featured { cursor: pointer; }
+/* any card with a CTA is clickable edge to edge (stretched link) */
+.card .cta::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.card:has(.cta) { cursor: pointer; }
 
 .card .shot {
   position: relative;

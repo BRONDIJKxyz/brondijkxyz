@@ -535,7 +535,7 @@ pre code {
 }
 
 /* ============================================================
-   GitHub contributions heatmap (front page) — brand-red scale
+   GitHub contributions heatmap (front page): brand-red scale
    ============================================================ */
 :root {
   --cl0: #E7DFCF;                       /* empty day (faint paper) */

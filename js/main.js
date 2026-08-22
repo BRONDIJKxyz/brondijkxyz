@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else img.addEventListener('load', reveal);
     });
 
-    // GitHub contribution heatmap — full year on desktop, 6 months on phone (front page only)
+    // GitHub contribution heatmap: full year on desktop, 6 months on phone (front page only)
     const contribGraph = document.getElementById('contrib-graph');
     if (contribGraph) {
         const totalEl = document.getElementById('contrib-total');
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // GitHub-style hover tooltip — attached once; delegation survives re-renders,
+        // GitHub-style hover tooltip, attached once; delegation survives re-renders,
         // and works fine even though the whole card links to the GitHub profile
         if (tip && card) {
             contribGraph.addEventListener('mouseover', e => {

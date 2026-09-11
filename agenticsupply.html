@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Action Loop</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  html { color-scheme: light; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; background: #F5F7F3; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #F5F7F3;
+    --surface: #FFFFFF;
+    --raise: #EDF1E9;
+    --ink: #151A16;
+    --ink-soft: #4E5A50;
+    --ink-faint: #7C8A7F;
+    --line: #DBE2D6;
+    --line-soft: #E7EBE3;
+    --accent: #1E5B45;
+    --amber: #8E5409;
+    --critical: #9A2B22;
+    --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.25rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5.5vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0.7rem 0 0;
+  }
+
+  .lede {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 1.1rem 0 0;
+    max-width: 34rem;
+  }
+
+  section { display: flex; flex-direction: column; gap: 1rem; }
+
+  h2 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.02rem;
+    margin: 0 0 0.3rem;
+    letter-spacing: -0.005em;
+  }
+
+  p { margin: 0; max-width: 36rem; }
+  p + p { margin-top: 0.85rem; }
+
+  strong { font-weight: 500; color: var(--ink); }
+
+  /* figure */
+  figure { margin: 0.6rem 0 0; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  .canvas {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    padding: 1.1rem 1rem;
+  }
+
+  .canvas svg { display: block; width: 100%; min-width: 42rem; height: auto; color: var(--ink); }
+
+  figcaption {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    max-width: 34rem;
+  }
+
+  .svg-eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.4px; text-transform: uppercase; }
+  .svg-node { font-family: var(--sans); font-size: 12.5px; font-weight: 600; }
+  .svg-sub { font-family: var(--sans); font-size: 11px; }
+  .svg-edge { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.6px; }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .split > div {
+    padding: 1.1rem 1.2rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+  }
+
+  .split .label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+
+  .split ul { margin: 0; padding-left: 1.1rem; }
+  .split li { margin-bottom: 0.35rem; font-size: 0.98rem; }
+  .split li:last-child { margin-bottom: 0; }
+  .ahead { border-left: 2px solid var(--accent) !important; }
+
+  ol.layers { list-style: none; margin: 0.4rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.7rem; }
+
+  ol.layers > li {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 0 1rem;
+    align-items: start;
+  }
+
+  .num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    padding-top: 0.28rem;
+    letter-spacing: 0.04em;
+  }
+
+  .layers p { font-size: 1rem; }
+
+  .kinds { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.25rem; margin-top: 0.3rem; }
+
+  .kind { display: flex; flex-direction: column; gap: 0.35rem; padding-left: 0.9rem; border-left: 2px solid var(--line); }
+  .kind.a { border-left-color: var(--amber); }
+  .kind.b { border-left-color: var(--accent); }
+  .kind .tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .kind p { font-size: 0.98rem; max-width: none; }
+
+  .trace { display: flex; flex-direction: column; gap: 0; margin-top: 0.3rem; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 0.2rem 1.2rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .step:first-child { border-top: 1px dashed var(--line); }
+
+  .step dt {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.28rem;
+  }
+
+  .step dd { margin: 0; font-size: 1rem; }
+
+  @media (max-width: 34rem) {
+    .step { grid-template-columns: 1fr; }
+    .step dt { padding-top: 0; }
+  }
+
+  .alert {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--amber);
+    box-shadow: 0 1px 0 var(--line-soft), 0 14px 28px -22px rgba(0,0,0,0.45);
+    overflow: hidden;
+  }
+
+  .alert.decision { border-top-color: var(--accent); }
+
+  .alert-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.6rem 1.15rem;
+    background: var(--raise);
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .alert-body { padding: 1.15rem 1.15rem 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .alert-title {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    line-height: 1.45;
+  }
+
+  .alert-title span { color: var(--amber); }
+  .alert.decision .alert-title span { color: var(--accent); }
+
+  .block .k {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .block p { font-size: 0.97rem; max-width: none; }
+
+  .buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 0.2rem; }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 0.83rem;
+    padding: 0.42rem 0.75rem;
+    border: 1px solid var(--line);
+    background: var(--ground);
+    color: var(--ink-soft);
+  }
+
+  .btn.primary { border-color: var(--accent); color: var(--accent); }
+
+  .mock-note {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  ul.plain { margin: 0.2rem 0 0; padding-left: 1.15rem; max-width: 36rem; }
+  ul.plain li { margin-bottom: 0.5rem; }
+
+  ul.open { list-style: none; margin: 0.3rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; max-width: 36rem; }
+  ul.open li { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.75rem; font-size: 1rem; }
+  ul.open .q { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); padding-top: 0.25rem; }
+
+  dl.rule {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    margin: 0.5rem 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-left: 2px solid var(--accent);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  dl.rule dt {
+    padding: 0.6rem 0.6rem 0.6rem 0.9rem;
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  dl.rule dd {
+    margin: 0;
+    padding: 0.6rem 1rem 0.6rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--ink);
+  }
+
+  dl.rule dt:last-of-type, dl.rule dd:last-of-type { border-bottom: 0; }
+
+  @media (max-width: 34rem) {
+    dl.rule { grid-template-columns: 1fr; }
+    dl.rule dt { border-bottom: 0; padding-bottom: 0; }
+    dl.rule dd { padding-left: 0.9rem; }
+  }
+
+  .caveat {
+    border-left: 2px solid var(--amber);
+    padding: 0.1rem 0 0.1rem 0.9rem;
+    max-width: 36rem;
+  }
+
+  .caveat .tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  table.acts { border-collapse: collapse; width: 100%; font-size: 0.95rem; margin-top: 0.3rem; }
+  table.acts th, table.acts td { text-align: left; padding: 0.6rem 0.9rem 0.6rem 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  table.acts th {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 400;
+    border-bottom: 1px solid var(--line);
+  }
+  table.acts td.w { font-family: var(--sans); font-size: 0.86rem; }
+  table.acts td.w b { font-weight: 600; color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 1.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .kicker {
+    font-family: var(--sans);
+    font-size: 1.06rem;
+    font-weight: 500;
+    color: var(--accent);
+    max-width: 32rem;
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Jimmy Joy · supply chain · system design</div>
+    <h1>The Action Loop</h1>
+    <p class="lede">It starts as a warning loop, and that is where most of these systems stop. The difference here is the button underneath the warning: the alert comes with the action already prepared.</p>
+  </header>
+
+  <section>
+    <h2>What this is about</h2>
+    <p>Right now everything is reactive. I ask: check my email, where is this order. I look in Exact myself to see whether that PO has been sent. I open dashboards to see whether things are going well.</p>
+    <p>What I want is the other way around. A <strong>loop that keeps running as a warning</strong>, and then a <strong>button with an action on it</strong>. Everything is connected: the purchasing email, Exact, sales. The agent runs past all of it constantly, comes forward when something is going on, and hands the team the thing to press.</p>
+    <p class="kicker">Nobody should need to open a dashboard. The alert comes to the team, with the consequence and the action already attached.</p>
+  </section>
+
+  <section>
+    <h2>Warning first, then a button</h2>
+    <p>A warning on its own still leaves all the work with me: open Exact, find the PO, write the mail, remember to check back. The button is where the difference sits. The same agent that spotted it writes the change back into the system it came from, or puts the message in front of me ready to send.</p>
+    <figure>
+      <div class="canvas">
+        <svg viewBox="0 0 900 430" role="img" aria-label="Diagram: connected sources feed a continuous watch, which weighs a signal into an alert; the alert's buttons write back into Exact and prepare messages to suppliers and customers, and an unanswered alert returns to the watch.">
+          <defs>
+            <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" style="fill:currentColor" />
+            </marker>
+            <marker id="arwa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" style="fill:var(--accent)" />
+            </marker>
+          </defs>
+
+          <!-- stage eyebrows -->
+          <text class="svg-eyebrow" x="20" y="42" style="fill:currentColor;opacity:.55">Connected</text>
+          <text class="svg-eyebrow" x="250" y="42" style="fill:currentColor;opacity:.55">The loop</text>
+          <text class="svg-eyebrow" x="650" y="42" style="fill:currentColor;opacity:.55">One message to the team</text>
+
+          <!-- sources -->
+          <rect x="20" y="55" width="170" height="200" rx="2" style="fill:none;stroke:currentColor;stroke-opacity:.25" />
+          <rect x="32" y="75" width="146" height="32" rx="2" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.2" />
+          <text class="svg-sub" x="105" y="95" text-anchor="middle" style="fill:currentColor">Exact, MRP, PO's</text>
+          <rect x="32" y="117" width="146" height="32" rx="2" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.2" />
+          <text class="svg-sub" x="105" y="137" text-anchor="middle" style="fill:currentColor">Purchasing inbox</text>
+          <rect x="32" y="159" width="146" height="32" rx="2" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.2" />
+          <text class="svg-sub" x="105" y="179" text-anchor="middle" style="fill:currentColor">Sales, Recharge</text>
+          <rect x="32" y="201" width="146" height="32" rx="2" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.2" />
+          <text class="svg-sub" x="105" y="221" text-anchor="middle" style="fill:currentColor">Forwarders, WMS</text>
+
+          <!-- watch -->
+          <rect x="250" y="110" width="140" height="90" rx="2" style="fill:none;stroke:currentColor;stroke-opacity:.5" />
+          <text class="svg-node" x="320" y="140" text-anchor="middle" style="fill:currentColor">Watch</text>
+          <text class="svg-sub" x="320" y="161" text-anchor="middle" style="fill:currentColor;opacity:.75">what is missing,</text>
+          <text class="svg-sub" x="320" y="177" text-anchor="middle" style="fill:currentColor;opacity:.75">what changed</text>
+
+          <!-- weigh -->
+          <rect x="450" y="110" width="140" height="90" rx="2" style="fill:none;stroke:currentColor;stroke-opacity:.5" />
+          <text class="svg-node" x="520" y="140" text-anchor="middle" style="fill:currentColor">Weigh</text>
+          <text class="svg-sub" x="520" y="161" text-anchor="middle" style="fill:currentColor;opacity:.75">lead time, runout,</text>
+          <text class="svg-sub" x="520" y="177" text-anchor="middle" style="fill:currentColor;opacity:.75">subscriptions</text>
+
+          <!-- alert -->
+          <rect x="650" y="75" width="235" height="160" rx="2" style="fill:currentColor;fill-opacity:.04;stroke:currentColor;stroke-opacity:.55" />
+          <text class="svg-node" x="664" y="103" style="fill:currentColor">Alert</text>
+          <text class="svg-sub" x="664" y="128" style="fill:currentColor;opacity:.75">What is going on</text>
+          <text class="svg-sub" x="664" y="147" style="fill:currentColor;opacity:.75">If you do nothing</text>
+          <text class="svg-sub" x="664" y="166" style="fill:currentColor;opacity:.75">What you can do now</text>
+          <rect x="664" y="182" width="100" height="28" rx="2" style="fill:none;stroke:var(--accent)" />
+          <text class="svg-edge" x="714" y="200" text-anchor="middle" style="fill:var(--accent)">Push to Exact</text>
+          <rect x="772" y="182" width="100" height="28" rx="2" style="fill:none;stroke:var(--accent)" />
+          <text class="svg-edge" x="822" y="200" text-anchor="middle" style="fill:var(--accent)">Draft message</text>
+
+          <!-- forward edges -->
+          <line x1="190" y1="155" x2="246" y2="155" marker-end="url(#arw)" style="stroke:currentColor;stroke-opacity:.6;stroke-dasharray:4 3" />
+          <text class="svg-edge" x="218" y="146" text-anchor="middle" style="fill:currentColor;opacity:.55">reads</text>
+          <line x1="390" y1="155" x2="446" y2="155" marker-end="url(#arw)" style="stroke:currentColor;stroke-opacity:.6" />
+          <text class="svg-edge" x="418" y="146" text-anchor="middle" style="fill:currentColor;opacity:.55">signal</text>
+          <line x1="590" y1="155" x2="646" y2="155" marker-end="url(#arw)" style="stroke:currentColor;stroke-opacity:.6" />
+          <text class="svg-edge" x="618" y="146" text-anchor="middle" style="fill:currentColor;opacity:.55">push</text>
+
+          <!-- draft out -->
+          <line x1="810" y1="235" x2="810" y2="264" marker-end="url(#arwa)" style="stroke:var(--accent)" />
+          <rect x="735" y="268" width="150" height="46" rx="2" style="fill:none;stroke:var(--accent);stroke-opacity:.55" />
+          <text class="svg-sub" x="810" y="288" text-anchor="middle" style="fill:currentColor">Supplier, customer</text>
+          <text class="svg-edge" x="810" y="304" text-anchor="middle" style="fill:currentColor;opacity:.6">I read it and send</text>
+
+          <!-- unanswered returns to watch -->
+          <path d="M668,235 V308 Q668,320 656,320 H332 Q320,320 320,308 V204" marker-end="url(#arw)" style="fill:none;stroke:currentColor;stroke-opacity:.5;stroke-dasharray:4 3" />
+          <text class="svg-edge" x="494" y="336" text-anchor="middle" style="fill:currentColor;opacity:.55">not followed up, back on the list</text>
+
+          <!-- write back into exact -->
+          <path d="M720,235 V373 Q720,385 708,385 H117 Q105,385 105,373 V259" marker-end="url(#arwa)" style="fill:none;stroke:var(--accent);stroke-width:1.6" />
+          <text class="svg-edge" x="400" y="403" text-anchor="middle" style="fill:var(--accent)">writes back: new price into Exact, every new PO on it</text>
+        </svg>
+      </div>
+      <figcaption>The dashed paths are reading and re-checking. The two solid green paths are the part that makes it more than an alerting tool: the loop writes back into the system it read from, and the message out goes as a draft I send myself.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>From reactive to ahead of it</h2>
+    <div class="split">
+      <div>
+        <span class="label">How it works today</span>
+        <ul>
+          <li>I have to remember to go looking</li>
+          <li>Search the mailbox: anything yet from Flexport or the forwarder</li>
+          <li>Search Exact: has this PO been sent</li>
+          <li>The dashboard only tells me once it is already late</li>
+          <li>Follow-ups sit there until someone misses them</li>
+        </ul>
+      </div>
+      <div class="ahead">
+        <span class="label">How it should work</span>
+        <ul>
+          <li>The loop keeps looking, including at what does not happen</li>
+          <li>A push to the team while there is still something to do</li>
+          <li>The consequence is already calculated</li>
+          <li>The action sits inside the alert, I only have to click</li>
+          <li>Not followed up is an alert in itself</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works, in five layers</h2>
+    <ol class="layers">
+      <li>
+        <span class="num">01</span>
+        <div>
+          <h3>Everything is connected</h3>
+          <p>The purchasing email, Exact (including MRP and production orders), sales, the subscriptions in Recharge, the forwarders and the warehouses. Without those sources side by side the agent cannot connect anything.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div>
+          <h3>The loop runs constantly</h3>
+          <p>Not a question I ask, but a check that keeps running. The important part: the agent watches just as closely for <strong>what is missing and what quietly changed</strong>. No mail from the forwarder, no ready confirmation from the supplier, no shipment on the way, or a new price landing in the mailbox. That is the signal.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div>
+          <h3>The warning comes forward</h3>
+          <p>A push message. Email, Slack or something else, but it has to come to the team. With the PO attached: look at this order, it probably has a problem, or: you need to make a call today.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div>
+          <h3>The consequence is already calculated</h3>
+          <p>If you do nothing this production order cannot run, and then you are short in these weeks. Ideally the AI says all of it: based on the next 90 days of Recharge data you cannot run this production, we still have this much on hand, that keeps the subscriptions supplied until this date.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <div>
+          <h3>The button does the work</h3>
+          <p>This is the part that matters. From the alert I click, and the agent executes: the new price with its start date into Exact so every new purchase order picks it up, the message to the supplier asking why it is not ready, the mail to the customers whose order will be late. Anything leaving the company is a draft I read and send myself. Anything internal it can write, with my click as the approval.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What sits on the buttons</h2>
+    <p>Every alert ends in a small set of buttons, and each one is a real action with a real target system.</p>
+    <table class="acts">
+      <thead>
+        <tr><th>Button</th><th>What it actually does</th><th>Writes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Push to Exact</td><td>Sets the new price with its effective date, so every new PO from that date is created on it</td><td class="w"><b>Exact</b></td></tr>
+        <tr><td>Message the supplier</td><td>Asks why the goods are not ready, or says we do not agree with the adjustment</td><td class="w">Draft</td></tr>
+        <tr><td>Mail late customers</td><td>The list of orders that will be late, with the message per customer</td><td class="w">Draft</td></tr>
+        <tr><td>Cost out air freight</td><td>Runs the alternative: what it costs, which week it makes, what it saves in lost sales</td><td class="w">Answer back</td></tr>
+        <tr><td>Snooze</td><td>Holds it until a date I set, then it comes back whether or not anything moved</td><td class="w">Own list</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Two kinds of signal</h2>
+    <div class="kinds">
+      <div class="kind a">
+        <span class="tag">Something is missing</span>
+        <p>No shipment on the way, no ready confirmation, no tracking, no answer to a follow-up. Nothing arrives, so nothing triggers me today. This is the type that costs the most, because silence looks like everything is fine.</p>
+      </div>
+      <div class="kind b">
+        <span class="tag">Something changed</span>
+        <p>A price adjustment, a new lead time, a moved ETA, a changed minimum order quantity. It lands in the mailbox as a normal email and needs a decision, with an effective date attached that nobody is tracking.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How a check is written down</h2>
+    <p>The chocolate powder case is the hard one to write down, because nothing happened. There is no delay mail, no bad ETA, no exception to catch. What there is: no idea of shipping anywhere, and the PO was never marked as on the way. The check has to be built on the <strong>absence of evidence measured against a clock</strong>.</p>
+    <p>So every check gets written down in the same seven lines. Absence on the left, a date to compare it to on the right.</p>
+    <dl class="rule">
+      <dt>Rule</dt><dd>PO-01, no evidence of departure</dd>
+      <dt>Watches</dt><dd>every open PO in Exact that MRP still needs</dd>
+      <dt>Evidence</dt><dd>a ready confirmation from the supplier, or a booking or ETA from the forwarder, or the PO marked shipped or on the way in Exact, or a tracking number</dd>
+      <dt>Fires when</dt><dd>none of those four exist, and today has passed (date needed, minus inbound, minus transit, minus production, minus buffer)</dd>
+      <dt>Verdict</dt><dd>nothing is moving, so this will probably arrive too late, X days short</dd>
+      <dt>Buttons</dt><dd>message the supplier, cost out air freight, snooze until a date</dd>
+      <dt>Re-check</dt><dd>daily, and the severity rises as the gap grows</dd>
+    </dl>
+    <p>The clock is the part that keeps it quiet. The same missing evidence means nothing at 20 weeks out and means trouble at 8, so the rule works backwards from the date MRP needs the goods and only fires once the remaining time is shorter than the route still takes.</p>
+    <figure>
+      <div class="canvas">
+        <svg viewBox="0 0 900 230" role="img" aria-label="Backwards time budget: from the week stock runs out, the diagram subtracts inbound handling, sea transit and supplier production to find the point of no return three weeks from today.">
+          <defs>
+            <marker id="arw2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" style="fill:currentColor" />
+            </marker>
+          </defs>
+
+          <!-- top labels -->
+          <text class="svg-edge" x="60" y="94" style="fill:currentColor;opacity:.6">today</text>
+          <text class="svg-eyebrow" x="229" y="80" text-anchor="middle" style="fill:var(--accent)">point of no return</text>
+          <text class="svg-edge" x="850" y="94" text-anchor="end" style="fill:currentColor;opacity:.6">stock runs out, MRP date</text>
+          <text class="svg-edge" x="821" y="122" text-anchor="middle" style="fill:currentColor;opacity:.6">inbound 1 w</text>
+
+          <!-- bar -->
+          <rect x="60" y="130" width="169" height="32" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.25" />
+          <text class="svg-edge" x="144" y="150" text-anchor="middle" style="fill:currentColor;opacity:.6">slack 3 w</text>
+          <rect x="229" y="130" width="226" height="32" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-sub" x="342" y="150" text-anchor="middle" style="fill:currentColor">supplier production 4 w</text>
+          <rect x="455" y="130" width="338" height="32" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-sub" x="624" y="150" text-anchor="middle" style="fill:currentColor">sea transit 6 w</text>
+          <rect x="793" y="130" width="57" height="32" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+
+          <!-- markers -->
+          <line x1="60" y1="104" x2="60" y2="172" style="stroke:currentColor;stroke-opacity:.45" />
+          <line x1="229" y1="88" x2="229" y2="176" style="stroke:var(--accent);stroke-width:1.6" />
+          <line x1="850" y1="104" x2="850" y2="172" style="stroke:currentColor;stroke-opacity:.45" />
+
+          <!-- week scale -->
+          <text class="svg-edge" x="60" y="188" text-anchor="middle" style="fill:currentColor;opacity:.45">w0</text>
+          <text class="svg-edge" x="229" y="188" text-anchor="middle" style="fill:currentColor;opacity:.45">w3</text>
+          <text class="svg-edge" x="455" y="188" text-anchor="middle" style="fill:currentColor;opacity:.45">w7</text>
+          <text class="svg-edge" x="793" y="188" text-anchor="middle" style="fill:currentColor;opacity:.45">w13</text>
+          <text class="svg-edge" x="850" y="188" text-anchor="middle" style="fill:currentColor;opacity:.45">w14</text>
+
+          <!-- backwards arrow -->
+          <line x1="846" y1="212" x2="233" y2="212" marker-end="url(#arw2)" style="stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-edge" x="540" y="205" text-anchor="middle" style="fill:currentColor;opacity:.5">counted backwards from the date MRP needs it</text>
+        </svg>
+      </div>
+      <figcaption>Fourteen weeks of stock is not fourteen weeks of room. Take off inbound, transit and production and the real deadline is three weeks from today: if nothing is confirmed or on the way by w3, w14 is missed. The alert fires while that slack is still there, not once it is gone.</figcaption>
+    </figure>
+    <div class="caveat">
+      <span class="tag">The field nobody fills</span>
+      <p>One thing to build in from the start: "not found" is not the same as "not there". If the PO status in Exact is a field nobody maintains, a rule leaning on it alone flags every order we have. So a rule needs at least two independent sources silent before it fires, and it has to be able to say I could not check this rather than reporting all clear. Per source we write down whether it is actually maintained, and how stale is too stale.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Case one: the chocolate powder</h2>
+    <p>This is how it runs from signal to action. Figures below are illustrative.</p>
+    <dl class="trace">
+      <div class="step"><dt>Signal</dt><dd>No mail from the forwarder about this PO, and the supplier has not even said the goods are ready. Or a mail does come in: delayed.</dd></div>
+      <div class="step"><dt>Requirement</dt><dd>Exact MRP: this product is needed as soon as stock runs out, in 14 weeks.</dd></div>
+      <div class="step"><dt>Check</dt><dd>Is anything on the way? No booking, no tracking, and the PO was never marked as on the way in Exact either. Rule PO-01.</dd></div>
+      <div class="step"><dt>Lead time</dt><dd>This supplier is in China. Sea freight plus inbound no longer fits inside 14 weeks.</dd></div>
+      <div class="step"><dt>Conclusion</dt><dd>This PO probably has a problem. Something needs to happen now, not in a month.</dd></div>
+      <div class="step"><dt>Impact</dt><dd>Without this ingredient the week 47 production order cannot run. Short in weeks 49 and 50. With current stock the subscriptions can still be supplied until early December.</dd></div>
+      <div class="step"><dt>Push</dt><dd>Warning to Slack and mail, with the options: call now, or air freight that still makes week 46.</dd></div>
+      <div class="step"><dt>Action</dt><dd>Message to the supplier prepared as a draft. Mail to the customers with a late order prepared as a draft.</dd></div>
+      <div class="step"><dt>Watch</dt><dd>No response within two days? The same PO comes back: this has not been followed up, should you not sort this out.</dd></div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>What that alert should look like</h2>
+    <div class="alert">
+      <div class="alert-bar">
+        <span>Slack · supply-and-operations</span>
+        <span>07:12</span>
+      </div>
+      <div class="alert-body">
+        <div class="alert-title"><span>Warning</span> · PO 24-0781 · chocolate powder · probably a problem</div>
+        <div class="block">
+          <span class="k">What is going on</span>
+          <p>No shipment on the way and no ready confirmation from the supplier (CN). Last contact is the order confirmation from three weeks ago.</p>
+        </div>
+        <div class="block">
+          <span class="k">If you do nothing</span>
+          <p>The week 47 production order cannot run. Short in weeks 49 and 50, around 4,200 units.</p>
+        </div>
+        <div class="block">
+          <span class="k">What you can do now</span>
+          <p>Call today, the sea freight cut-off is Friday. Air freight still makes week 46. With current stock the subscriptions run until 4 December, so throttle single purchases earlier.</p>
+        </div>
+        <div class="buttons">
+          <span class="btn primary">Message the supplier</span>
+          <span class="btn">Mail customers with a late order</span>
+          <span class="btn">Cost out air freight</span>
+          <span class="btn">Snooze 3 days</span>
+        </div>
+      </div>
+    </div>
+    <p class="mock-note">Example alert, not a real order</p>
+  </section>
+
+  <section>
+    <h2>Case two: a price adjustment</h2>
+    <p>Same loop, different trigger, and the clearest case for the button. A mail comes in about a price change for cacao powder or coconut powder. The agent should find what the period is and what the adjusted price should be, and bring that forward as a decision instead of letting it sit in the mailbox.</p>
+    <dl class="trace">
+      <div class="step"><dt>Signal</dt><dd>A mail from the supplier announcing a price adjustment, with a period attached.</dd></div>
+      <div class="step"><dt>Extract</dt><dd>The agent pulls out what matters: which item, the old price, the new price, the percentage, from which date it applies and for how long it is quoted. So in this case four months from now.</dd></div>
+      <div class="step"><dt>Context</dt><dd>What it does to the cost price per kg and per finished unit, and which open PO's still run on the old price.</dd></div>
+      <div class="step"><dt>Push</dt><dd>Cacao powder has a price adjustment. Do you want to send a mail to the supplier saying you do not agree, or do you want me to push it through?</dd></div>
+      <div class="step"><dt>If pushed through</dt><dd>The new price and its start date go into Exact, and from that date every new purchase order is created on the new price automatically.</dd></div>
+      <div class="step"><dt>If not</dt><dd>A draft to the supplier saying we do not agree, and the item stays open until there is an answer.</dd></div>
+      <div class="step"><dt>Watch</dt><dd>If nothing is decided before the start date, it comes back. A price change that quietly takes effect is the same failure as a shipment that quietly never left.</dd></div>
+    </dl>
+    <div class="alert decision">
+      <div class="alert-bar">
+        <span>Slack · supply-and-operations</span>
+        <span>08:40</span>
+      </div>
+      <div class="alert-body">
+        <div class="alert-title"><span>Decision</span> · cacao powder · price adjustment from 1 January</div>
+        <div class="block">
+          <span class="k">What changed</span>
+          <p>Supplier announced 4.60 to 4.95 per kg (+7.6%), effective 1 January 2027, quoted for 12 months. Mail received this morning.</p>
+        </div>
+        <div class="block">
+          <span class="k">What it means</span>
+          <p>Cost price per unit up around 0.04. Two open PO's still run on the old price, both landing before the start date.</p>
+        </div>
+        <div class="block">
+          <span class="k">Your call</span>
+          <p>Push it through, and every new PO from 1 January is created on the new price in Exact. Or reply that we do not agree and keep it open.</p>
+        </div>
+        <div class="buttons">
+          <span class="btn primary">Push through in Exact</span>
+          <span class="btn">Draft: we do not agree</span>
+          <span class="btn">Ask for longer notice</span>
+          <span class="btn">Snooze until December</span>
+        </div>
+      </div>
+    </div>
+    <p class="mock-note">Example alert, not a real quote</p>
+  </section>
+
+  <section>
+    <h2>What the system keeps track of</h2>
+    <ul class="plain">
+      <li>Per PO: is anything on the way, is there a ready confirmation, is there tracking, does the ETA still match what MRP needs.</li>
+      <li>Per production order: are all ingredients in on time, and if not, which one pushes it out.</li>
+      <li>Per SKU: when does stock run out, and how long can the subscriptions keep running on the queued charges.</li>
+      <li>Per commercial term: current price, agreed period, announced change, effective date, and which PO's it applies to.</li>
+      <li>Per alert: which button was pressed, what it wrote, and whether anything came back. An open alert nobody responds to has to keep coming back.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Still to decide</h2>
+    <ul class="open">
+      <li><span class="q">01</span><div>Where the push lands. Slack in supply-and-operations, or mail, or both with different urgency.</div></li>
+      <li><span class="q">02</span><div>The threshold for an alert. I do not want noise, only when there is really something to do.</div></li>
+      <li><span class="q">03</span><div>Where version one starts. My proposal: purchasing and inbound, so PO's against MRP and against the mailbox, with price adjustments included because they come from the same inbox.</div></li>
+      <li><span class="q">04</span><div>How far the button may reach. Writing into Exact needs my click but no second pair of eyes. Anything going to a supplier or a customer stays a draft I send myself.</div></li>
+      <li><span class="q">05</span><div>Which buttons ship first. A button that only reports back is easy, a button that writes into Exact is the one that changes how the day runs.</div></li>
+    </ul>
+  </section>
+
+  <footer>Jimmy Joy · action loop design · September 2026</footer>
+
+</div>
+</body>
+</html>

@@ -41,3 +41,9 @@ All notable changes to the project list will be documented in this file.
 - Added project: Taskflow-done.com
 - Added project: CodeAnalyzer (in progress)
 - Added project: DataVizLib (later replaced with Windsurf / Cursor Global Rules)
+
+
+## 2026-09-12
+
+- Added the public LinkedIn Order Visualizer demonstration to the homepage, with a responsive embed, screenshot and direct post fallback.
+- Added an isolated premium homepage trial, including GitHub activity, project filters and a public Order Visualizer showcase.

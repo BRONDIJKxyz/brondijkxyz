@@ -28,6 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/site.css?v=8">
+    <link rel="stylesheet" href="css/linkedin-embed.css">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
@@ -150,23 +151,19 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="shot">
-                    <img src="assets/projects/order-visualizer.jpg" alt="Global Order Visualizer" loading="lazy" onerror="this.style.display='none'">
-                    <span class="ph">Order Visualizer</span>
+            <article class="card order-story">
+                <div class="order-story-copy">
+                    <h3>Order Visualizer <span class="status daily"><span class="pip"></span>2025</span></h3>
+                    <p class="desc">A 3D globe that draws every order shipped from Amsterdam to the world: glowing arcs from the warehouse to each destination city. See it in action in my LinkedIn post.</p>
+                    <div class="how"><b>How:</b> Mapbox GL globe with great-circle arcs generated from anonymised order geodata. Only city and postal code, no personal data.</div>
+                    <img class="order-still" src="assets/projects/order-visualizer.jpg" alt="Order Visualizer globe showing shipping routes from Amsterdam" loading="lazy">
+                    <a class="order-post-link" href="https://www.linkedin.com/posts/maartenbrondijk_datavisualization-logistics-supplychain-activity-7412104459511562242-frBd" target="_blank" rel="noopener noreferrer">Watch on LinkedIn ↗</a>
                 </div>
-                <h3>Order Visualizer <span class="status daily"><span class="pip"></span>2025</span></h3>
-                <p class="desc">A 3D globe that draws every order shipped from Amsterdam to the world: glowing arcs from the warehouse to each destination city. Privacy-safe: only city and postal code, no personal data.</p>
-                <div class="how"><b>How:</b> Mapbox GL globe with great-circle arcs generated from anonymised order geodata.</div>
-                <div class="foot">
-                    <div class="badges">
-                        <span class="badge">Mapbox globe</span>
-                        <span class="badge">privacy-safe</span>
-                        <span class="badge">2025 orders</span>
-                    </div>
-                    <span class="nolink">internal tool · screenshots only</span>
+                <div class="linkedin-embed">
+                    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7412104385385811969?collapsed=1" height="550" width="504" loading="lazy" allowfullscreen title="Maarten Brondijk’s Order Visualizer demonstration on LinkedIn"></iframe>
+                    <p>Post not showing? <a href="https://www.linkedin.com/posts/maartenbrondijk_datavisualization-logistics-supplychain-activity-7412104459511562242-frBd" target="_blank" rel="noopener noreferrer">Open it on LinkedIn ↗</a></p>
                 </div>
-            </div>
+            </article>
         </div>
 
         <div class="section-label">More projects</div>

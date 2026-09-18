@@ -743,6 +743,137 @@
   </section>
 
   <section>
+    <h2>How it gets built</h2>
+    <p>The five layers say what it does. This says what it is: five small programs that run on a clock, one store that remembers, and one thing that has to stay awake.</p>
+    <figure>
+      <div class="canvas">
+        <svg viewBox="0 0 900 330" role="img" aria-label="Build shape: the inbox is collected, deduplicated and stored, read for meaning, weighed against stock and dates, then posted to the team as an alert with buttons. A click goes to an always-on receiver, which either prepares a draft in the inbox or writes into Exact, and what happened goes back on the list.">
+          <defs>
+            <marker id="arw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <polygon points="0,1 10,5 0,9" style="fill:currentColor" />
+            </marker>
+          </defs>
+
+          <text class="svg-eyebrow" x="20" y="34" style="fill:currentColor;opacity:.55">Collect</text>
+          <text class="svg-eyebrow" x="372" y="34" style="fill:currentColor;opacity:.55">The run, on a clock</text>
+          <text class="svg-eyebrow" x="724" y="34" style="fill:currentColor;opacity:.55">To the team</text>
+
+          <!-- row one: the run -->
+          <rect x="20" y="52" width="150" height="56" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.25" />
+          <text class="svg-node" x="95" y="78" text-anchor="middle" style="fill:currentColor">Inbox</text>
+          <text class="svg-sub" x="95" y="96" text-anchor="middle" style="fill:currentColor;opacity:.75">one shared label</text>
+
+          <line x1="170" y1="80" x2="190" y2="80" style="stroke:currentColor;stroke-opacity:.45" marker-end="url(#arw3)" />
+
+          <rect x="196" y="52" width="150" height="56" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-node" x="271" y="78" text-anchor="middle" style="fill:currentColor">Collect</text>
+          <text class="svg-sub" x="271" y="96" text-anchor="middle" style="fill:currentColor;opacity:.75">seen once, never twice</text>
+
+          <line x1="346" y1="80" x2="366" y2="80" style="stroke:currentColor;stroke-opacity:.45" marker-end="url(#arw3)" />
+
+          <rect x="372" y="52" width="150" height="56" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-node" x="447" y="78" text-anchor="middle" style="fill:currentColor">Read</text>
+          <text class="svg-sub" x="447" y="96" text-anchor="middle" style="fill:currentColor;opacity:.75">what is this about</text>
+
+          <line x1="522" y1="80" x2="542" y2="80" style="stroke:currentColor;stroke-opacity:.45" marker-end="url(#arw3)" />
+
+          <rect x="548" y="52" width="150" height="56" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-node" x="623" y="78" text-anchor="middle" style="fill:currentColor">Weigh</text>
+          <text class="svg-sub" x="623" y="96" text-anchor="middle" style="fill:currentColor;opacity:.75">impact, slack, clock</text>
+
+          <line x1="698" y1="80" x2="718" y2="80" style="stroke:currentColor;stroke-opacity:.45" marker-end="url(#arw3)" />
+
+          <rect x="724" y="52" width="156" height="56" style="fill:var(--accent);fill-opacity:.07;stroke:var(--accent);stroke-opacity:.45" />
+          <text class="svg-node" x="802" y="78" text-anchor="middle" style="fill:currentColor">Alert</text>
+          <text class="svg-sub" x="802" y="96" text-anchor="middle" style="fill:currentColor;opacity:.75">with the buttons on it</text>
+
+          <!-- the store -->
+          <line x1="271" y1="108" x2="271" y2="146" style="stroke:currentColor;stroke-opacity:.3" marker-end="url(#arw3)" />
+          <rect x="176" y="152" width="190" height="46" style="fill:none;stroke:currentColor;stroke-opacity:.3;stroke-dasharray:3 3" />
+          <text class="svg-node" x="271" y="172" text-anchor="middle" style="fill:currentColor">State</text>
+          <text class="svg-sub" x="271" y="188" text-anchor="middle" style="fill:currentColor;opacity:.7">seen, judged, acted on</text>
+
+          <!-- the click -->
+          <line x1="802" y1="108" x2="802" y2="144" style="stroke:var(--accent);stroke-opacity:.6" marker-end="url(#arw3)" />
+          <text class="svg-edge" x="812" y="130" style="fill:var(--accent)">click</text>
+
+          <rect x="724" y="150" width="156" height="56" style="fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.35" />
+          <text class="svg-node" x="802" y="176" text-anchor="middle" style="fill:currentColor">Receiver</text>
+          <text class="svg-sub" x="802" y="194" text-anchor="middle" style="fill:currentColor;opacity:.75">the part that stays awake</text>
+
+          <!-- two outcomes -->
+          <polyline points="724,178 704,178 704,158 684,158" fill="none" style="stroke:var(--accent);stroke-opacity:.6" marker-end="url(#arw3)" />
+          <polyline points="724,178 704,178 704,242 684,242" fill="none" style="stroke:var(--accent);stroke-opacity:.6" marker-end="url(#arw3)" />
+
+          <rect x="470" y="134" width="208" height="48" style="fill:currentColor;fill-opacity:.05;stroke:currentColor;stroke-opacity:.25" />
+          <text class="svg-node" x="574" y="155" text-anchor="middle" style="fill:currentColor">Draft in the inbox</text>
+          <text class="svg-sub" x="574" y="171" text-anchor="middle" style="fill:currentColor;opacity:.75">nothing sends itself</text>
+
+          <rect x="470" y="218" width="208" height="48" style="fill:var(--accent);fill-opacity:.07;stroke:var(--accent);stroke-opacity:.45" />
+          <text class="svg-node" x="574" y="239" text-anchor="middle" style="fill:currentColor">Write into Exact</text>
+          <text class="svg-sub" x="574" y="255" text-anchor="middle" style="fill:currentColor;opacity:.75">my click is the approval</text>
+
+          <!-- back on the list -->
+          <polyline points="470,242 420,242 420,300 271,300 271,204" fill="none" style="stroke:currentColor;stroke-opacity:.35" marker-end="url(#arw3)" />
+          <text class="svg-edge" x="348" y="316" text-anchor="middle" style="fill:currentColor;opacity:.55">what happened goes back on the list</text>
+        </svg>
+      </div>
+      <figcaption>The run is a cron job and can stop between runs. The receiver cannot, because a click arrives when someone presses it.</figcaption>
+    </figure>
+
+    <div class="caveat">
+      <span class="tag">The catch</span>
+      <p>A Slack incoming webhook can only post. It cannot receive a click. So the moment the alert grows a button, we need a real Slack app and one small endpoint that is always on. That is the single piece of infrastructure the whole idea stands on, and it is also the smallest.</p>
+    </div>
+
+    <p>Everything else is ordinary. The run is a scheduled job: read the label, drop what we have seen before, ask what each message is about, work out what it means against stock and dates, post the ones that need a person. The store is what makes it a loop rather than a daily reset, and it holds three things: what we saw, what we judged, and what was actually done.</p>
+
+    <dl class="trace">
+      <div class="step"><dt>Collect</dt><dd>One label in the purchasing inbox, so nothing depends on someone remembering to forward. Every message gets an id and is only ever processed once.</dd></div>
+      <div class="step"><dt>Read</dt><dd>Is this a price change, a moved date, a new lead time. Which item, which supplier, from which date, and does it need an answer. This is the step that turns a mail into fields.</dd></div>
+      <div class="step"><dt>Weigh</dt><dd>Plain arithmetic against stock, MRP and the clock. Nothing here guesses. Reading is judgement, weighing is not, and keeping them apart is what makes a wrong alert traceable.</dd></div>
+      <div class="step"><dt>Post</dt><dd>Only what needs a person today. How sure the reading was decides how much the button dares fill in: sure enough gets the figures prefilled, not sure enough gets no button at all.</dd></div>
+      <div class="step"><dt>Receive</dt><dd>The click carries the message id and the exact figures that were shown, signed. It never recalculates on the way in, because the sheet has moved since the alert was posted.</dd></div>
+      <div class="step"><dt>Write</dt><dd>Anything outward becomes a draft. Anything internal writes once, and a second click on the same button does nothing. One switch turns every write off without a deploy.</dd></div>
+    </dl>
+
+    <p>Four steps to get there, and each one is worth having on its own.</p>
+
+    <ol class="layers">
+      <li>
+        <span class="num">01</span>
+        <div>
+          <h3>Collect and remember</h3>
+          <p>Read the label, store what comes in. No reading, no alerts, no buttons. It proves the inbox is reachable and gives us the pile of real messages that everything after this is judged against.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div>
+          <h3>Read, and only report</h3>
+          <p>Turn the messages into fields and post a digest to the channel we already have. Run it a fortnight and count how often it was right before anything is wired to a button. This is the step worth being slow about.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div>
+          <h3>One button, the safest one</h3>
+          <p>The Slack app and the receiver, with a single action: prepare a draft reply. A draft does nothing until someone presses send, so the worst outcome of a bug is a message nobody sends.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div>
+          <h3>Then the writes</h3>
+          <p>Exact one action at a time, each with its own bar for how sure the reading has to be. This is where it stops being a smarter dashboard and starts changing how the day runs.</p>
+        </div>
+      </li>
+    </ol>
+
+    <p>Two things to find out before step four can be scoped: whether the supplier mail actually lands somewhere a token can read, and whether Exact can be written to on our plan. Both decide how far the button reaches, and neither is a question about the agent.</p>
+  </section>
+
+  <section>
     <h2>Still to decide</h2>
     <ul class="open">
       <li><span class="q">01</span><div>Where the push lands. Slack in supply-and-operations, or mail, or both with different urgency.</div></li>

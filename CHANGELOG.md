@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03 — Taste Lab featured
+
+- Made Taste Lab the featured homepage project and moved the World Cup Pool into Recent builds.
+- Adapted the revised LinkedIn draft into its case study, highlighting €5,000 in annual software-fee savings, colleague feedback and shelf-life tests.
+- Added the draft’s shelf-life report screenshot, labelled as synthetic demo data.
+
 ## 2026-10-03 — Live app screenshots
 
 - Added real screenshots of the Taste Lab public demo and Thousand Nights homepage to their homepage cards and project pages.

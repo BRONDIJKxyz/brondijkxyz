@@ -35,3 +35,5 @@ homepage cards retain the existing placeholders.
 - `taste-lab.jpg`: https://jimmy-joy-sensory.vercel.app/demo — synthetic demo, no ratings submitted.
 - `thousand-nights.jpg`: https://brondijkxyz.github.io/1000-Reading-Machine/#home — home view, scrolled below the account banner.
 - Both images are used on the normal homepage and corresponding project pages.
+
+- `taste-lab-shelf-life.png`: original screenshot from the revised LinkedIn draft package (`linkedin-taste-lab-natural/02-shelf-life-report.png`); synthetic demo results, with the Demo data label retained.

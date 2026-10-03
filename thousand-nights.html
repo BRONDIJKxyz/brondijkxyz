@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thousand Nights, a 1,000 day reading machine - brondijk.xyz</title>
+    <meta name="description" content="A mobile reading app for a 1,000 day list of 3,000 texts: a story, an essay and a poem per day, 1,313 of them readable inside the app, offline, with private cross-device sync.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/thousand-nights.html">
+    <meta property="og:title" content="Thousand Nights, a 1,000 day reading machine">
+    <meta property="og:description" content="A mobile reading app for a 1,000 day list of 3,000 texts: a story, an essay and a poem per day, readable offline, with private cross-device sync.">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card-thousand-nights.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/thousand-nights.html">
+    <meta name="twitter:title" content="Thousand Nights, a 1,000 day reading machine">
+    <meta name="twitter:description" content="A mobile reading app for a 1,000 day list of 3,000 texts: a story, an essay and a poem per day, readable offline, with private cross-device sync.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card-thousand-nights.png">
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=8">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <!-- Umami analytics (self-hosted) -->
+    <script defer src="https://stats.brondijk.xyz/script.js" data-website-id="a660fa42-d72a-438c-bb89-cd4844778929"></script>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to projects</a>
+            <h1>Thousand Nights</h1>
+            <div class="case-meta">
+                <span class="chip live">● live</span>
+                <span class="chip">reading app</span>
+                <span class="chip">no framework</span>
+                <span class="chip">works offline</span>
+                <span class="chip">GitHub Pages</span>
+            </div>
+            <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:14px 0 6px;">A reading machine for a 1,000 day list: one story, one essay and one poem per day.</p>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔍</span> Overview</h2>
+                <p>The list came first: 1,000 days of reading, three texts per day, <strong>3,000 selections</strong> in total. The problem with a list like that is friction. You have to find the text, decide if you have time for it, and remember what you already read.</p>
+                <p>So the list became an app. It opens on your phone, suggests the next unread text in the category you want, tells you how long it takes to read, and opens the text itself. Nothing is locked behind a day counter: every selection is available from the first day. Mark a text as finished and it goes into your reading log with the date and your own note.</p>
+
+                <div class="tech-stack">
+                    <div class="tech-item">Vanilla JavaScript</div>
+                    <div class="tech-item">Service worker</div>
+                    <div class="tech-item">Python importer</div>
+                    <div class="tech-item">Supabase Auth</div>
+                    <div class="tech-item">PostgreSQL + RLS</div>
+                    <div class="tech-item">GitHub Pages</div>
+                </div>
+            </div>
+
+            <div class="case-metrics">
+                <div class="case-metric"><div class="num">3,000</div><div class="lbl">selections, 1,000 days</div></div>
+                <div class="case-metric"><div class="num">1,313</div><div class="lbl">texts open in the app</div></div>
+                <div class="case-metric"><div class="num">921</div><div class="lbl">full source collections</div></div>
+                <div class="case-metric"><div class="num">0</div><div class="lbl">runtime dependencies</div></div>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">✨</span> What it does</h2>
+                <ul class="feature-list">
+                    <li><strong>Next unread:</strong> picks your next story, essay or poem, and prefers texts that open directly in the app.</li>
+                    <li><strong>Time filters:</strong> up to 5, 10, 15 or 30 minutes. "Start with a short read" shows the unread texts under five minutes, shortest first.</li>
+                    <li><strong>Reading in the app:</strong> adjustable text size, estimated reading time and a saved reading position, in a dark or light theme.</li>
+                    <li><strong>Reading log:</strong> read and unread status, reading dates and personal notes, with overall and per category progress.</li>
+                    <li><strong>Reading packs:</strong> a 3, 7, 14 or 30 day pack, exported as an HTML reading list or as a selection file.</li>
+                    <li><strong>E-reader export:</strong> a script turns a pack into real EPUB files for a Crosspoint e-reader, with a reading list and a report of what failed.</li>
+                    <li><strong>Offline:</strong> after one visit the app and catalogue work without internet. Texts you opened stay cached.</li>
+                    <li><strong>Backups:</strong> JSON export and import. Imports merge, the later reading date wins, and nothing is ever removed by an import.</li>
+                </ul>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">📚</span> Honest about the texts</h2>
+                <p>Getting 3,000 public domain texts into one app is mostly a matching problem, and the app says out loud how well each match went instead of pretending every link is perfect:</p>
+                <ul class="feature-list">
+                    <li><strong>1,313 extracts</strong> have a unique title match with defined text boundaries and open directly.</li>
+                    <li><strong>921 source books</strong> match on author and collection, but the exact selection is not reliably delimited, so the app opens the searchable collection instead.</li>
+                    <li><strong>432 author mismatches</strong> point at a different author. The app explains the mismatch rather than serving the wrong book as the right one.</li>
+                    <li><strong>315 external sources and 19 unavailable selections</strong> have no local text yet, and keep their original link.</li>
+                </ul>
+                <p>Texts come from Project Gutenberg EPUBs with explicit public domain metadata. Source text is rendered as plain text, never as HTML, so nothing from a source file can execute in the reader. A label such as "selection #5" is left ambiguous instead of being filled in by a guess.</p>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔒</span> Your reading log stays yours</h2>
+                <p>Progress works as a guest, stored in that browser. Sign in with an email link and the log syncs privately between your devices: on edits, on reconnect, on returning to the tab, and every 30 seconds while the page is visible. Offline edits are queued, and a conflict between two devices asks you which version to keep.</p>
+                <p>Row level security limits reads to the signed-in user, writes go through an authenticated and version checked function, and retry IDs prevent duplicate writes. Only the public key is in the repository. No reading logs are committed.</p>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🛠️</span> How it is built</h2>
+                <p>No framework, no bundler and no backend during reading. The app is static files on GitHub Pages, published by an action that first rebuilds the catalogue and runs the tests. The catalogue parser checks exactly 3,000 unique selection IDs, three per day. Parser tests cover paragraph continuity, verse line breaks, chapter boundaries and ambiguous matches, and browser tests cover reading, persistence, backups, exports and reopening offline.</p>
+                <p>A separate Python importer downloads and extracts the source texts, reuses its download cache, and writes a report of what it could and could not import. That import work stays out of the published app.</p>
+            </div>
+
+            <a href="https://brondijkxyz.github.io/1000-Reading-Machine/" target="_blank" rel="noopener noreferrer" class="visit-site">Open the app →</a>
+        </div>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

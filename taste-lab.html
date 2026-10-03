@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimmy Joy Taste Lab - brondijk.xyz</title>
+    <meta name="description" content="A blind tasting platform for a nutrition brand: organisers prepare a tasting, colleagues rate samples on their phone, and closing the round freezes a fixed report with CSV, print and optional AI summary.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brondijk.xyz/taste-lab.html">
+    <meta property="og:title" content="Jimmy Joy Taste Lab">
+    <meta property="og:description" content="A blind tasting platform for a nutrition brand: organisers prepare a tasting, colleagues rate samples on their phone, and closing the round freezes a fixed report.">
+    <meta property="og:image" content="https://brondijk.xyz/assets/social-card-taste-lab.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brondijk.xyz/taste-lab.html">
+    <meta name="twitter:title" content="Jimmy Joy Taste Lab">
+    <meta name="twitter:description" content="A blind tasting platform for a nutrition brand: organisers prepare a tasting, colleagues rate samples on their phone, and closing the round freezes a fixed report.">
+    <meta name="twitter:image" content="https://brondijk.xyz/assets/social-card-taste-lab.png">
+
+    <!-- avoid dark-mode flash -->
+    <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('pre-dark');}catch(e){}</script>
+    <style>html.pre-dark body{background:#060607;color:#F2F0EA;}</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css?v=8">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <!-- Umami analytics (self-hosted) -->
+    <script defer src="https://stats.brondijk.xyz/script.js" data-website-id="a660fa42-d72a-438c-bb89-cd4844778929"></script>
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a href="index.html" class="logo">brondijk.xyz</a>
+            <span class="logo-tag">builds useful tools, fast</span>
+            <nav>
+                <a href="blog.html">blog</a>
+                <a href="index.html#projects">projects</a>
+                <a href="contact.html">contact</a>
+                <a href="https://github.com/brondijkxyz" target="_blank" rel="noopener noreferrer">github</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to projects</a>
+            <h1>Jimmy Joy Taste Lab</h1>
+            <div class="case-meta">
+                <span class="chip live">● live</span>
+                <span class="chip">internal tool</span>
+                <span class="chip">Next.js + Supabase</span>
+                <span class="chip">Amsterdam + Malta</span>
+                <span class="chip">private repo</span>
+            </div>
+            <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:14px 0 6px;">Built for product development and QA at a nutrition brand. The app needs a company account, so the link below shows the sign-in screen.</p>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔍</span> Overview</h2>
+                <p>Taste Lab replaces the spreadsheet round of product tasting. An organiser prepares a tasting, gives each sample a blind code, and either assigns colleagues or shares a participation link. Participants rate the samples on their phone, can revise an answer until they submit, and see their own results only. When the organiser closes the round, the app writes a <strong>fixed report snapshot</strong>: the numbers can no longer move after the fact, and the report exports to CSV or print.</p>
+                <p>What started as one tasting screen now holds three workspaces that share the same products, templates and member list: new product development, QA comparisons, and a shelf life archive.</p>
+
+                <div class="tech-stack">
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Supabase</div>
+                    <div class="tech-item">PostgreSQL + RLS</div>
+                    <div class="tech-item">Vercel</div>
+                    <div class="tech-item">Claude API</div>
+                    <div class="tech-item">TypeSafe</div>
+                </div>
+            </div>
+
+            <div class="case-metrics">
+                <div class="case-metric"><div class="num">3</div><div class="lbl">workspaces in one app</div></div>
+                <div class="case-metric"><div class="num">36</div><div class="lbl">database migrations</div></div>
+                <div class="case-metric"><div class="num">11</div><div class="lbl">product categories</div></div>
+                <div class="case-metric"><div class="num">2</div><div class="lbl">offices: AMS + MLA</div></div>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🧪</span> The three workspaces</h2>
+                <ul class="feature-list">
+                    <li><strong>Development tastings:</strong> blind samples with automatic sample codes, a shared product list, named templates, and a compare view for 2 to 6 closed rounds of the same product.</li>
+                    <li><strong>QA tests:</strong> a fixed comparison format with odour, appearance, colour, flavour, sweetness and texture on a five level difference scale, plus comparison photos stored privately in the database.</li>
+                    <li><strong>Shelf life:</strong> an archive of stored versus control samples with dates, batch, storage and timepoint, a 0 to 100 severity index per attribute, and trend comparison across tests.</li>
+                </ul>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">📊</span> Reports people can actually read</h2>
+                <p>Closing a tasting snapshots only the submitted answers. Blank answers stay blank, zero stays a valid score, and skips are left out of the summary instead of being counted as a low rating. Every report keeps its own ALL, Amsterdam and Malta view, so a difference between the two offices stays visible instead of being averaged away.</p>
+                <p>An organiser can also publish one <strong>AI report</strong> on a random public link. Claude writes the narrative; every number comes from the app's own calculation, not from the model. Only titles, products, sample codes, scale labels and aggregated scores go into the public payload. Source rows, participant fields and raw comments do not. Known names, emails and URLs are removed from comment fragments before analysis and from the narrative afterwards, and the text is labelled as AI generated.</p>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🔒</span> Access and safety</h2>
+                <ul class="feature-list">
+                    <li>Management screens need a verified Google identity plus an explicitly granted, active membership. There is no open sign-up.</li>
+                    <li>A tasting can separately allow guests through a link with a self reported name. Guests submit their own answers and see nothing else. Turning the link off revokes their reads and writes.</li>
+                    <li>Every write is validated and audited in PostgreSQL, under row level security, with an assignment wide revision and a serial browser queue so two tabs cannot overwrite each other.</li>
+                    <li>Public report links can be revoked, and a reopened tasting marks its published report as historical.</li>
+                </ul>
+            </div>
+
+            <div class="project-section">
+                <h2><span class="emoji">🛠️</span> How it is built</h2>
+                <p>Next.js on Vercel in front of Supabase, with the real logic in SQL functions and row level security rather than in the client. Database tests run against an isolated PostgreSQL engine with mock auth identities, so permissions and lifecycle rules are tested under actual database roles. Browser tests cover both the organiser and the participant side, including rejection of unauthenticated API and export requests.</p>
+                <p>Background work is persisted in PostgreSQL: report jobs take a three minute worker lease, checkpoint per location, count attempts and keep a safe error history, so a terminated invocation resumes where it stopped instead of starting a fresh billable run.</p>
+            </div>
+
+            <a href="https://jimmy-joy-sensory.vercel.app" target="_blank" rel="noopener noreferrer" class="visit-site">Open the app (sign-in required) →</a>
+        </div>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <span>© <span id="current-year"></span> brondijk.xyz</span>
+            <span>Execution over perfection, just ship ASAP</span>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

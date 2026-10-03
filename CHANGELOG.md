@@ -2,6 +2,15 @@
 
 All notable changes to the project list will be documented in this file.
 
+## [1.5.0] - 2026-10-03
+
+### Added
+- Jimmy Joy Taste Lab project page (`taste-lab.html`): blind tasting platform, three workspaces, fixed report snapshots, public AI reports
+- Thousand Nights project page (`thousand-nights.html`): 1,000 day reading machine, 3,000 selections, offline reading, private cross-device log
+- "Recent builds" section on the homepage with a card for each of the two projects
+- Social sharing cards for both project pages
+- Both pages added to the sitemap
+
 ## [1.4.0] - 2025-03-28
 
 ### Added

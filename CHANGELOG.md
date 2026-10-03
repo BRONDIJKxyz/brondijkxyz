@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Live app screenshots
+
+- Added real screenshots of the Taste Lab public demo and Thousand Nights homepage to their homepage cards and project pages.
+
 ## 2026-10-03 — Homepage screenshots
 
 - Added Taskflow and Side quests project-page screenshots to the normal homepage.

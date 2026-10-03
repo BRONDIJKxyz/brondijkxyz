@@ -29,3 +29,9 @@ top-aligned). PNG or JPG both fine. Keep the name, change nothing else.
 The original homepage now uses the `.jpg` captures for Taskflow and Side quests.
 Stock Dashboard and Master Insights screenshots are still unavailable; their
 homepage cards retain the existing placeholders.
+
+## Live app captures — 2026-10-03
+
+- `taste-lab.jpg`: https://jimmy-joy-sensory.vercel.app/demo — synthetic demo, no ratings submitted.
+- `thousand-nights.jpg`: https://brondijkxyz.github.io/1000-Reading-Machine/#home — home view, scrolled below the account banner.
+- Both images are used on the normal homepage and corresponding project pages.

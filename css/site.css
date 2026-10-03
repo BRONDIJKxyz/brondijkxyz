@@ -200,6 +200,9 @@ header.site nav a:hover { color: var(--ink); text-decoration: none; }
 }
 /* once the real screenshot loads, drop the placeholder tile so it can't cover the image */
 .card .shot.has-shot .ph { display: none; }
+/* Show complete project-page captures without cropping their content. */
+.card .shot.shot-overview { height: auto; aspect-ratio: 1920 / 884; background: #faf4e8; }
+.card .shot.shot-overview img { object-fit: contain; }
 /* featured card shows a taller overview band */
 .card.featured .shot { height: 280px; }
 @media (max-width: 560px) { .card.featured .shot { height: 210px; } }

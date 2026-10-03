@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-03 — Homepage screenshots
+
+- Added Taskflow and Side quests project-page screenshots to the normal homepage.
+- Display complete captures without cropping. Taskflow’s live domain is unavailable; its image shows the project overview.
+
 All notable changes to the project list will be documented in this file.
 
 ## [1.5.0] - 2026-10-03

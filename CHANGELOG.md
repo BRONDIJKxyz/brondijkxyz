@@ -10,6 +10,7 @@ All notable changes to the project list will be documented in this file.
 - "Recent builds" section on the homepage with a card for each of the two projects
 - Social sharing cards for both project pages
 - Both pages added to the sitemap
+- Link to the open Taste Lab participant demo (/demo), which needs no account
 
 ## [1.4.0] - 2025-03-28
 

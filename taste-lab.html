@@ -62,9 +62,9 @@
                 <span class="chip">internal tool</span>
                 <span class="chip">Next.js + Supabase</span>
                 <span class="chip">Amsterdam + Malta</span>
-                <span class="chip">private repo</span>
+                <span class="chip">open demo</span>
             </div>
-            <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:14px 0 6px;">Built for product development and QA at a nutrition brand. The app needs a company account, so the link below shows the sign-in screen.</p>
+            <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:14px 0 6px;">Built for product development and QA at a nutrition brand. <a href="https://jimmy-joy-sensory.vercel.app/demo" target="_blank" rel="noopener noreferrer">Try the demo, no sign-in ↗</a> · <a href="#try">What the demo shows</a></p>
 
             <div class="project-section">
                 <h2><span class="emoji">🔍</span> Overview</h2>
@@ -87,6 +87,18 @@
                 <div class="case-metric"><div class="num">36</div><div class="lbl">database migrations</div></div>
                 <div class="case-metric"><div class="num">11</div><div class="lbl">product categories</div></div>
                 <div class="case-metric"><div class="num">2</div><div class="lbl">offices: AMS + MLA</div></div>
+            </div>
+
+            <div class="project-section" id="try">
+                <h2><span class="emoji">👀</span> Have a look yourself</h2>
+                <p>The app itself needs a company account, but the participant screen is open to anyone at <a href="https://jimmy-joy-sensory.vercel.app/demo" target="_blank" rel="noopener noreferrer">/demo</a>. It is the real tasting interface on a made-up round: five blind samples of one product, five attributes each, rated from 0 to 10.</p>
+                <ul class="feature-list">
+                    <li>Rate the samples, skip one, then open <strong>Review answers</strong> and jump back to anything you want to change.</li>
+                    <li>Skip a sample or give an unusual score and the form asks you to say why before you continue.</li>
+                    <li>Your draft is kept in that browser, so you can close the tab and come back to it.</li>
+                    <li>Open it in two tabs and the second one warns you instead of overwriting the first.</li>
+                </ul>
+                <p>Nothing in the demo touches the real database. There is no account, no tasting record and no organiser on the other side; everything stays in your own browser and resets when you clear it.</p>
             </div>
 
             <div class="project-section">
@@ -120,7 +132,8 @@
                 <p>Background work is persisted in PostgreSQL: report jobs take a three minute worker lease, checkpoint per location, count attempts and keep a safe error history, so a terminated invocation resumes where it stopped instead of starting a fresh billable run.</p>
             </div>
 
-            <a href="https://jimmy-joy-sensory.vercel.app" target="_blank" rel="noopener noreferrer" class="visit-site">Open the app (sign-in required) →</a>
+            <a href="https://jimmy-joy-sensory.vercel.app/demo" target="_blank" rel="noopener noreferrer" class="visit-site">Try the demo, no sign-in →</a>
+            <p style="font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:14px 0 0;"><a href="https://jimmy-joy-sensory.vercel.app" target="_blank" rel="noopener noreferrer">The full app ↗</a> needs a company account, so it opens on the sign-in screen.</p>
         </div>
     </main>
 
